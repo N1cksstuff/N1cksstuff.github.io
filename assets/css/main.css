@@ -399,8 +399,3 @@ body.light .progress-wrap svg.progress-circle path {
 .switched .circle:after {
     opacity: 1;
 }
-
-.rimg {
-    width: 100%;
-    height: auto;
-}
