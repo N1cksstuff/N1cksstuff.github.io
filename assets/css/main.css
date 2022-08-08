@@ -464,7 +464,7 @@ span {
 }
 
 .stage svg:nth-child(5) {
-    left: 80%;
+    left: 10%;
     top: 50%;
     animation: roll-left 13s infinite linear alternate-reverse;
 }
