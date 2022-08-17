@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <script src="https://kit.fontawesome.com/d0ae3f46cc.js" crossorigin="anonymous"></script>
 </head>
+<!-- particles.js container -->
+<div id="particles-js"></div>
 
 <body class="stage">
     <div class="section">
@@ -21,11 +23,11 @@
     </div>
 
 
+    <div class="hidden-mobile">
+        <!--SVG Source-->
+        <svg style="display:none">
 
-    <!--SVG Source-->
-    <svg style="display:none">
-
-    <symbol id="circle" width="20px" height="20px" viewBox="0 0 20 20">
+    <symbol id="circle" width="20px" height="20px" viewBox="0 0 20 20 ">
         <circle fill="none" stroke-width="2" stroke-miterlimit="10" cx="10" cy="10" r="7.699"/>
       </symbol>
       
@@ -46,35 +48,35 @@
       </symbol>
     
     </svg>
-    <!--End SVG Source-->
+        <!--End SVG Source-->
 
 
-    <svg width="20" height="20">
+        <svg width="20" height="20">
         <use xlink:href="#triangle"/>
       </svg>
 
-    <svg width="20" height="20">
+        <svg width="20" height="20">
         <use xlink:href="#circle"/>
       </svg>
 
-    <svg width="20" height="20">
+        <svg width="20" height="20">
         <use xlink:href="#square"/>
       </svg>
 
-    <svg width="20" height="20">
+        <svg width="20" height="20">
         <use xlink:href="#cross"/>
       </svg>
 
-    <svg width="10" height="10">
+        <svg width="20" height="20">
         <use xlink:href="#triangle"/>
       </svg>
 
-    <svg width="20" height="20">
+        <svg width="20" height="20">
         <use xlink:href="#circle"/>
       </svg>
 
 
-
+    </div>
 
 
     <p class="text-center mb-0 section">First of all, I want to be a webdev when I'm big and strong.
@@ -88,9 +90,10 @@
         <br> and I have plans on uploading some coding stuff to <a href="https://www.youtube.com/channel/UCyFFcpfWh7PHNVcihKG5snA">Youtube</a>, <br> for any of those interrested in how the development of my own game goes!
         <br><br><br> Alright, now that you know what I like, what do you like? yea you, <a href="https://discord.gg/hrnvkRcD5B">Talk to me! </a>
         <br><br> As an end, here's some art by the wonderfull <a href="https://solo.to/rainbow_candyfloss">Rainbow_Candyfloss</a> (Thank you!!!) and with that you've reached the end!
-        <br><br><br> yepyep there is nothing below ::) <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br> yepyep there is nothing below ::)
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-        <div class="section text-center mb-0 rimg">
+        <div class="section text-center mb-0 img">
             <img src="assets/img/pride-flag-designify.png">
             <img src="assets/img/sketch1649877711582.png">
         </div>
@@ -98,13 +101,12 @@
         <footer>
 
 
+            <div class="curzr" hidden></div>
 
-            <div class="progress-wrap">
-                <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
-		</svg>
-            </div>
 
+
+            <!-- particles.js lib - https://github.com/VincentGarreau/particles.js -->
+            <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
             <a style="color: grey" href="https://www.youtube.com/watch?v=TfAMNOaZaAE">   Copyright Nick Angermann, 2022 </a>
         </footer>

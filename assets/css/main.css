@@ -477,12 +477,12 @@ span {
 
 .stage svg:nth-child(7) {
     left: 40%;
-    top: 60%;
+    top: 80%;
     animation: roll-left 20s infinite linear alternate-reverse;
 }
 
 .stage svg:nth-child(8) {
-    left: 10%;
+    left: 40%;
     top: 90%;
     animation: roll-right 11s infinite linear alternate-reverse;
 }
@@ -520,5 +520,36 @@ span {
     }
     to {
         transform: rotate(-360deg);
+    }
+}
+
+
+/* ---- reset ---- */
+
+body {
+    margin: 0;
+}
+
+canvas {
+    display: block;
+    vertical-align: bottom;
+}
+
+
+/* ---- particles.js container ---- */
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 767px) {
+    .hidden-mobile {
+        display: none;
+    }
+    .img {
+        max-width: 100%;
+        height: auto;
     }
 }
