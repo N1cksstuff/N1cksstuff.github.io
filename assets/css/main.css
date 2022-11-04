@@ -317,6 +317,28 @@ body {
     -webkit-font-smoothing: antialiased !important;
 }
 
+body.light {
+    color: var(--black-light);
+}
+
+h1 {
+    font-family: 'Monteserat', sans-serif;
+    font-size: 12vw;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--white);
+    -webkit-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
+
+body.light h1 {
+    color: var(--black);
+}
+
+body.light {
+    background-color: var(--white);
+}
+
 .navbar-brand {
     height: 36px;
     position: fixed;
