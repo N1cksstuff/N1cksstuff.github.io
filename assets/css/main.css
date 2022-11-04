@@ -30,7 +30,6 @@ body{
 	line-height: 1.7;
 	color: #ececee;
 	background-color: #1f2029;
-	
   background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat-back.svg');
   background-position: center;
   background-repeat: repeat;
@@ -323,7 +322,7 @@ body.light {
 }
 
 h1 {
-    font-family: 'Muli', sans-serif;
+    font-family: 'Monteserat', sans-serif;
     font-size: 12vw;
     font-weight: 900;
     line-height: 1;
