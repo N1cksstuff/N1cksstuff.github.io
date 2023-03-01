@@ -1,317 +1,449 @@
-(function($) {
-    "use strict";
-
-    //Switch dark/light
-
-    $(".switch").on('click', function() {
-        if ($("body").hasClass("light")) {
-            $("body").removeClass("light");
-            $(".switch").removeClass("switched");
-        } else {
-            $("body").addClass("light");
-            $(".switch").addClass("switched");
-        }
-    });
-
-    $(document).ready(function() {
-        "use strict";
-
-        //Scroll back to top
-
-        var progressPath = document.querySelector('.progress-wrap path');
-        var pathLength = progressPath.getTotalLength();
-        progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
-        progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
-        progressPath.style.strokeDashoffset = pathLength;
-        progressPath.getBoundingClientRect();
-        progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
-        var updateProgress = function() {
-            var scroll = $(window).scrollTop();
-            var height = $(document).height() - $(window).height();
-            var progress = pathLength - (scroll * pathLength / height);
-            progressPath.style.strokeDashoffset = progress;
-        }
-        updateProgress();
-        $(window).scroll(updateProgress);
-        var offset = 50;
-        var duration = 550;
-        jQuery(window).on('scroll', function() {
-            if (jQuery(this).scrollTop() > offset) {
-                jQuery('.progress-wrap').addClass('active-progress');
-            } else {
-                jQuery('.progress-wrap').removeClass('active-progress');
-            }
-        });
-        jQuery('.progress-wrap').on('click', function(event) {
-            event.preventDefault();
-            jQuery('html, body').animate({ scrollTop: 0 }, duration);
-            return false;
-        })
-
-
-    });
-
-})(jQuery);
-
-
-
-
-class CircleAndDot {
-    constructor() {
-        this.root = document.body
-        this.cursor = document.querySelector(".curzr")
-
-        this.position = {
-                distanceX: 0,
-                distanceY: 0,
-                distance: 0,
-                pointerX: 0,
-                pointerY: 0,
-            },
-            this.previousPointerX = 0
-        this.previousPointerY = 0
-        this.angle = 0
-        this.previousAngle = 0
-        this.angleDisplace = 0
-        this.degrees = 57.296
-        this.cursorSize = 22.6
-        this.fading = false
-
-        this.cursorStyle = {
-            boxSizing: 'border-box',
-            position: 'fixed',
-            top: `${ this.cursorSize / -2 }px`,
-            left: `${ this.cursorSize / -2 }px`,
-            zIndex: '2147483647',
-            width: `${ this.cursorSize }px`,
-            height: `${ this.cursorSize }px`,
-            backgroundColor: '#fff0',
-            border: '1.25px solid #111920',
-            borderRadius: '50%',
-            boxShadow: '0 -15px 0 -8px #0000',
-            transition: '250ms, transform 100ms',
-            userSelect: 'none',
-            pointerEvents: 'none'
-        }
-
-        this.init(this.cursor, this.cursorStyle)
-    }
-
-    init(el, style) {
-        Object.assign(el.style, style)
-        this.cursor.removeAttribute("hidden")
-
-        document.body.style.cursor = 'none'
-        document.body.querySelectorAll("button, label, input, textarea, select, a").forEach((el) => {
-            el.style.cursor = 'inherit'
-        })
-    }
-
-    move(event) {
-        this.previousPointerX = this.position.pointerX
-        this.previousPointerY = this.position.pointerY
-        this.position.pointerX = event.pageX + this.root.getBoundingClientRect().x
-        this.position.pointerY = event.pageY + this.root.getBoundingClientRect().y
-        this.position.distanceX = this.previousPointerX - this.position.pointerX
-        this.position.distanceY = this.previousPointerY - this.position.pointerY
-        this.distance = Math.sqrt(this.position.distanceY ** 2 + this.position.distanceX ** 2)
-
-        if (event.target.localName === 'button' ||
-            event.target.localName === 'a' ||
-            event.target.onclick !== null ||
-            event.target.className.includes('curzr-hover')) {
-            this.hover()
-        } else {
-            this.hoverout()
-        }
-
-        this.cursor.style.transform = `translate3d(${this.position.pointerX}px, ${this.position.pointerY}px, 0)`
-
-        this.rotate(this.position)
-        this.fade(this.distance)
-    }
-
-    rotate(position) {
-        let unsortedAngle = Math.atan(Math.abs(position.distanceY) / Math.abs(position.distanceX)) * this.degrees
-        this.previousAngle = this.angle
-
-        if (position.distanceX <= 0 && position.distanceY >= 0) {
-            this.angle = 90 - unsortedAngle + 0
-        } else if (position.distanceX < 0 && position.distanceY < 0) {
-            this.angle = unsortedAngle + 90
-        } else if (position.distanceX >= 0 && position.distanceY <= 0) {
-            this.angle = 90 - unsortedAngle + 180
-        } else if (position.distanceX > 0 && position.distanceY > 0) {
-            this.angle = unsortedAngle + 270
-        }
-
-        if (isNaN(this.angle)) {
-            this.angle = this.previousAngle
-        } else {
-            if (this.angle - this.previousAngle <= -270) {
-                this.angleDisplace += 360 + this.angle - this.previousAngle
-            } else if (this.angle - this.previousAngle >= 270) {
-                this.angleDisplace += this.angle - this.previousAngle - 360
-            } else {
-                this.angleDisplace += this.angle - this.previousAngle
-            }
-        }
-        this.cursor.style.transform += ` rotate(${this.angleDisplace}deg)`
-    }
-
-    hover() {
-        this.cursor.style.border = '11.3px solid #111920'
-    }
-
-    hoverout() {
-        this.cursor.style.border = '1.25px solid #111920'
-    }
-
-    fade(distance) {
-        this.cursor.style.boxShadow = `0 ${-15 - distance}px 0 -8px #111920, 0 0 0 1px #F2F5F8`
-        if (!this.fading) {
-            this.fading = true
-            setTimeout(() => {
-                this.cursor.style.boxShadow = '0 -15px 0 -8px #11192000, 0 0 0 1px #F2F5F8'
-                this.fading = false
-            }, 50)
-        }
-    }
-
-    click() {
-        this.cursor.style.transform += ` scale(0.75)`
-        setTimeout(() => {
-            this.cursor.style.transform = this.cursor.style.transform.replace(` scale(0.75)`, '')
-        }, 35)
-    }
-
-    remove() {
-        this.cursor.remove()
-    }
-}
-
-(() => {
-    const cursor = new CircleAndDot()
-    if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        document.onmousemove = function(event) {
-            cursor.move(event)
-        }
-        document.onclick = function() {
-            cursor.click()
-        }
-    } else {
-        cursor.remove()
-    }
-})()
-
-
-particlesJS("particles-js", {
-    "particles": {
-        "number": {
-            "value": 355,
-            "density": {
-                "enable": true,
-                "value_area": 789.1476416322727
-            }
-        },
-        "color": {
-            "value": "#ffffff"
-        },
-        "shape": {
-            "type": "circle",
-            "stroke": {
-                "width": 0,
-                "color": "#000000"
-            },
-            "polygon": {
-                "nb_sides": 5
-            },
-            "image": {
-                "src": "img/github.svg",
-                "width": 100,
-                "height": 100
-            }
-        },
-        "opacity": {
-            "value": 0.48927153781200905,
-            "random": false,
-            "anim": {
-                "enable": true,
-                "speed": 0.2,
-                "opacity_min": 0,
-                "sync": false
-            }
-        },
-        "size": {
-            "value": 2,
-            "random": true,
-            "anim": {
-                "enable": true,
-                "speed": 2,
-                "size_min": 0,
-                "sync": false
-            }
-        },
-        "line_linked": {
-            "enable": false,
-            "distance": 150,
-            "color": "#ffffff",
-            "opacity": 0.4,
-            "width": 1
-        },
-        "move": {
-            "enable": true,
-            "speed": 0.2,
-            "direction": "none",
-            "random": true,
-            "straight": false,
-            "out_mode": "out",
-            "bounce": false,
-            "attract": {
-                "enable": false,
-                "rotateX": 600,
-                "rotateY": 1200
-            }
-        }
+// Shortcuts to skip waiting for the flow
+const Simulations = {
+    localStorageError() {
+      return false // Make this true to see the error screens
     },
-    "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-            "onhover": {
-                "enable": true,
-                "mode": "bubble"
-            },
-            "onclick": {
-                "enable": true,
-                "mode": "push"
-            },
-            "resize": true
-        },
-        "modes": {
-            "grab": {
-                "distance": 400,
-                "line_linked": {
-                    "opacity": 1
-                }
-            },
-            "bubble": {
-                "distance": 83.91608391608392,
-                "size": 1,
-                "duration": 3,
-                "opacity": 1,
-                "speed": 3
-            },
-            "repulse": {
-                "distance": 200,
-                "duration": 0.4
-            },
-            "push": {
-                "particles_nb": 4
-            },
-            "remove": {
-                "particles_nb": 2
-            }
-        }
+  
+    // This one is a sub-scenario of the one above
+    deadEndError() {
+      return Simulations.localStorageError() && true
     },
-    "retina_detect": true
-});
+  
+    // Maybe false, maybe a view
+    workingOnView() {
+      return false && Views.something()
+    }
+  }
+  
+  // Used in flow decision points
+  const Constants = {
+    DELETE: 'delete a progress',
+    SOMETHING: 'Go to the Store',
+    LOCALSTORAGE_ERROR:
+      `<p>Cannot access localStorage. Please make sure you have the localStorage / 3rd party cookies enabled and try again.</p>
+      <p>If the error persists, please feel free to <a target="_blank" href="mailto:Nickdoesstuff@proton.me">report it.</a></p>`,
+    DEAD_END_ERROR:
+      `Not a lucky day. Please refresh the page and try again.`
+  }
+  
+  // Helpers
+  const Utils = {
+    sleep: async (durationMilliseconds) => {
+      return new Promise(resolve => {
+        return setTimeout(resolve, durationMilliseconds)
+      })
+    },
+  
+    branchOff: (srcFlow, subFlows) => async () => {
+      const { key } = await srcFlow()
+      return subFlows[key]()
+    },
+  
+    toCSSText: (style) => {
+      return Object.keys(style).reduce((acc, key) => {
+        return `;
+          ${acc};
+          ${key}: ${style[key]};
+        `
+      }, ``)
+    },
+  
+    pushStyle: (selector, styles) => {
+      const el = document.querySelector(selector)
+      const computedStyle = window.getComputedStyle(el)
+      const originalStyle = Object.keys(styles).reduce((acc, key) => {
+        return {
+          ...acc,
+          [key]: computedStyle[key]
+        }
+      }, {})
+      const originalCSSText = Utils.toCSSText(originalStyle)
+      el.style.cssText += Utils.toCSSText(styles)
+      return originalCSSText
+    }
+  }
+  
+  // Side-effects
+  const Actions = {
+    async loadUserProgress() {
+      await Utils.sleep(2000)
+  
+      if (Simulations.localStorageError()) {
+        return Promise.resolve(Constants.LOCALSTORAGE_ERROR)
+      }
+  
+      try {
+        return window.localStorage.getItem('userProgress')
+      } catch (e) {
+        return Promise.resolve(Constants.LOCALSTORAGE_ERROR)
+      }
+    },
+  
+    async saveUserProgress() {
+      await Utils.sleep(2000)
+      try {
+        return window.localStorage.setItem(
+          'userProgress',
+          JSON.stringify({some: 'data'})
+        )
+      } catch (e) {
+        return Promise.resolve(Constants.LOCALSTORAGE_ERROR)
+      }
+    },
+  
+    async deleteUserProgress() {
+      await Utils.sleep(2000)
+      try {
+        window.localStorage.removeItem('userProgress')
+      } catch (e) {
+        return Promise.resolve(Constants.LOCALSTORAGE_ERROR)
+      }
+      return Promise.resolve()
+    },
+  
+    reloadPage() {
+      try {
+        if (Simulations.deadEndError()) {
+          return Promise.resolve(Constants.DEAD_END_ERROR)
+        }
+        window.location.href = window.location.href
+      } catch (e) {
+        return Promise.resolve(Constants.DEAD_END_ERROR)
+      }
+    }
+  }
+  
+  // All the ways the app can be in,
+  // named and organized freely, using Promises
+  const Flows = {
+    master: async () => {
+      if (Simulations.workingOnView()) {
+        return Simulations.workingOnView()
+      }
+  
+      const [ , progress ] = await Promise.all([
+        Views.loading(),
+        Actions.loadUserProgress()
+      ])
+      if (!progress) {
+        return Flows.firstTime()
+      }
+      if (progress === Constants.LOCALSTORAGE_ERROR) {
+        return Flows.abort(progress)
+      }
+      return Flows.continuation()
+    },
+  
+    firstTime: async () => {
+      if (Simulations.workingOnView()) {
+        return Simulations.workingOnView()
+      }
+  
+      await Views.intro1()
+      await Views.intro2()
+      await Views.intro3()
+   //  await Views.intro4()
+  
+      await Promise.all([
+        Views.saving(),
+        Actions.saveUserProgress()
+      ])
+  
+      return Flows.continuation()
+    },
+  
+    // Switch flows based on which button in Views.main is clicked.
+    continuation: Utils.branchOff(
+      () => Views.main(),
+      {
+        async [Constants.SOMETHING]() {
+          await Views.something()
+          return Flows.continuation()
+        },
+  
+        async [Constants.DELETE]() {
+          await Promise.all([
+            Views.deleting(),
+            Actions.deleteUserProgress()
+          ])
+          return Flows.master()
+        }
+      }
+    ),
+  
+    abort: async (progress) => {
+      await Views.error(progress)
+      const reloadError = await Actions.reloadPage()
+      if (reloadError === Constants.DEAD_END_ERROR) {
+        return Flows.deadEnd(reloadError)
+      }
+    },
+  
+    deadEnd: async (reason) => {
+      await Views.deadEnd(reason)
+    }
+  }
+  
+  // Some low-level components that serve as a screen's layout
+  const Layouts = {
+    init(el) {
+      this.el = el
+    },
+  
+    async message({ content, enter, transitionDuration = 500 }) {
+      const template = () => {
+        return `
+          <div class="layout message-layout">
+            ${content}
+          </form>
+        `
+      }
+  
+      const cssVariables = () => `;
+        --transition-duration: ${transitionDuration};
+      `
+  
+      if (typeof enter === 'function') {
+        enter()
+      }
+      this.el.innerHTML = template()
+      this.el.style.cssText += cssVariables()
+      return new Promise()
+    },
+  
+    async messageWithButtons({ content, btn, enter, exit, transitionDuration = 500 }) {
+      const getBtn = (maybeMultipleBtns) => {
+        if (Array.isArray(maybeMultipleBtns)) {
+          return maybeMultipleBtns
+        }
+        return [maybeMultipleBtns]
+      }
+  
+      const template = () => {
+        return `
+          <form id="complete-step-form" class="layout message-layout">
+            ${content}
+            <footer>
+              ${getBtn(btn).map(eachBtn => `
+                <button
+                  autofocus
+                  class="btn ${eachBtn.type || ''}"
+                  data-key="${eachBtn.key || Constants.FORWARD}"
+                >
+                  ${eachBtn.text}
+                </button>
+              `).join('')}
+            </footer>
+          </form>
+        `
+      }
+  
+      const cssVariables = () => `;
+        --transition-duration: ${transitionDuration};
+      `
+  
+      const listenToFormSubmit = (onSubmit) => {
+        const form = this.el.querySelector('#complete-step-form')
+        form.addEventListener('submit', async e => {
+          e.preventDefault()
+          form.classList.add('exiting')
+          if (typeof exit === 'function') {
+            await exit(restoredValues)
+          }
+          setTimeout(() => {
+            onSubmit({
+              key: e.submitter.dataset.key
+            })
+          }, transitionDuration)
+        })
+      }
+  
+      let restoredValues
+      if (typeof enter === 'function') {
+        restoredValues = enter()
+      }
+      this.el.innerHTML = template()
+      this.el.style.cssText += cssVariables()
+      return new Promise(listenToFormSubmit)
+    },
+  
+    async statusFeedback({ text, type, animationDuration = 1500 }) {
+      const template = () => {
+        const typeClassName = type || ''
+        return `
+          <div class="layout status-feedback-layout">
+            <span class="animation-object ${type}"></span>
+            <span class="status-text ${type}">${text}</span>
+          </div>
+        `
+      }
+  
+      const cssVariables = () => `;
+        --animation-duration: ${animationDuration}ms;
+        --type: ${type};
+      `
+  
+      const listenToAnimationEnd = (onEnd) => {
+        setTimeout(onEnd, animationDuration)
+      }   
+  
+      this.el.innerHTML = template()
+      this.el.style.cssText += cssVariables()
+      await new Promise(listenToAnimationEnd)
+    },
+  }
+  
+  // Things to render on the screen
+  const Views = {
+    async loading() {
+      return Layouts.statusFeedback({
+        text: 'loading',
+        type: 'loading'
+      })
+    },
+  
+    async saving() {
+      return Layouts.statusFeedback({
+        text: 'saving',
+        type: 'saving'
+      })
+    },
+  
+    async deleting() {
+      return Layouts.statusFeedback({
+        text: 'deleting',
+        type: 'deleting'
+      })
+    },
+  
+    async intro1() {
+      return Layouts.messageWithButtons({
+        content: `
+          <h1>Heya,</h1>
+          <p>We are <://>, we code the website of your dreams for you.</p>
+            <p>And the best thing? It's impressively cheap!</p> <br>
+          <p>You seem to be here for the first time. Let me show you. </p>
+        `,
+        btn: {
+          text: "Let's start!"
+        }
+      })
+    },
+  
+    async intro2() {
+      return Layouts.messageWithButtons({
+        content: `
+          <h1>What we believe in</h1>
+          <p>Our goal is to make websites accessible for everyone, even those on a budget.</p>
+          <p>Small content creators most of the time do not have the <em>money</em> to afford a fancy website, but it can help you grow, and just is a cool thing to have.</p>
+        `,
+        btn: {
+          text: 'And you will help?'
+        }
+      })
+    },
+  
+    async intro3() {
+      return Layouts.messageWithButtons({
+        content: `
+          <h1>Yes!</h1>
+          <p>We have multiple plans ranking from just <em>30$</em> to more expensive ones.</p>
+          <p>If you want to spend a little bit more, we are also open to custom requests if you cannot find a plan that suits your needs!.</p>
+        `,
+        btn: {
+          text: 'Sounds cool?',
+        }
+      })
+    },
+  
+  //  async intro4() {
+  //    return Layouts.messageWithButtons({
+  //      content: `
+   //       <h1>Cool!</h1>
+   //       <p>After this view, your progress will be saved.</p>
+   //       <p>You'll switch to a <em>continuation flow</em>, from this <em>intro</em>.</p>
+   //     `,
+   //     btn: {
+   //       text: "Save it"
+   //     }
+   //   })
+  //  },
+  
+    async main() {
+      return Layouts.messageWithButtons({
+        content: `
+          <h1>Great!</h1>
+          <p>Now, what are you waiting for?</p>
+          <p>Get your website, pay less!</p>
+        `,
+        btn: [{
+          text: 'Delete cookies',
+          type: 'danger',
+          key: Constants.DELETE
+        }, {
+          text: 'Go to our store',
+          type: 'absurd',
+          key: Constants.SOMETHING
+        }]
+      })
+    },
+  
+    async something() {
+      return Layouts.messageWithButtons({
+        get content() {
+            window.location.replace("https://www.fiverr.com/nick_owo/create-a-website-that-suits-your-needs?gig_id=304291991&utm_campaign=base_gig_create_share&utm_content=&utm_medium=shared&utm_source=get_url&utm_term=&view=gig");
+        }
+      })
+    },
+  
+    
+    async error(message) {
+      return Layouts.messageWithButtons({
+        enter() {
+          return Utils.pushStyle('body', {
+            background: 'linear-gradient(to bottom, violet, lightblue)',
+            color: 'black',
+            transition: 'all 0.5s'
+          })
+        },
+        async exit(originalCSSText) {
+          document.body.style.cssText += originalCSSText
+          await Utils.sleep(500)
+          return Promise.resolve()
+        },
+        content: `
+          <h1>Error</h1>
+          <p>${message}</p>
+        `,
+        btn: {
+          text: 'Refresh page',
+          type: 'absurd'
+        }
+      })
+    },
+  
+    async deadEnd(reason) {
+      return Layouts.message({
+        enter() {
+          return Utils.pushStyle('body', {
+            background: `
+              linear-gradient(135deg, white -60%, transparent 30%),
+              linear-gradient(135deg, #fd3 50%, black 300%)
+            `,
+            color: 'black',
+            transition: 'all 0.5s'
+          })
+        },
+        content: `
+          <h1>Dead end.</h1>
+          <p>${reason}</p>
+        `
+      })
+    }
+  }
+  
+  // Layouts should recognize the container
+  Layouts.init(document.getElementById('app'))
+  
+  // Init one of the flows
+  Flows.master()
