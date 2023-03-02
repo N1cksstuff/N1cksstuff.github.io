@@ -358,8 +358,7 @@ const Simulations = {
         btn: [{
           text: 'Sounds cool?',
         }, {
-          text: 'See our mission in length',
-          type: 'absurd',
+          text: 'full mission',
           key: Constants.MISSION
         }]
       })
