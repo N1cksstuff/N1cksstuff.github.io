@@ -339,8 +339,7 @@ const Simulations = {
         `,
         btn: {
           text: 'And you will help?'
-        }
-          {
+        }, {
           text: 'See our full believes',
           type: 'absurd',
           key: Constants.MISSION
