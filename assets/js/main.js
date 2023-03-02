@@ -160,11 +160,6 @@ const Simulations = {
           await Views.something()
           return Flows.continuation()
         },
-        
-        async [Constants.MISSION]() {
-          await Views.mission()
-          return Flows.mission()
-        },
   
         async [Constants.DELETE]() {
           await Promise.all([
@@ -344,7 +339,7 @@ const Simulations = {
         `,
         btn: {
           text: 'And you will help?'
-        },
+        }
       })
     },
   
@@ -401,13 +396,6 @@ const Simulations = {
       })
     },
   
-         async mission() {
-      return Layouts.messageWithButtons({
-        get content() {
-            window.location.replace("https://n1cksstuff.github.io/mission.html");
-        }
-      })
-    },
     
     async error(message) {
       return Layouts.messageWithButtons({
