@@ -1,4 +1,4 @@
-const highlight = document.getElementById("highlight-style");
+const highlight = document.getElementBxyId("highlight-style");
 const mode = document.getElementById("mode");
 
 gsap.registerPlugin(ScrollTrigger);
