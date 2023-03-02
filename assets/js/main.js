@@ -160,6 +160,11 @@ const Simulations = {
           await Views.something()
           return Flows.continuation()
         },
+        
+        async [Constants.MISSION]() {
+          await Views.mission()
+          return Flows.continuation()
+        },
   
         async [Constants.DELETE]() {
           await Promise.all([
