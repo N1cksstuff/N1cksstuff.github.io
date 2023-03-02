@@ -340,6 +340,11 @@ const Simulations = {
         btn: {
           text: 'And you will help?'
         }
+          {
+          text: 'See our full believes',
+          type: 'absurd',
+          key: Constants.MISSION
+        }]
       })
     },
   
@@ -396,6 +401,13 @@ const Simulations = {
       })
     },
   
+         async mission() {
+      return Layouts.messageWithButtons({
+        get content() {
+            window.location.replace("https://n1cksstuff.github.io/mission.html");
+        }
+      })
+    },
     
     async error(message) {
       return Layouts.messageWithButtons({
