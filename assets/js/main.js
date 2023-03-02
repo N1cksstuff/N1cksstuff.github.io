@@ -160,6 +160,11 @@ const Simulations = {
           await Views.something()
           return Flows.continuation()
         },
+          
+        async [Constants.MISSION]() {
+          await Views.mission()
+          return Flows.continuation()
+        },
   
         async [Constants.DELETE]() {
           await Promise.all([
@@ -350,9 +355,13 @@ const Simulations = {
           <p>We have multiple plans ranking from just <em>30$</em> to more expensive ones.</p>
           <p>If you want to spend a little bit more, we are also open to custom requests if you cannot find a plan that suits your needs!.</p>
         `,
-        btn: {
+        btn: [{
           text: 'Sounds cool?',
-        }
+        }, {
+          text: 'See our mission in length',
+          type: 'absurd',
+          key: Constants.MISSION
+        }]
       })
     },
   
@@ -392,6 +401,14 @@ const Simulations = {
       return Layouts.messageWithButtons({
         get content() {
             window.location.replace("https://www.fiverr.com/nick_owo/create-a-website-that-suits-your-needs?gig_id=304291991&utm_campaign=base_gig_create_share&utm_content=&utm_medium=shared&utm_source=get_url&utm_term=&view=gig");
+        }
+      })
+    },
+      
+     async mission() {
+       return Layouts.messageWithButtons({
+         get content() {
+            window.location.replace("https://N1cksstuff.github.io/mission.html");
         }
       })
     },
