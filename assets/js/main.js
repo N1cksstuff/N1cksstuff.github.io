@@ -163,7 +163,7 @@ const Simulations = {
         
         async [Constants.MISSION]() {
           await Views.mission()
-          return Flows.continuation()
+          return Flows.mission()
         },
   
         async [Constants.DELETE]() {
