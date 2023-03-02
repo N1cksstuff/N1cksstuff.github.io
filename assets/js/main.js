@@ -407,7 +407,7 @@ const Simulations = {
      async mission() {
        return Layouts.messageWithButtons({
          get content() {
-            window.location.replace("https://n1cksstuff.github.io/mission.html");
+            window.location.replace("https://n1cksstuff.github.io/Meet <://>.pdf");
         }
       })
     },
