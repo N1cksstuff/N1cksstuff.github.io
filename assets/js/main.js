@@ -166,10 +166,10 @@ const Simulations = {
           return Flows.continuation()
         },
   
-        async [Constants.DELETE]() {
-          await Promise.all([
-            Views.deleting(),
-            Actions.deleteUserProgress()
+         async [Constants.DELETE]() {
+            await Promise.all([
+              Views.deleting(),
+              Actions.deleteUserProgress()
           ])
           return Flows.master()
         }
