@@ -131,7 +131,7 @@ a:hover {
 .nav:before, .nav:after {
 	content: "";
 	position: fixed;
-  top: 20px;
+  top: 70px;
   left: 50px;
 	width: 0;
 	height: 0;
@@ -157,7 +157,7 @@ a:hover {
 .nav__content {
 	position: fixed;
 	visibility: hidden;
-	top: 90px;
+	top: 140px;
   left: 50px;
 	width: 280px;
 	text-align: left;
@@ -471,7 +471,6 @@ padding: 2em;
   margin-top: 75px;
 }
 
-}
 
 @media only screen and (min-width: 1000px){
 
