@@ -466,6 +466,11 @@ padding: 2em;
 
 }
 
+.nav-but-wrap
+{
+  margin-top: 75px;
+}
+
 }
 
 @media only screen and (min-width: 1000px){
