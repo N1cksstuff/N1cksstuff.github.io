@@ -453,7 +453,8 @@ padding: 2em;
 .panel {
     width: 90vw;
     height: 210vh;
-
+	backdrop-filter: blur(15px);
+	background-color: rgba(13, 13, 13, 0.084);
 }
 
 
@@ -462,7 +463,9 @@ padding: 2em;
 
 .panel {
     width: 90vw;
-    height: 180vh;
+    height: 125vh;
+	backdrop-filter: blur(15px);
+	background-color: rgba(13, 13, 13, 0.084);
 
 }
 
@@ -478,6 +481,8 @@ padding: 2em;
 .panel {
     width: 90vw;
     height: 100vh;
+	backdrop-filter: blur(15px);
+    background-color: rgba(13, 13, 13, 0.084);
 
 }
 
@@ -487,7 +492,8 @@ padding: 2em;
 .panel {
     width: 90vw;
     height: 100vh;
-
+	backdrop-filter: blur(15px);
+	background-color: rgba(13, 13, 13, 0.084);
 }
 
 }
@@ -678,4 +684,14 @@ a .weblink {
 .weblink:visited {
 	color: #dadada;
 	text-decoration: none;
+}
+}
+
+.purple:hover {
+
+
+	text-decoration-color: #2E0D48;
+	fill: #2E0D48;
+	background-color: #2E0D48;
+
 }
