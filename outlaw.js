@@ -83,6 +83,9 @@ function formatTime(time) {
 }
 
 function displayFullPlanTable() {
+    var currentDate = new Date();
+    var currentDay = currentDate.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
+
     var names = getNames();
     var fullPlanTable = document.getElementById("fullPlanTable");
     var tableHtml = '<table>';
@@ -99,7 +102,8 @@ function displayFullPlanTable() {
         currentDayNames.forEach(function(name) {
             var startTime = formatTime(name.start);
             var endTime = formatTime(name.end);
-            tableHtml += '<tr><td>' + dayName + '</td><td>' + startTime + '-' + endTime + '</td><td>' + name.name + '</td></tr>';
+            var rowClass = day == currentDay ? ' class="current-day"' : '';
+            tableHtml += '<tr' + rowClass + '><td>' + dayName + '</td><td>' + startTime + '-' + endTime + '</td><td>' + name.name + '</td></tr>';
         });
     });
 

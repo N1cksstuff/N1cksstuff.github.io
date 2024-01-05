@@ -54,6 +54,9 @@ body {
     text-transform: uppercase;
 }
 
+.current-day {
+    background-color: #aaaaaa;
+}
 
 /* Responsive Design */
 @media only screen and (max-width: 600px) {
