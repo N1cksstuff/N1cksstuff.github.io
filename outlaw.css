@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#greetingContainer {
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+#greetingMessage {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#fullPlanTable {
+    margin: 40px auto;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+    background-color: #fff;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+    display: none;
+    text-align: center;
+}
+
+
+#fullPlanTable th, #fullPlanTable td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    padding-inline-start: 130px;
+
+}
+
+#fullPlanTable th {
+    background-color: #f9f9f9;
+    color: #333;
+    text-transform: uppercase;
+}
+
+
+/* Responsive Design */
+@media only screen and (max-width: 600px) {
+    #fullPlanTable {
+        width: 100%;
+    }
+
+    #fullPlanTable th, #fullPlanTable td {
+        padding: 12px;
+        padding-inline-start: 30px; /* Reduce padding on small screens */
+    }
+
+    #greetingMessage {
+        font-size: 24px;
+    }
+}
