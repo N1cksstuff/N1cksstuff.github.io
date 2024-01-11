@@ -22,7 +22,11 @@ body{
 a {
 	cursor: pointer;
 	text-decoration: none;
-	color: #b7b7b7;
+	color: #9765f4;
+}
+
+.bold {
+	font-weight: 650;
 }
 
 i {
