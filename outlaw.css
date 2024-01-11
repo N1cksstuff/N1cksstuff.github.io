@@ -73,3 +73,17 @@ body {
         font-size: 24px;
     }
 }
+
+.fa-mouse-pointer {
+    padding: 10px;
+}
+
+.fa-users {
+    font-size: 200%;
+}
+
+.login {
+    margin-left: 90%;
+    margin-top: -5%;
+    padding: 1em;
+}
