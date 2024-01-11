@@ -10,14 +10,14 @@ function displayCurrentName() {
     var names = {
         0: { start: 630, end: 2330, name: "Henne" }, //Sunday
         1: [
-            { start: 630, end: 900, name: "RB Anna" }, //Monday
-            { start: 1400, end: 1800, name: "RB Anna" },
-            { start: 1800, end: 2330, name: "Benny" }
+            { start: 630, end: 900, name: "Jaci" }, //Monday
+            { start: 1400, end: 1800, name: "Tobias" },
+            { start: 1800, end: 2330, name: "Anna" }
         ],
         2: [
-            { start: 1000, end: 1400, name: "Jaci" }, //Tuesday
-            { start: 1400, end: 1800, name: "Caro" },
-            { start: 1800, end: 2330, name: "Tobias" }
+            { start: 1000, end: 1400, name: "Benny" }, //Tuesday
+            { start: 1400, end: 1800, name: "Sina" },
+            { start: 1800, end: 2330, name: "Maxi" }
         ],
         3: [
             { start: 1000, end: 1400, name: "Tobias" }, //Wednesday
@@ -113,36 +113,37 @@ function displayFullPlanTable() {
 
 function getNames() {
     return {
-            0: { start: 1800, end: 2330, name: "Sina" }, //Sunday
-            1: [
-                { start: 630, end: 900, name: "RB Anna" }, //Monday
-                { start: 1400, end: 1800, name: "RB Anna" },
-                { start: 1800, end: 2330, name: "Benny" }
-            ],
-            2: [
-                { start: 1000, end: 1400, name: "Jaci" }, //Tuesday
-                { start: 1400, end: 1800, name: "Caro" },
-                { start: 1800, end: 2330, name: "Tobias" }
-            ],
-            3: [
-                { start: 1000, end: 1400, name: "Henne" }, //Wednesday
-                { start: 1400, end: 1800, name: "Benny" },
-                { start: 1800, end: 2330, name: "Anna" }
-            ],
-            4: [
-                { start: 630, end: 900, name: "Benny" }, //Thursday
-                { start: 1400, end: 1800, name: "Henne" },
-                { start: 1800, end: 2330, name: "Caro" },
-            ],
-            5: [
-                { start: 630, end: 900, name: "Tobias" }, //Friday
-                { start: 1400, end: 1800, name: "Sina" },
-                { start: 1800, end: 2330, name: "Edwin" }
-            ],
-            6: [
-                { start: 630, end: 2330, name: "RB & ZWK, Edwin" } //Saturday
-            ]
-        };
+          0: { start: 630, end: 2330, name: "Henne" }, //Sunday
+        1: [
+            { start: 630, end: 900, name: "Jaci" }, //Monday
+            { start: 1400, end: 1800, name: "Tobias" },
+            { start: 1800, end: 2330, name: "Anna" }
+        ],
+        2: [
+            { start: 1000, end: 1400, name: "Benny" }, //Tuesday
+            { start: 1400, end: 1800, name: "Sina" },
+            { start: 1800, end: 2330, name: "Maxi" }
+        ],
+        3: [
+            { start: 1000, end: 1400, name: "Tobias" }, //Wednesday
+            { start: 1400, end: 1800, name: "Ginette" },
+            { start: 1800, end: 2330, name: "Hannah" }
+        ],
+        4: [
+            { start: 630, end: 900, name: "Sina" }, //Thursday
+            { start: 1400, end: 1800, name: "Jaci" },
+            { start: 1800, end: 2330, name: "Caro" },
+        ],
+        5: [
+            { start: 630, end: 900, name: "Hannah" }, //Friday
+            { start: 1400, end: 1800, name: "Maxi" },
+            { start: 1800, end: 2330, name: "Henne" }
+        ],
+        6: [
+            { start: 630, end: 2330, name: "Henne" } //Saturday
+        ]
+    };
+
 }
 
 window.onload = function() {
