@@ -21,7 +21,22 @@ body{
 }
 a {
 	cursor: pointer;
+	text-decoration: none;
+	color: #b7b7b7;
 }
+
+i {
+	padding: 5px;
+}
+
+a:active {
+	text-decoration: none;
+}
+
+a:visited {
+	text-decoration: none;
+}
+
 a:hover {
 	text-decoration: none;
 }
