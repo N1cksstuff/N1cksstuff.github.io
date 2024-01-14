@@ -8,7 +8,9 @@ function displayCurrentName() {
     var currentTime = currentDate.getHours() * 100 + currentDate.getMinutes();
 
     var names = {
-        0: { start: 630, end: 2330, name: "Henne" }, //Sunday
+        0:  [
+            { start: 630, end: 2330, name: "Henne" }, //Sunday
+        ],
         1: [
             { start: 630, end: 900, name: "Jaci" }, //Monday
             { start: 1400, end: 1800, name: "Tobias" },
@@ -113,7 +115,9 @@ function displayFullPlanTable() {
 
 function getNames() {
     return {
-          0: { start: 630, end: 2330, name: "Henne" }, //Sunday
+        0:  [
+            { start: 630, end: 2330, name: "Henne" }, //Sunday
+        ],
         1: [
             { start: 630, end: 900, name: "Jaci" }, //Monday
             { start: 1400, end: 1800, name: "Tobias" },
