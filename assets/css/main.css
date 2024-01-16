@@ -391,6 +391,12 @@ text-align: center;
 		100% {color: gold;}
 	}
 
+@keyframes fading {
+		0% {opacity: 1;}
+		50% {opacity: 0.5;}
+		100% {opacity: 1;}
+	}
+	
 .panel .contentWrapper {
 position: absolute;
 top: 0;

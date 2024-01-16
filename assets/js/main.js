@@ -98,6 +98,21 @@
 		textElement.style.transform = "translate(-50%, -50%)";
 
 		element.appendChild(textElement); // Append it to the 'element'
+		
+	}
+		else if (month === 2 && day === 14) {
+			//Valentines day
+			var textElement = document.createElement("Valentine"); // Create a new <p> element
+			textElement.textContent = "Kiss your loved ones! // I love you Alex <3"; // Set its text content
+			textElement.style.color = "red";
+			textElement.style.animation = "fading 5s ease infinite";
+			textElement.style.fontSize = "x-large";
+			textElement.style.position = "absolute";
+			textElement.style.bottom = "90%";
+			textElement.style.left = "50%";
+			textElement.style.transform = "translate(-50%, -50%)";
+
+			element.appendChild(textElement); // Append it to the 'element'
 	} else {
 		// Default
 	}
