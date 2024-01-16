@@ -692,6 +692,7 @@ a .weblink {
 	text-decoration: none;
 
 }
+
 .weblink:hover {
 	color: #dadada;
 	text-decoration: none;
@@ -707,6 +708,16 @@ a .weblink {
 
 .purple:hover {
 	background-color: #2E0D48;
+}
+
+::selection {
+	background: #8167a9;
+	color: #fff;
+}
+
+.hover-target::selection {
+	background: #552c93;
+	color: #fff;
 }
 
 .frosted-pp {
