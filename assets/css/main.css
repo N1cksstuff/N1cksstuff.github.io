@@ -456,7 +456,6 @@ border-radius: 10px;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 text-align: center;
 }
-
 .panel .contentWrapper {
 position: absolute;
 top: 0;
@@ -468,6 +467,7 @@ height: 100%;
 .panel .contentWrapper .textWrapper {
 padding: 2em;
 }
+
 @media only screen and (max-width: 600px) {
 .panel {
     width: 90vw;
@@ -475,9 +475,8 @@ padding: 2em;
 	backdrop-filter: blur(15px);
 	background-color: rgba(13, 13, 13, 0.084);
 }
-
-
 }
+
 @media only screen and (min-height: 600px) {
 
 .panel {
@@ -486,6 +485,7 @@ padding: 2em;
 	backdrop-filter: blur(15px);
 	background-color: rgba(13, 13, 13, 0.084);
 
+}
 }
 
 .nav-but-wrap
@@ -709,3 +709,49 @@ a .weblink {
 .purple:hover {
 	background-color: #2E0D48;
 }
+
+.frosted-pp {
+	color: #dadada;
+	width: 20vw;
+	height: 15vh;
+	position: relative;
+  top: 0vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(15px);
+  background-color: rgba(13, 13, 13, 0.084);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  }
+
+  @media only screen and (max-width: 600px) {
+	.frosted-pp {
+		width: 60vw;
+		height: 20vh;
+		backdrop-filter: blur(15px);
+		background-color: rgba(13, 13, 13, 0.084);
+	}
+	
+
+  .frosted-btn {
+	color: #dadada;
+	width: 40vw;
+	height: 7vh;
+	position: relative;
+  top: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(15px);
+  background-color: rgba(13, 13, 13, 0.084);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  } 
+  }
