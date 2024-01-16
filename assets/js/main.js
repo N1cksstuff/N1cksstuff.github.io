@@ -84,6 +84,18 @@
 		textElement.style.transform = "translate(-50%, -50%)";
 		
 		element.appendChild(textElement); // Append it to the 'element'
+
+	} else if (month === 10 && day === 15) {
+		//Birthday
+		var textElement = document.createElement("Pridemonth"); // Create a new <p> element
+		textElement.textContent = "Happy Birthday to me!"; // Set its text content
+		textElement.style.position = "absolute";
+		textElement.style.bottom = "90%";
+		textElement.style.left = "50%";
+		textElement.style.transform = "translate(-50%, -50%)";
+
+
+
 	} else {
 		// Default
 	}
