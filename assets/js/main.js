@@ -87,15 +87,17 @@
 
 	} else if (month === 10 && day === 15) {
 		//Birthday
-		var textElement = document.createElement("Pridemonth"); // Create a new <p> element
+		var textElement = document.createElement("Birthday"); // Create a new <p> element
 		textElement.textContent = "Happy Birthday to me!"; // Set its text content
+		element.style.color = "white";
+		textElement.style.animation = "flashing 5s ease infinite";
+		textElement.style.fontSize = "x-large";
 		textElement.style.position = "absolute";
 		textElement.style.bottom = "90%";
 		textElement.style.left = "50%";
 		textElement.style.transform = "translate(-50%, -50%)";
 
-
-
+		element.appendChild(textElement); // Append it to the 'element'
 	} else {
 		// Default
 	}

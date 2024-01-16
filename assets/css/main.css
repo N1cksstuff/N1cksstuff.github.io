@@ -382,6 +382,15 @@ text-align: center;
 		100% {background-position: 0% 50%;}
 	}
 
+
+@keyframes flashing {
+		0% {color: rgb(184, 158, 26);}
+		20% {color: rgb(78, 44, 133);}
+		30% {color: red;}
+		60% {color: blue;}
+		100% {color: gold;}
+	}
+
 .panel .contentWrapper {
 position: absolute;
 top: 0;
