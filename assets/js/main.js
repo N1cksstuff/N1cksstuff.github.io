@@ -59,4 +59,33 @@
 		document.getElementById("counter").innerHTML = days;
 	}, 1000);
 
+	//dynamically change website on certain dates
+(function() {
+	var currentDate = new Date();
+	var day = currentDate.getDate();
+	var month = currentDate.getMonth() + 1; // JavaScript months are 0-11
+	var year = currentDate.getFullYear();
+
+	var element = document.getElementById("Panel");
+
+	if (month === 5) {
+		// Pride Month
+		element.style.background = "linear-gradient(45deg, rgba(255,0,0,0.1), rgba(255,165,0,0.1), rgba(255,255,0,0.1), rgba(0,128,0,0.1), rgba(0,0,255,0.1), rgba(75,0,130,0.1), rgba(238,130,238,0.1))";
+		element.style.backgroundSize = "1400% 1400%";
+		element.style.animation = "rainbow 5s ease infinite";
+		element.style.color = "white";
+		var textElement = document.createElement("Pridemonth"); // Create a new <p> element
+		textElement.textContent = "HAPPY PRIDE MONTH!!!"; // Set its text content
+		
+		// Add CSS styles to position the text element
+		textElement.style.position = "absolute";
+		textElement.style.bottom = "90%";
+		textElement.style.left = "50%";
+		textElement.style.transform = "translate(-50%, -50%)";
+		
+		element.appendChild(textElement); // Append it to the 'element'
+	} else {
+		// Default
+	}
+})();
 })(jQuery); 
