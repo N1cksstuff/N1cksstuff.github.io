@@ -351,6 +351,8 @@ body.nav-active .nav__list-item:nth-child(10) {
           transition-delay: 1.7s;
 }
 
+/* Primary style */
+
 .panel {
   color: #dadada;
   width: 50vw;
