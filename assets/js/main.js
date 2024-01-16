@@ -49,4 +49,14 @@
     function o(t) {
         t.addEventListener("mouseover", n), t.addEventListener("mouseout", s)
     } 
+
+	//day counter
+	var countDownDate = new Date("Oct 15, 2006 00:00:00").getTime();
+	var x = setInterval(function() {
+		var now = new Date().getTime();
+		var distance = now - countDownDate;
+		var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		document.getElementById("counter").innerHTML = days;
+	}, 1000);
+
 })(jQuery); 
