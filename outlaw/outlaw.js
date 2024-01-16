@@ -17,7 +17,7 @@ function displayCurrentName() {
             { start: 1800, end: 2330, name: "Benny" }
         ],
         2: [
-            { start: 1000, end: 1400, name: "Maria" }, //Tuesday
+            { start: 630, end: 900, name: "Maria" }, //Tuesday
             { start: 1400, end: 1800, name: "Sina" },
             { start: 1800, end: 2330, name: "Maxi" }
         ],

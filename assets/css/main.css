@@ -382,10 +382,6 @@ text-align: center;
 		100% {background-position: 0% 50%;}
 	}
 
-	#Pridemonth {
-        
-	}
-
 .panel .contentWrapper {
 position: absolute;
 top: 0;
@@ -401,7 +397,7 @@ padding: 2em;
 @media only screen and (max-width: 600px) {
 .panel {
     width: 90vw;
-    height: 210vh;
+    height: 250vh;
 	backdrop-filter: blur(15px);
 	background-color: rgba(13, 13, 13, 0.084);
 }
@@ -411,7 +407,7 @@ padding: 2em;
 
 .panel {
     width: 90vw;
-    height: 125vh;
+    height: 130vh;
 	backdrop-filter: blur(15px);
 	background-color: rgba(13, 13, 13, 0.084);
 
@@ -429,7 +425,7 @@ padding: 2em;
 
 .panel {
     width: 90vw;
-    height: 100vh;
+    height: 120vh;
 	backdrop-filter: blur(15px);
     background-color: rgba(13, 13, 13, 0.084);
 
@@ -440,7 +436,7 @@ padding: 2em;
 
 .panel {
     width: 90vw;
-    height: 100vh;
+    height: 110vh;
 	backdrop-filter: blur(15px);
 	background-color: rgba(13, 13, 13, 0.084);
 }
