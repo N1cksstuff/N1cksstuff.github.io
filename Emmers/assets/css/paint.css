@@ -1,0 +1,36 @@
+body {
+    font-family: 'Anaheim', sans-serif;
+    padding: 0;
+    margin: 0;
+    background: #f7f6f2;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#message {
+    color: #e2e2de;
+    font-size: 32px;
+    text-align: center;
+    letter-spacing: 2px;
+    position: fixed;
+    top: 50%;
+    z-index: 0;
+    width: 100%;
+    margin-top: -0.5em;
+    text-shadow: 0 -1px 0 #d3d3d1;
+}
+
+.dg.ac {
+    z-index: 2;
+}

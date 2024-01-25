@@ -19,7 +19,6 @@ body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 1.2rem;
-    overflow: hidden;
   }
   
 
@@ -72,10 +71,11 @@ body {
   text-align: center;
   position: absolute;
   left: 50%;
-  top: 30%;
+  top: 90%;
   transform: translate(-50%,-50%) scale(1);
-  opacity: 0.5;
   transition: all 0.5s ease-in-out;
+  font-size: large;
+  color: white;
 }
 
 
