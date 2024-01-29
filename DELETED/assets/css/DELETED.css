@@ -697,9 +697,24 @@ a:hover {
     }
     .main-content {
 
-        margin-top: 35%;
+        margin-top: 30%;
         left: 48.5%; /* Adjust this line */
         overflow-y: hidden;
+    }
+
+    .main-content-wrap {
+        position: absolute;
+        top: 50%;
+        left: 48.5%; /* Adjust this line */
+        z-index: 10;
+        transform: translate(-50%, 20%); /* Adjust this line */
+        width: 80%;
+        -webkit-transition: all 500ms linear;
+        transition: all 500ms linear;
+        margin: 0 auto;
+        text-align: center;
+        z-index: 100;
+        margin-top: -80px;
     }
 }
 
