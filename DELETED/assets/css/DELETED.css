@@ -41,8 +41,13 @@ h1 {
 }
 
 .fontawesome {
-    font-weight: 900;
-    color: #505050;
+    font-family: 'Font Awesome 5 Free';
+    top: 10%;
+    position: absolute;
+}
+
+.fontawesome-mobile {
+    font-family: 'Font Awesome 5 Free';
 }
 /* #Primary style
 ================================================== */
