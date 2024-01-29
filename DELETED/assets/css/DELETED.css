@@ -27,7 +27,7 @@ h1 {
     font-size: 3.5rem;
     font-weight: 900;
     line-height: 1.2;
-    color: #fff;
+    color: #ffffff !important; 
     margin-bottom: 1rem;
 }
 
@@ -79,15 +79,6 @@ h1 {
 
 .logo-wrap a:hover {
     opacity: 0.9;
-}
-
-.nav-but-wrap {
-    position: relative;
-    display: inline-block;
-    padding-left: 15px;
-    padding-top: 15px;
-    margin-top: 26px;
-    transition: all 0.3s ease-out;
 }
 
 .centered-top {
@@ -209,6 +200,7 @@ h1 {
     width: 100%;
     top: 0;
     left: 0;
+    overflow: hidden;
 }
 
   .navbar-desktop ul {
