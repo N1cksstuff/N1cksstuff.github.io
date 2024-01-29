@@ -242,7 +242,7 @@ h1 {
     border-radius: 4px;
     z-index: 300;
     left: 7%;
-}
+    }
 
 .dropdown-content::before {
     content: "";
@@ -267,6 +267,9 @@ h1 {
     visibility: visible;
 }
   
+.active {
+    color: #bfbfbf !important;
+}
 /* Menu ONLY DESKTOP /// END */
 
 
