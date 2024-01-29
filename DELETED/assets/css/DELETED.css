@@ -45,6 +45,7 @@ h1 {
     color: #505050;
 }
 
+
 /* Social Media Links 
 
 a {
@@ -642,7 +643,7 @@ a:hover {
 /* Menu ONLY MOBILE /// End*/
 
 /* mobile styled */
-@media (max-width: 958px) {
+@media (max-width: 768px) {
     .navbar-desktop {
         display: none;
     }
@@ -692,7 +693,7 @@ a:hover {
         border-bottom: 2px solid rgb(92, 92, 92);
         width: 100%;
         z-index: 0;
-        bottom: -8%; /* Adjust this value as needed */
+        bottom: -6.5%; /* Adjust this value as needed */
     }
 
 }
