@@ -553,19 +553,19 @@ h1 {
 
     
     .logo-wrap-right img {
-        width: 120px;
+        width: 90px;
         height: auto;
         rotate: 60deg;
-        margin-top: -35px;
+        margin-top: -10px;
         margin-right: 25px;
     }
     
     
     .logo-wrap-left img {
-        width: 120px;
+        width: 90px;
         height: auto;
         rotate: 3deg;
-        margin-top: -35px;
+        margin-top: -10px;
         margin-left: -10px;
     }
 
@@ -613,7 +613,7 @@ h1 {
         margin: 0 auto;
         text-align: center;
         z-index: 100;
-        margin-top: -70px; /* Makes the scroll-area of maincontent bigger/smaller  */
+        margin-top: -10px; /* Makes the scroll-area of maincontent bigger/smaller  */
     }
 }
 
