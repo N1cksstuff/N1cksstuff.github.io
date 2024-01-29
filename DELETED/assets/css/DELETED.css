@@ -698,7 +698,7 @@ a:hover {
 }
 
 /* desktop styles */
-@media (min-width: 769px) {
+@media (min-width: 950px) {
     .navbar-mobile {
         display: none;
     }
