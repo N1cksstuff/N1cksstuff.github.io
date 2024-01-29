@@ -695,7 +695,12 @@ a:hover {
         z-index: 0;
         bottom: -6.5%; /* Adjust this value as needed */
     }
+    .main-content {
 
+        margin-top: 10%;
+        left: 48.5%; /* Adjust this line */
+        overflow-y: hidden;
+    }
 }
 
 /* desktop styles */
