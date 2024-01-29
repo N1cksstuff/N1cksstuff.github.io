@@ -642,7 +642,7 @@ a:hover {
 /* Menu ONLY MOBILE /// End*/
 
 /* mobile styled */
-@media (max-width: 768px) {
+@media (max-width: 958px) {
     .navbar-desktop {
         display: none;
     }
@@ -698,7 +698,7 @@ a:hover {
 }
 
 /* desktop styles */
-@media (min-width: 950px) {
+@media (min-width: 769px) {
     .navbar-mobile {
         display: none;
     }
