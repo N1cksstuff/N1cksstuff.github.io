@@ -117,7 +117,7 @@ h1 {
     left: 92%;
     bottom: 0;
     width: 2px; /* Set width instead of border */
-    height: 850px; /* Adjust as needed */
+    height: 1050px; /* Adjust as needed */
     background: linear-gradient(to bottom, #000000 10%, #494949 100%);
 }
 
@@ -127,7 +127,7 @@ h1 {
     left: 6%;
     bottom: 0;
     width: 2px; /* Set width instead of border */
-    height: 850px; /* Adjust as needed */
+    height: 1050px; /* Adjust as needed */
     background: linear-gradient(to bottom, #000000 10%, #494949 100%);
 }
 /* #Navigation
