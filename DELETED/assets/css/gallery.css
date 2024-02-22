@@ -201,5 +201,6 @@ table {
     }
     .list-container {
         display: block;
+        overflow: auto;
     }
 }
