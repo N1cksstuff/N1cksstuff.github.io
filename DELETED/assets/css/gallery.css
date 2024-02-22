@@ -154,7 +154,7 @@ table {
     width: 90%;
     left: 50%;
     transform: translate(-50%, -50%);
-    margin-top: 15rem;
+    margin-top: 5rem;
     height: 66vh;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
