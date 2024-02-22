@@ -8,6 +8,25 @@
     
 }
 
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#loading-gif {
+    max-width: 50%;
+    max-height: 50%;
+}
+
 * {
     font-family: 'DELETED'; 
 }
@@ -624,3 +643,20 @@ h1 {
     }
 }
 
+
+.privacy {
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+    color: #a9a9a9;
+    background-color: #000000;
+    z-index: 100;
+}
+
+.link {
+   background-color: #9765f4;
+}
+
+.purple {
+    color: #9765f4;
+}

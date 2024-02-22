@@ -1,0 +1,134 @@
+.main-content {
+    padding: 0;
+    margin: 0;
+}
+
+
+td {
+    position: relative; /* This is needed to contain the absolute positioned child */
+    width: auto;
+    height: 0rem;
+    border: 1px solid rgb(88, 88, 88);
+
+}
+
+table {
+    width: 100%;
+    height: 100%;
+    table-layout: fixed; /* This makes the columns of equal width */
+    margin-left: 0%; 
+    margin-top: 2%; 
+    border-collapse: collapse; /* This makes the borders between cells collapse into a single line */
+    border: 1px solid rgb(88, 88, 88);
+    overflow: hidden;
+    box-sizing: border-box; /* This ensures that the width includes any padding or border */
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.gallery-item {
+    box-shadow: 0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 400ms ease-in-out, filter 400ms ease-in-out;
+    cursor: zoom-in;
+}
+
+.gallery-image {
+    max-width: 90%;
+    max-height: 90%;
+    filter: blur(9px);
+    transition: transform 400ms ease-in-out;
+}
+
+.gallery-item:hover {
+    transform: scale(1.50);
+    filter: blur(0);
+}
+
+.gallery-image:hover {
+    filter: blur(0);
+}
+
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(255, 255, 255);
+    filter: blur(-9px); /* This should be the negative of the blur applied to .gallery-item */
+}
+
+.gallery-item:hover .overlay-text {
+    display: block;
+    display: none;
+}
+
+
+
+
+
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 30%;
+    max-width: 700px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .gallery {
+        width: 100%;
+        margin-left: -1%
+    }
+}
