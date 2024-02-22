@@ -144,7 +144,7 @@ table {
 }
 
 .scrollable-list {
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 /* Hide the list by default */
