@@ -145,13 +145,12 @@ table {
 
 .scrollable-list {
     overflow-y: auto;
-    margin-bottom: 20%;
 }
 
 /* Hide the list by default */
 .list-container {
     display: none;
-    position: fixed;
+    position: relative;
     width: 90%;
     left: 50%;
     transform: translate(-50%, -50%);
