@@ -202,5 +202,6 @@ table {
     .list-container {
         display: block;
         overflow: auto;
+        margin-top: 10rem;
     }
 }
