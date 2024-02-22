@@ -23,6 +23,11 @@ window.onload = function() {
         var modal = document.getElementById("myModal");
         var mainContent = document.getElementById("main-content"); // Get the main content
         modal.style.display = "none";
-        mainContent.style.filter = "none"; // Remove the blur
+    }
+    window.onload = function() {
+        if (window.innerWidth <= 800) {
+            var table = document.querySelector('.table-container');
+            table.parentNode.removeChild(table);
+        }
     }
 }
