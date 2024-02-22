@@ -203,7 +203,7 @@ table {
         display: block;
         overflow: auto;
         margin-top: 19rem;
-        margin-bottom: auto;
+        margin-bottom: -10rem;
         height: 70vh;
     }
 }
