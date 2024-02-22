@@ -202,7 +202,7 @@ table {
     .list-container {
         display: block;
         overflow: auto;
-        margin-top: 15rem;
+        margin-top: 19rem;
         height: 66vh;
     }
 }
