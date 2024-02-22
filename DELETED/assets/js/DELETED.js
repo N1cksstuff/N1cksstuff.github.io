@@ -15,7 +15,6 @@ window.onload = function() {
         var mainContent = document.getElementById("main-content"); // Get the main content
         modal.style.display = "block";
         modalImg.src = src;
-        mainContent.style.filter = "blur(2px)"; // Blur the main content
     }
     
     var span = document.getElementsByClassName("close")[0];
