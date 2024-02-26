@@ -148,7 +148,7 @@ table {
     width: 90%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 50%;
+    height: 100%;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     z-index: 1;
