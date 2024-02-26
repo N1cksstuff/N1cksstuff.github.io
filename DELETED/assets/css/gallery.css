@@ -148,7 +148,7 @@ table {
     width: 90%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 66vh;
+    height: 80vh;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     z-index: 1;
@@ -176,15 +176,9 @@ table {
     padding: 0; /* Remove the default list padding */
     width: 100%; /* Adjust as needed */
     max-width: 600px; /* Adjust as needed */
-    margin: 0 auto; /* Center the list */
     background: #000000; /* Add a background color */
     border-radius: 10px; /* Round the corners */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a shadow */
-}
-
-/* Remove the border from the last item */
-.list-container li:last-child {
-    border-bottom: none;
 }
 
 /* On small screens, hide the table and show the list */
@@ -195,7 +189,7 @@ table {
     .list-container {
         display: block;
         overflow: auto;
-        margin-top: 10rem;
+        margin-top: 19rem;
         height: 70vh;
     }
 }
