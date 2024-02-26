@@ -195,7 +195,7 @@ table {
     .list-container {
         display: block;
         overflow: auto;
-        margin-top: 19rem;
+        margin-top: 10rem;
         height: 70vh;
     }
 }
