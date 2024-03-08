@@ -9,35 +9,35 @@ function displayCurrentName() {
 
     var names = {
         0:  [
-            { start: 630, end: 2330, name: "Ginette" }, //Sunday
+            { start: 1400, end: 2330, name: "Jaci" }, //Sunday
         ],
         1: [
             { start: 630, end: 900, name: "Tobias" }, //Monday
-            { start: 1400, end: 1800, name: "Jaci" },
-            { start: 1800, end: 2330, name: "Benny" }
-        ],
-        2: [
-            { start: 630, end: 900, name: "Maria" }, //Tuesday
             { start: 1400, end: 1800, name: "Sina" },
             { start: 1800, end: 2330, name: "Maxi" }
         ],
-        3: [
-            { start: 1000, end: 1400, name: "Edwin" }, //Wednesday
+        2: [
+            { start: 630, end: 900, name: "Benny" }, //Tuesday
             { start: 1400, end: 1800, name: "Maria" },
+            { start: 1800, end: 2330, name: "Ginette" }
+        ],
+        3: [
+            { start: 1000, end: 1400, name: "Caro" }, //Wednesday
+            { start: 1400, end: 1800, name: "Henne" },
             { start: 1800, end: 2330, name: "Hannah" }
         ],
         4: [
-            { start: 630, end: 900, name: "Maxi" }, //Thursday
-            { start: 1400, end: 1800, name: "Henne" },
-            { start: 1800, end: 2330, name: "Sina" },
+            { start: 630, end: 900, name: "Ginette" }, //Thursday
+            { start: 1400, end: 1800, name: "Benny" },
+            { start: 1800, end: 2330, name: "Tobias" },
         ],
         5: [
-            { start: 630, end: 900, name: "Tobias" }, //Friday
-            { start: 1400, end: 1800, name: "Anna ( RB bis 22:00 )" },
-            { start: 1800, end: 2330, name: "Ginette" }
+            { start: 630, end: 900, name: "Sina" }, //Friday
+            { start: 1400, end: 1800, name: "Anna" },
+            { start: 1800, end: 2330, name: "Jaci" }
         ],
         6: [
-            { start: 630, end: 2330, name: "Ginette" } //Saturday
+            { start: 1400, end: 2330, name: "Jaci" } //Saturday
         ]
     };
 
@@ -116,35 +116,35 @@ function displayFullPlanTable() {
 function getNames() {
     return {
         0:  [
-            { start: 630, end: 2330, name: "Ginette" }, //Sunday
+            { start: 1400, end: 2330, name: "Jaci" }, //Sunday
         ],
         1: [
             { start: 630, end: 900, name: "Tobias" }, //Monday
-            { start: 1400, end: 1800, name: "Jaci" },
-            { start: 1800, end: 2330, name: "Benny" }
-        ],
-        2: [
-            { start: 1000, end: 1400, name: "Maria" }, //Tuesday
             { start: 1400, end: 1800, name: "Sina" },
             { start: 1800, end: 2330, name: "Maxi" }
         ],
-        3: [
-            { start: 1000, end: 1400, name: "Edwin" }, //Wednesday
+        2: [
+            { start: 630, end: 900, name: "Benny" }, //Tuesday
             { start: 1400, end: 1800, name: "Maria" },
+            { start: 1800, end: 2330, name: "Ginette" }
+        ],
+        3: [
+            { start: 1000, end: 1400, name: "Caro" }, //Wednesday
+            { start: 1400, end: 1800, name: "Henne" },
             { start: 1800, end: 2330, name: "Hannah" }
         ],
         4: [
-            { start: 630, end: 900, name: "Maxi" }, //Thursday
-            { start: 1400, end: 1800, name: "Henne" },
-            { start: 1800, end: 2330, name: "Sina" },
+            { start: 630, end: 900, name: "Ginette" }, //Thursday
+            { start: 1400, end: 1800, name: "Benny" },
+            { start: 1800, end: 2330, name: "Tobias" },
         ],
         5: [
-            { start: 630, end: 900, name: "Tobias" }, //Friday
-            { start: 1400, end: 1800, name: "Anna ( RB bis 22:00 )" },
-            { start: 1800, end: 2330, name: "Ginette" }
+            { start: 630, end: 900, name: "Sina" }, //Friday
+            { start: 1400, end: 1800, name: "Anna" },
+            { start: 1800, end: 2330, name: "Jaci" }
         ],
         6: [
-            { start: 630, end: 2330, name: "Ginette" } //Saturday
+            { start: 1400, end: 2330, name: "Jaci" } //Saturday
         ]
     };
 
