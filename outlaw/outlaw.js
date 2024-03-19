@@ -9,37 +9,38 @@ function displayCurrentName() {
 
     var names = {
         0:  [
-            { start: 1400, end: 2330, name: "Jaci" }, //Sunday
+            { start: 1400, end: 2330, name: "Maxi" }, //Sunday
         ],
         1: [
-            { start: 630, end: 900, name: "Tobias" }, //Monday
-            { start: 1400, end: 1800, name: "Sina" },
-            { start: 1800, end: 2330, name: "Maxi" }
+            { start: 630, end: 900, name: "Maria" }, //Monday
+            { start: 1400, end: 1800, name: "Benny" },
+            { start: 1800, end: 2330, name: "Henne" }
         ],
         2: [
-            { start: 630, end: 900, name: "Benny" }, //Tuesday
-            { start: 1400, end: 1800, name: "Maria" },
+            { start: 630, end: 900, name: "Caro" }, //Tuesday
+            { start: 1400, end: 1800, name: "Maxi + Melanie" },
             { start: 1800, end: 2330, name: "Ginette" }
         ],
         3: [
-            { start: 1000, end: 1400, name: "Caro" }, //Wednesday
-            { start: 1400, end: 1800, name: "Henne" },
-            { start: 1800, end: 2330, name: "Hannah" }
+            { start: 1000, end: 1400, name: "Henne" }, //Wednesday
+            { start: 1400, end: 1800, name: "Sina + Anna + Melanie" },
+            { start: 1800, end: 2330, name: "Maria" }
         ],
         4: [
-            { start: 630, end: 900, name: "Ginette" }, //Thursday
-            { start: 1400, end: 1800, name: "Benny" },
+            { start: 630, end: 900, name: "Benny + Melanie" }, //Thursday
+            { start: 1400, end: 1800, name: "Caro" },
             { start: 1800, end: 2330, name: "Tobias" },
         ],
         5: [
             { start: 630, end: 900, name: "Sina" }, //Friday
             { start: 1400, end: 1800, name: "Anna" },
-            { start: 1800, end: 2330, name: "Jaci" }
+            { start: 1800, end: 2330, name: "Henne" }
         ],
         6: [
-            { start: 1400, end: 2330, name: "Jaci" } //Saturday
+            { start: 1400, end: 2330, name: "ZWK + RB + SD: Anna" } //Saturday
         ]
     };
+
 
     var currentNames = names[currentDay];
 
@@ -116,35 +117,35 @@ function displayFullPlanTable() {
 function getNames() {
     return {
         0:  [
-            { start: 1400, end: 2330, name: "Jaci" }, //Sunday
+            { start: 1400, end: 2330, name: "Maxi" }, //Sunday
         ],
         1: [
-            { start: 630, end: 900, name: "Tobias" }, //Monday
-            { start: 1400, end: 1800, name: "Sina" },
-            { start: 1800, end: 2330, name: "Maxi" }
+            { start: 630, end: 900, name: "Maria" }, //Monday
+            { start: 1400, end: 1800, name: "Benny" },
+            { start: 1800, end: 2330, name: "Henne" }
         ],
         2: [
-            { start: 630, end: 900, name: "Benny" }, //Tuesday
-            { start: 1400, end: 1800, name: "Maria" },
+            { start: 630, end: 900, name: "Caro" }, //Tuesday
+            { start: 1400, end: 1800, name: "Maxi + Melanie" },
             { start: 1800, end: 2330, name: "Ginette" }
         ],
         3: [
-            { start: 1000, end: 1400, name: "Caro" }, //Wednesday
-            { start: 1400, end: 1800, name: "Henne" },
-            { start: 1800, end: 2330, name: "Hannah" }
+            { start: 1000, end: 1400, name: "Henne" }, //Wednesday
+            { start: 1400, end: 1800, name: "Sina + Anna + Melanie" },
+            { start: 1800, end: 2330, name: "Maria" }
         ],
         4: [
-            { start: 630, end: 900, name: "Ginette" }, //Thursday
-            { start: 1400, end: 1800, name: "Benny" },
+            { start: 630, end: 900, name: "Benny + Melanie" }, //Thursday
+            { start: 1400, end: 1800, name: "Caro" },
             { start: 1800, end: 2330, name: "Tobias" },
         ],
         5: [
             { start: 630, end: 900, name: "Sina" }, //Friday
             { start: 1400, end: 1800, name: "Anna" },
-            { start: 1800, end: 2330, name: "Jaci" }
+            { start: 1800, end: 2330, name: "Henne" }
         ],
         6: [
-            { start: 1400, end: 2330, name: "Jaci" } //Saturday
+            { start: 1400, end: 2330, name: "ZWK + RB + SD: Anna" } //Saturday
         ]
     };
 
