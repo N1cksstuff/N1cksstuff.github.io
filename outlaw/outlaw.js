@@ -1,185 +1,32 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Display current name based on schedule
-    displayCurrentName();
+document.querySelector('.user-menu-icon').addEventListener('click', function() {
+    var menuContent = document.querySelector('.user-menu-content');
+    menuContent.classList.add('animate__fadeIn');
+    var userMenu = document.querySelector('.user-menu-icon');
+    menuContent.classList.toggle('show');
+    userMenu.classList.toggle('hidden');
+}); 
+// show user menu, hide user icon
 
-function displayCurrentName() {
-    var currentDate = new Date();
-    var currentDay = currentDate.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
-    var currentTime = currentDate.getHours() * 100 + currentDate.getMinutes();
+document.querySelector('.close-user-menu').addEventListener('click', function() {
+    var menuContent = document.querySelector('.user-menu-content');
+    var userMenu = document.querySelector('.user-menu-icon');
+    menuContent.classList.remove('show');
+    userMenu.classList.remove('hidden');
+}); 
+// hide user menu, show user icon
 
-    var names = {
-        0:  [
-            { start: 1400, end: 2330, name: "Benny" }, //Sunday
-        ],
-        1: [
-            { start: 630, end: 900, name: "Ginette" }, //Monday
-            { start: 1400, end: 1800, name: "Caro" },
-            { start: 1800, end: 2330, name: "Tobias/Melanie" }
-        ],
-        2: [
-            { start: 630, end: 900, name: "Caro" }, //Tuesday
-            { start: 1400, end: 1800, name: "Anna/Tobias" },
-            { start: 1800, end: 2330, name: "Maxi" }
-        ],
-        3: [
-            { start: 1000, end: 1400, name: "Sina" }, //Wednesday
-            { start: 1400, end: 1800, name: "Maxi" },
-            { start: 1800, end: 2330, name: "Anna" }
-        ],
-        4: [
-            { start: 630, end: 900, name: "Anna/Melanie" }, //Thursday
-            { start: 1400, end: 1800, name: "Maxi" },
-            { start: 1800, end: 2330, name: "Ginette ab 22:00" },
-        ],
-        5: [
-            { start: 630, end: 900, name: "Ginette" }, //Friday
-            { start: 1400, end: 1800, name: "Ginette" },
-            { start: 1800, end: 2330, name: "Ginette" }
-        ],
-        6: [
-            { start: 1400, end: 2330, name: "Benny" } //Saturday
-        ]
-    };
+//LOGIN FORM
 
+document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    var currentNames = names[currentDay];
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
 
-    if (currentNames) {
-        var currentName = findCurrentName(currentNames, currentTime);
-        if (currentName) {
-            document.getElementById("greetingMessage").innerText = "Gerade im Dienst ist: " + currentName;
-        } else {
-            document.getElementById("greetingMessage").innerText = "Niemand im Haus / Keine Plandaten vorhanden";
-        }
+   
+    if (username === 'Nick' && password === '1312') {
+        window.location.href = 'users/Nick.html'; 
     } else {
-        document.getElementById("greetingMessage").innerText = "Keine Plandaten, bitte Nick schreiben! Email: Nickdoesstuff@proton.me";
-    }
-}
-
-function findCurrentName(schedule, currentTime) {
-    for (var i = 0; i < schedule.length; i++) {
-        if (currentTime >= schedule[i].start && currentTime <= schedule[i].end) {
-            return schedule[i].name;
-        }
-    }
-    return null;
-}
-})
-
-function findCurrentName(schedule, currentTime) {
-    for (var i = 0; i < schedule.length; i++) {
-        if (currentTime >= schedule[i].start && currentTime <= schedule[i].end) {
-            return schedule[i].name;
-        }
-    }
-    return null;
-}
-
-function formatTime(time) {
-    var hours = Math.floor(time / 100);
-    var minutes = time % 100;
-
-    if (hours < 10) hours = '0' + hours;
-    if (minutes < 10) minutes = '0' + minutes;
-
-    return hours + ':' + minutes;
-}
-
-function displayFullPlanTable() {
-    var currentDate = new Date();
-    var currentDay = currentDate.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
-
-    var names = getNames();
-    var fullPlanTable = document.getElementById("fullPlanTable");
-    var tableHtml = '<table>';
-
-    var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-    Object.keys(names).forEach(function(day) {
-        var dayName = dayNames[day];
-        var currentDayNames = names[day];
-        if (!Array.isArray(currentDayNames)) {
-            currentDayNames = [currentDayNames];
-        }
-
-        currentDayNames.forEach(function(name) {
-            var startTime = formatTime(name.start);
-            var endTime = formatTime(name.end);
-            var rowClass = day == currentDay ? ' class="current-day"' : '';
-            tableHtml += '<tr' + rowClass + '><td>' + dayName + '</td><td>' + startTime + '-' + endTime + '</td><td>' + name.name + '</td></tr>';
-        });
-    });
-
-    tableHtml += '</table>';
-    fullPlanTable.innerHTML = tableHtml;
-}
-
-function getNames() {
-    return {
-        0:  [
-            { start: 1400, end: 2330, name: "Benny" }, //Sunday
-        ],
-        1: [
-            { start: 630, end: 900, name: "Ginette" }, //Monday
-            { start: 1400, end: 1800, name: "Caro" },
-            { start: 1800, end: 2330, name: "Tobias/Melanie" }
-        ],
-        2: [
-            { start: 630, end: 900, name: "Caro" }, //Tuesday
-            { start: 1400, end: 1800, name: "Anna/Tobias" },
-            { start: 1800, end: 2330, name: "Maxi" }
-        ],
-        3: [
-            { start: 1000, end: 1400, name: "Sina" }, //Wednesday
-            { start: 1400, end: 1800, name: "Maxi" },
-            { start: 1800, end: 2330, name: "Anna" }
-        ],
-        4: [
-            { start: 630, end: 900, name: "Anna/Melanie" }, //Thursday
-            { start: 1400, end: 1800, name: "Maxi" },
-            { start: 1800, end: 2330, name: "Ginette ab 22:00" },
-        ],
-        5: [
-            { start: 630, end: 900, name: "Ginette" }, //Friday
-            { start: 1400, end: 1800, name: "Ginette" },
-            { start: 1800, end: 2330, name: "Ginette" }
-        ],
-        6: [
-            { start: 1400, end: 2330, name: "Benny" } //Saturday
-        ]
-    };
-
-
-}
-
-window.onload = function() {
-    var fullPlanTable = document.getElementById("fullPlanTable");
-    var otherElement = document.getElementById("otherElement");
-
-    // Hide the table and show the other element initially
-    fullPlanTable.style.display = "none";
-    otherElement.style.display = "block";
-
-    // Display current name based on schedule
-    displayFullPlanTable();
-}
-
-window.addEventListener("scroll", function () {
-    var fullPlanTable = document.getElementById("fullPlanTable");
-    var otherElement = document.getElementById("otherElement");
-    var currentNameSection = document.getElementById("currentNameSection");
-
-    var isScrolled = currentNameSection.classList.contains("scrolled");
-
-    if (window.scrollY > window.innerHeight / 2 && !isScrolled) {
-        // Show the table and hide the other element when scrolling down
-        fullPlanTable.style.display = "block";
-        otherElement.style.display = "none";
-        currentNameSection.classList.add("scrolled");
-    } else if (window.scrollY <= window.innerHeight / 2 && isScrolled) {
-        // Hide the table and show the other element when scrolling up
-        fullPlanTable.style.display = "none";
-        otherElement.style.display = "block";
-        currentNameSection.classList.remove("scrolled");
+        alert('Invalid username or password');
     }
 });

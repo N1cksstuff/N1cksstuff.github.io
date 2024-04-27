@@ -3,33 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWETSCHKE PLAN</title>
-    <link rel="stylesheet" href="/outlaw/outlaw.css">
+    <title>outplanlaw</title>
     <script src="https://kit.fontawesome.com/5b18481055.js" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="outlaw.css">
+    <script src="outlaw.js" defer></script>
+    <!-- Add your meta tags here -->
 </head>
-<body>
-   <div class="ad">
-    <i class="fas fa-mouse-pointer fa-flip-horizontal"></i> <a href="https://nickowo.me"target=blank_> Made with <i class="fas fa-heart"></i> by Nick </a> <br>
-    <i class="fas fa-mouse-pointer fa-flip-horizontal"></i> <a href="https://github.com/N1cksstuff/N1cksstuff.github.io"target=blank_> Open source! :) <i class="fab fa-github-square"></i></a>
-    </div> 
-    PlanData from: 25-31.3.24
-    <div id="currentNameSection" class="section">
-        <div id="greetingContainer">
-            <div id="otherElement"> 
-            <div id="greetingMessage"></div>
+    <nav>
+        <i class="far fa-user-circle user-menu-icon"></i>
+        <div class="user-menu-content">
+        <i class="fas fa-xmark close-user-menu"></i>
+        <ul>
+            <li> <i class="fas fa-home list-icon"></i><a href="#">Home</a></li>
+            <li><i class="fas fa-user-cog list-icon"></i><a href="#">Account</a></li>
+            <li><i class="far fa-calendar list-icon"></i><a href="#">Kalendar</a></li>
+            <li><i class="far fa-copyright list-icon"></i>Nick Eckstein</li>
+        </ul>
         </div>
-    </div>
+    </nav>
+    <body>
 
-</div>
+    <main>
+    
+        <h1 class="top-center">Outlaw</h1>
 
+        <login>
 
+            <form id="login-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            
+                <input class="submit" type="submit" value="Login">
+            </form>
 
-    <div id="fullPlanSection" class="section">
-        <table id="fullPlanTable">
-        </table>
-    </div>
-<script defer src="/outlaw/outlaw.js"></script>
+        </login>
+    
+    </main>
+
+    <footer>
+        <!-- Add your footer content here -->
+    </footer>
 </body>
-
 </html>
