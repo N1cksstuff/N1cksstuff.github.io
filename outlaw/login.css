@@ -1,6 +1,5 @@
 * {
     text-decoration: none;
-    color: inherit;
 }
 
 body {
@@ -47,7 +46,7 @@ nav { /* This is the navbar */
 }
 
 .user-menu-content.show { /* This is the dropdown menu, shown, main styles here */
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     float: right;
@@ -112,7 +111,7 @@ form {
     flex-direction: column;
     width: 200px;
     margin: auto;
-    color: #ffffff;
+    color: black;
 }
 
 label {
@@ -121,7 +120,7 @@ label {
 
 input[type="text"], input[type="password"] {
     margin-bottom: 10px;
-    color: #000000;
+    color: black;
 }
 
 .submit {
