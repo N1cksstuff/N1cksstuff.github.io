@@ -1,4 +1,27 @@
-(function($) { "use strict";
+document.addEventListener('DOMContentLoaded', () => {
+    const interBubble = document.querySelector('.interactive');
+    let curX = 0;
+    let curY = 0;
+    let tgX = 0;
+    let tgY = 0;
+  
+    const move = () => {
+      curX += (tgX - curX) / 20;
+      curY += (tgY - curY) / 20;
+      interBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+      requestAnimationFrame(move);
+    };
+  
+    window.addEventListener('mousemove', event => {
+      tgX = event.clientX;
+      tgY = event.clientY;
+    });
+  
+    move();
+  });
+  
+  
+  (function($) { "use strict";
 	//Navigation
 
 	var app = function () {
@@ -22,34 +45,6 @@
 		init();
 	}();
 
-
-	//Page cursors
-
-    document.getElementsByTagName("body")[0].addEventListener("mousemove", function(n) {
-        t.style.left = n.clientX + "px", 
-		t.style.top = n.clientY + "px", 
-		e.style.left = n.clientX + "px", 
-		e.style.top = n.clientY + "px", 
-		i.style.left = n.clientX + "px", 
-		i.style.top = n.clientY + "px"
-    });
-    var t = document.getElementById("cursor"),
-        e = document.getElementById("cursor2"),
-        i = document.getElementById("cursor3");
-    function n(t) {
-        e.classList.add("hover"), i.classList.add("hover")
-    }
-    function s(t) {
-        e.classList.remove("hover"), i.classList.remove("hover")
-    }
-    s();
-    for (var r = document.querySelectorAll(".hover-target"), a = r.length - 1; a >= 0; a--) {
-        o(r[a])
-    }
-    function o(t) {
-        t.addEventListener("mouseover", n), t.addEventListener("mouseout", s)
-    } 
-
 	//day counter
 	var countDownDate = new Date("Oct 15, 2006 00:00:00").getTime();
 	var x = setInterval(function() {
@@ -62,4 +57,7 @@
 
 })();
 
+
+
 (jQuery); 
+
