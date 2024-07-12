@@ -382,7 +382,8 @@ body.nav-active .nav__list-item:nth-child(10) {
     font-weight: 400;
     letter-spacing: 1px;
     text-decoration: none;
-    overflow: hidden;
+    overflow-x:hidden;
+    overflow-y: auto;
     transition: all .3s ease-in-out;
     backdrop-filter: blur(15px)
 }
