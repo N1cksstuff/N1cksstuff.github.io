@@ -20,7 +20,9 @@ circle{
   100% {
     transform:  rotateZ(-20deg) rotateX(35deg) rotateY(var(--end))
   }
+
 }
+
 body {
   background: hsl(200, 10%, 10%);
   display: flex; 
