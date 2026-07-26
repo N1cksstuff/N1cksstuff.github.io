@@ -3,34 +3,662 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Nickowo</title>
-  <link rel="stylesheet" href="/assets/css/main.css">
-  <script src="https://kit.fontawesome.com/5b18481055.js" crossorigin="anonymous"></script>
-  <link rel="icon" href="/assets/img/favicon.png" type="image/png" sizes="16x16">
+  <title>Spiral Galaxy</title>
+  <style>
+    :root {
+      font-family: Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffb0f5;
+      color: #1d1d1d;
+      font-size: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      background-color: #ffb0f5;
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
+      background-size: 24px 24px;
+      overflow-x: hidden;
+      position: relative;
+      padding-bottom: 64px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 1px, transparent 1px, transparent 8px);
+      pointer-events: none;
+    }
+
+    .desktop {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 24px 0;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 16px;
+      align-items: start;
+      position: relative;
+    }
+
+    .icon-panel {
+      display: grid;
+      gap: 10px;
+      background: #ffffff;
+      border: 3px solid #d781d7;
+      box-shadow: 10px 10px 0 #b85ab8;
+      padding: 14px;
+    }
+
+    .icon-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: #fff7ff;
+      border: 2px solid #bc71c8;
+      color: #421f3f;
+      font-weight: 700;
+      text-transform: none;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .icon-item.active,
+    .icon-item:hover {
+      background: #f5e1ff;
+      border-color: #8c3b94;
+      color: #2d0b35;
+    }
+
+    .icon-item::before {
+      content: '';
+      width: 30px;
+      height: 30px;
+      border: 2px solid #a13a9c;
+      background: #fff;
+      display: inline-block;
+    }
+
+    .icon-item:nth-child(1)::before { background: linear-gradient(135deg, #ffbbf2 0%, #ff9de5 100%); }
+    .icon-item:nth-child(2)::before { background: linear-gradient(135deg, #b8ecff 0%, #74c8ff 100%); }
+    .icon-item:nth-child(3)::before { background: linear-gradient(135deg, #fff0b7 0%, #ffd67c 100%); }
+    .icon-item:nth-child(4)::before { background: linear-gradient(135deg, #d6c4ff 0%, #b2a2ff 100%); }
+    .icon-item:nth-child(5)::before { background: linear-gradient(135deg, #ffc0ff 0%, #ff99dd 100%); }
+    .icon-item:nth-child(6)::before { background: linear-gradient(135deg, #c4ffb6 0%, #9cff86 100%); }
+
+    .window {
+      background: #fff5ff;
+      border: 4px solid #9f4ea4;
+      box-shadow: 12px 12px 0 #8d3e8d;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: linear-gradient(90deg, #ff8ae3 0%, #ff5cbf 100%);
+      color: #3a003d;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 3px solid #7d2c74;
+    }
+
+    .titlebar span {
+      font-size: 0.95rem;
+    }
+
+    .titlebar-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .titlebar-button {
+      width: 14px;
+      height: 14px;
+      border: 2px solid #7d2c74;
+      background: #fff;
+      border-radius: 2px;
+    }
+
+    .window-body {
+      padding: 18px 18px 16px;
+    }
+
+    .pane {
+      display: none;
+    }
+
+    .pane.active {
+      display: block;
+    }
+
+    .window-body h1 {
+      margin: 0 0 10px;
+      font-size: 2.7rem;
+      line-height: 1.05;
+      color: #5f0f6b;
+    }
+
+    .window-body p {
+      margin: 0;
+      color: #41213d;
+      line-height: 1.6;
+    }
+
+    .window-body small {
+      display: block;
+      margin-top: 10px;
+      color: #632f5f;
+      opacity: 0.9;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px;
+      border: 3px solid #d992e1;
+      background: #fff4ff;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6);
+      margin-top: 12px;
+    }
+
+    .avatar {
+      width: 88px;
+      height: 88px;
+      border: 4px solid #b155a9;
+      background: radial-gradient(circle at 30% 30%, #fffbff 0%, #ffb8f0 30%, #ff7bdc 100%);
+      border-radius: 20px;
+      position: relative;
+    }
+
+    .avatar::after {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 40% 40%, rgba(255,255,255,0.9), transparent 40%);
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .profile-name {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #4b124d;
+    }
+
+    .profile-pronouns {
+      font-size: 0.95rem;
+      color: #6b3271;
+      opacity: 0.95;
+    }
+
+    .stamp-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+      align-items: center;
+    }
+
+    .stamp-card {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+      background: none;
+      border: none;
+      box-shadow: none;
+      width: auto;
+      height: auto;
+    }
+
+    .stamp-card img {
+      max-height: 48px;
+      width: auto;
+      display: block;
+    }
+
+    .stamp-card:nth-child(odd),
+    .stamp-card:nth-child(even) {
+      background: none;
+    }
+
+    .media-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .media-card {
+      width: 96px;
+      height: 96px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: inherit;
+      font-weight: normal;
+      display: block;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .media-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    .media-card:hover {
+      transform: translateY(-1px);
+    }
+
+    .window-body a {
+      color: #9a2f90;
+      text-decoration: underline dotted;
+    }
+
+    .window-body a:hover {
+      color: #5e0f58;
+      text-decoration: underline;
+    }
+
+    .profile .avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .mini-window {
+      background: #fff;
+      border: 4px solid #bc72c9;
+      box-shadow: 8px 8px 0 #9461a1;
+      overflow: hidden;
+    }
+
+    .mini-title {
+      padding: 8px 10px;
+      background: #f0d6ff;
+      border-bottom: 3px solid #c88ad2;
+      color: #402448;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .mini-body {
+      padding: 12px 10px 14px;
+      color: #412842;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .mini-body ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .mini-body li {
+      margin-bottom: 8px;
+    }
+
+    .dialog {
+      background: #fff;
+      border: 4px solid #d698d6;
+      box-shadow: 10px 10px 0 #a05a9f;
+      display: inline-block;
+      padding: 14px;
+      margin-top: 14px;
+      width: calc(100% - 28px);
+    }
+
+    .dialog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f7d3ff;
+      border-bottom: 3px solid #cb8cd2;
+      padding: 8px 10px;
+      font-weight: 700;
+      color: #401f44;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .dialog-body {
+      padding: 10px;
+      color: #4c2d5c;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .dialog-buttons {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .dialog-button {
+      padding: 8px 10px;
+      background: #fff;
+      border: 3px solid #b35ba7;
+      color: #451e4d;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .taskbar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #fff;
+      border-top: 4px solid #d597d7;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 -2px 0 rgba(0,0,0,0.08);
+    }
+
+    .start-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      background: #fff6ff;
+      border: 3px solid #c978ce;
+      color: #401847;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      min-width: 110px;
+    }
+
+    .task-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: 700;
+      color: #422748;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.9rem;
+    }
+
+    .taskbar-chip {
+      background: #fff;
+      padding: 8px 10px;
+      border: 3px solid #cf9ed6;
+    }
+
+    @media (max-width: 980px) {
+      .desktop {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .window-body h1 {
+        font-size: 2rem;
+      }
+
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="desktop">
+    <aside class="icon-panel">
+      <div class="icon-item active" data-page="home">My Computer</div>
+      <div class="icon-item" data-page="network">Network</div>
+      <div class="icon-item" data-page="inbox">Inbox</div>
+      <div class="icon-item" data-page="photos">Photos</div>
+      <div class="icon-item" data-page="video">Video</div>
+      <div class="icon-item" data-page="trash">Trash</div>
+    </aside>
 
+    <div>
+      <section class="window">
+        <div class="titlebar">
+          <span>Welcome.exe</span>
+          <div class="titlebar-buttons">
+            <div class="titlebar-button"></div>
+            <div class="titlebar-button"></div>
+            <div class="titlebar-button"></div>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="pane active" data-page="home">
+            <h1>Nicky's Privately owned Spiral Galaxy</h1>
+            <div class="profile">
+              <div class="avatar"><img src="https://media.discordapp.net/attachments/761841717203828747/1531065561658687579/80EB2F26-56FA-403B-8B32-D22BB9C90676.jpg?ex=6a67db6b&is=6a6689eb&hm=df44c9102e861362f89c67dd9c8b9d00d7049d08e5f82e2ba5b4c11c09e106b8&=&format=webp&width=320&height=320" alt="Nicky ^^"></div>
+              <div class="profile-info">
+                <div class="profile-name"><img src="https://www.gigaglitters.com/created/jIVlIzMkoI.gif"> she/her</div>
+                <div class="profile-pronouns">I do things on the Internet</div>
+              </div>
+            </div>
+            <p></p>
+            <small>Click the icons to switch sections inside this window.</small>
+            <div class="stamp-row">
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/db4a4750cd9bc61340a8ae307dcf5c78/0cf7d0e14ff711a5-52/s250x400/948e89d4f732ba2e0947e39b449eb414a6a86674.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/b2db63193d328a623ce741c6152d93cf/efa59677884e5c34-ad/s400x600/14fab98885a7a63dee0c5ace58e473576f757d8c.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/3ac3e045e49a74b5a12c091aab903160/5732e589548c1c67-65/s250x400/576f362910b2292f6e7449e69ef8e76851fec4b9.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/7ad547cf196ab99913e95807549850c5/c7622e3007499f41-a1/s250x400/99cf6164a373f4ee4fe9b9205d4c1ad2134070ed.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c9866be81498de05e3c727f5dfe4300c/a5e52d0aeeb9d8b9-bf/s250x400/fea970b172b2db0570a1af12525cb58074ef1b6f.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c94b6802589a524b67321ac85754a0ca/a5e52d0aeeb9d8b9-eb/s250x400/b8e4d599bfd30cda038f1f44693b892e6dba0808.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/97dbbf48cd8216ae5917848367a9282e/a5e52d0aeeb9d8b9-46/s250x400/d1bbf4ed3223de282b8282e44c37e40d94bb87c0.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/21ec3d9cba29e7ee7ec134331c25bde4/a5e52d0aeeb9d8b9-90/s250x400/c6b85adedaac18b545c1b636bbf376fb9d5649ca.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/a4cca1232b1f15b791c5e7d5b6eaf7d5/5732e589548c1c67-af/s250x400/a7f539d2694a3a1fac42de151bc3b7cb8e5ec58a.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/d454fc30f2f58630d0ac88aeafb2e0af/2383a6ea20118e43-dc/s100x200/799bf5d9ecc63e23ae8e8db20f0dffcff4a971f7.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/8c1965df5a6ccc3eabac593e574419b/394622394477a7d8-71/s250x400/289df5bf43a7740b67c4506a89ab1b42cceddc81.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/f1335d202c724c1e05798764200441b6/394622394477a7d8-3d/s250x400/14e3b2923af7a216d8f4a13ea78c57a8a7badbcf.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/1f32c415add31452c390aa9cd4a45062/244fdab6b045e016-32/s250x400/36ba53e329fcdfe1edd1c34598dcc8de56afbd90.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/8f246c50d65f0e9a661a04c155d813ec/244fdab6b045e016-a8/s250x400/205b446cbeb49a41d591b92ac9ef055ffe1fa075.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/5206657ab79f628b0bd77d1981d6f52c/244fdab6b045e016-46/s250x400/8d689061bd2f917c04fc3b1b9ef9ce6c490c570a.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/f3043c98414b1922da955a7bc3dd665c/244fdab6b045e016-1e/s250x400/51fbe63f12a066b600713528458cde4e442fb4d1.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/77dbcc6ee47c37f33b8d33757a06afe2/244fdab6b045e016-59/s250x400/192c2eef91e10336b9239eab29cdf053994b07dd.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/444e336c58f295647dc07fa173d0d60e/4160be3cc2b84620-e3/s500x750/153ecb75962a68b7182e293f1bb0ff901cddc006.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/444e336c58f295647dc07fa173d0d60e/4160be3cc2b84620-e3/s500x750/153ecb75962a68b7182e293f1bb0ff901cddc006.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/3711771ebb0c01a54c3fd74d6f8b6d1e/1e4ee533e40ac45f-89/s100x200/0515af15284a055618d6922129481309cd491c0e.jpg" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/3b760e758a4932fe4adb5a67b9e558ce/1e4ee533e40ac45f-3d/s100x200/f36973a22c13a072b7e295d1b03d54ddf1e2056a.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/f34a4d5896004c348ca6821f570b2d14/382e7f15eab99436-bc/s250x400/d54ca89198c9ccb67c00c5e3870d7ffe23f4eab0.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/66be78981d48a18392116c3fa952fca8/5732e589548c1c67-e1/s100x200/be997d5173da32608fe599b3487a99f86d03ac10.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/04463492092d40bbe3a59baf60723643/687832104e77ea72-d4/s100x200/70c616e039c94a758c0f4f6dd38f59bf777c8019.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/6099aec0262c51625baf6739378f657d/687832104e77ea72-5f/s100x200/21525c01f33d0741ec77f2c9917aaf433f3dab0e.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/1814ef6f996bbda3b9c332e0e54e4e25/687832104e77ea72-d6/s100x200/d7474ef6dd4479c4ab230bcee64bd853b6496d0e.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/0056f72b5ecfdad1715916dc17c15335/687832104e77ea72-24/s100x200/bb0cbaf9a4c770818885cfd1729cb79793e7bcfd.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/bb97700fb08790f7a8dbec21e8d3d0e3/9574327874d6f544-d1/s100x200/5cd7fe0f028a112cccdc05c648b9aae91b2e0f19.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/635c6595732689832992f4d579bac456/2383a6ea20118e43-be/s100x200/db6ab9b9988638acd2b2cb8677e5552f2e1097e6.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/4261f7f9227b71415c235d6847bc07cd/4ae708fa88fd6797-f5/s100x200/5cbb5b38873f4955ef8a6f452fc97bada39f8b28.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c4d8f7609ce07771d6b2d3cbf9dcb8ab/5732e589548c1c67-8c/s100x200/8ec9a0c04558c9c759d1077a21153b1e29e2d5b2.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/8f2e9a5d1105bfecf1a4277e0fbeb219/b18aff3ce9323114-63/s100x200/0a813959f8a1f163f9c74f9428d0cb050e4f2c3d.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/ee8db9402c98e19b7c7cfb3216cf50a1/09fe12a80bbf1fd7-c2/s100x200/d04b5367aa6ff0a292856217126b304b14e1cdfe.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/dd2726d02db3a15aea10a43fab1c8189/2313462277efff0c-8e/s100x200/11b5546df2b31c79bbde4bb28827d4428b1af244.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/8b673284d414874594bbb38bc8b4a4f1/2313462277efff0c-1d/s100x200/836b9cd52356519ceab138895939f468d32f6170.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/6c03ec128c6adfcccfd59e1ec2c9c1ab/c7d482321697bcc4-8e/s100x200/a69cafa864ccdfceddee051919b3b7ddd55997ab.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/794f3f31c665dc0da8c5b01790b33e3b/394622394477a7d8-c0/s100x200/aa4d90df9847974e99dabb620bd1ca1b41f62f53.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/748d7e805520056409b134d09dcea5a5/394622394477a7d8-c6/s100x200/90706904d8fc35cf0a0a74d8a8ba1fd7cfa1bffa.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c541a5ccd6954c5f5abf2eb01297d6c3/394622394477a7d8-60/s100x200/2956e1440d8c0426955c427516b932bd3106c927.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/ee8db9402c98e19b7c7cfb3216cf50a1/09fe12a80bbf1fd7-c2/s100x200/d04b5367aa6ff0a292856217126b304b14e1cdfe.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/ee8db9402c98e19b7c7cfb3216cf50a1/09fe12a80bbf1fd7-c2/s100x200/d04b5367aa6ff0a292856217126b304b14e1cdfe.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/ee8db9402c98e19b7c7cfb3216cf50a1/09fe12a80bbf1fd7-c2/s100x200/d04b5367aa6ff0a292856217126b304b14e1cdfe.pnj" alt="webstamp"></div>
+            </div>
+            <div class="media-row">
+              <div class="media-card"><img src="https://media.discordapp.net/attachments/761841717203828747/1531060401268199636/tumblr_0f85f0c5608d02ebe492ee5ccf2d15e8_e15a786a_250.webp?ex=6a67d69d&is=6a66851d&hm=0480732deceacb6f0847a23e8269fc441d5fbe2470e4f95ae477b52356a03c6b&=&animated=true" alt="Tumblr glow gif"></div>
+              <div class="media-card"><img src="https://media.discordapp.net/attachments/761841717203828747/1531060388949393509/tumblr_4ffce167cc9f22e763a3eae276e1ff91_f99b971f_1280.png?ex=6a67d69a&is=6a66851a&hm=c5408cb0de5ee4670b1177709270ba535c28388fae6515f3126ef65f17181632&=&format=webp&quality=lossless" alt="Pastel desktop image"></div>
+              <div class="media-card"><img src="https://media.discordapp.net/attachments/761841717203828747/1531060368552628234/tumblr_65710ad5e61b5da4ea391f1ebd213ed1_d09b58be_100.webp?ex=6a67d695&is=6a668515&hm=34a6b06bb909e60cbea504152f4b5bf1aced13c73218f35d1ab95b0ab0638c94&=&animated=true" alt="Retro window gif"></div>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-window">
+                <div class="mini-title">Sign Up</div>
+                <div class="mini-body">
+                  <p>Subscribe for the throwback updates below.</p>
+                  <ul>
+                    <li>Ellis Updates</li>
+                    <li>Glitch drops</li>
+                    <li>Retro art</li>
+                  </ul>
+                </div>
+              </div>
 
-    
-<svg viewBox="-500 -500 1000 1000">
-  <circle r="450"></circle>
-  <circle class="equator" r="450"></circle>
-  <circle class="meridian" r="450" style="--start:165deg; --end:180deg"></circle>
-  <circle class="meridian" r="450" style="--start:150deg; --end:165deg"></circle>
-  <circle class="meridian" r="450" style="--start:135deg; --end:150deg"></circle>
-  <circle class="meridian" r="450" style="--start:120deg; --end:135deg"></circle>
-  <circle class="meridian" r="450" style="--start:105deg; --end:120deg"></circle>
-  <circle class="meridian" r="450" style="--start:90deg; --end:105deg"></circle>
-  <circle class="meridian" r="450" style="--start:75deg; --end:90deg"></circle>
-  <circle class="meridian" r="450" style="--start:60deg; --end:75deg"></circle>
-  <circle class="meridian" r="450" style="--start:45deg; --end:60deg"></circle>
-  <circle class="meridian" r="450" style="--start:30deg; --end:45deg"></circle>
-  <circle class="meridian" r="450" style="--start:15deg; --end:30deg"></circle>
-  <circle class="meridian" r="450" style="--start:0deg; --end:15deg"></circle>
-</svg>
-<div class="title text"><a href="https://vmou3qxmhb2.typeform.com/to/n4e3UI1a">What if the frame was the distortion all along?</a></div>
+              <div class="mini-window">
+                <div class="mini-title">Socials</div>
+                <div class="mini-body">
+                  <p>Facebook</p>
+                  <p>Twitter</p>
+                  <p>YouTube</p>
+                </div>
+              </div>
+
+              <div class="mini-window">
+                <div class="mini-title">Video</div>
+                <div class="mini-body">
+                  <p>Don't Say Ur Sorry.mp4</p>
+                  <p>How I Made DSUS.mp4</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pane" data-page="network">
+            <div class="dialog">
+              <div class="dialog-header">Network</div>
+              <div class="dialog-body">Connected to the neon web. Browse shared folders, remote drives, and pixelated dreams.</div>
+              <div class="dialog-buttons">
+                <div class="dialog-button">Explore</div>
+                <div class="dialog-button">Disconnect</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pane" data-page="inbox">
+            <div class="mini-window">
+              <div class="mini-title">Inbox</div>
+              <div class="mini-body">
+                <p>New mail from: pixel@retroverse.net</p>
+                <p>Subject: “Your webstamp upload is ready!”</p>
+                <p>Unread: 3 items</p>
+              </div>
+            </div>
+            <div class="mini-window">
+              <div class="mini-title">Messages</div>
+              <div class="mini-body">
+                <ul>
+                  <li>Friend request from StarDust</li>
+                  <li>Event: Glitter Party tonight</li>
+                  <li>Reminder: back up your files</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="pane" data-page="photos">
+            <div class="mini-window">
+              <div class="mini-title">Photos</div>
+              <div class="mini-body">
+                <p>A small gallery of retro graphics and pixel art.</p>
+                <img src="https://media.discordapp.net/attachments/761841717203828747/1531060388949393509/tumblr_4ffce167cc9f22e763a3eae276e1ff91_f99b971f_1280.png?ex=6a67d69a&is=6a66851a&hm=c5408cb0de5ee4670b1177709270ba535c28388fae6515f3126ef65f17181632&=&format=webp&quality=lossless" alt="photo preview" style="width:100%; border-radius:12px; margin-top:10px;">
+              </div>
+            </div>
+          </div>
+
+          <div class="pane" data-page="video">
+            <div class="mini-window">
+              <div class="mini-title">Video</div>
+              <div class="mini-body">
+                <p>Retro clips and animated loops are ready to watch in your mind.</p>
+                <ul>
+                  <li>Best of 2001</li>
+                  <li>Glitch Dreams</li>
+                  <li>Late-night desktop tour</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="pane" data-page="trash">
+            <div class="dialog">
+              <div class="dialog-header">Recycle Bin</div>
+              <div class="dialog-body">Oops... you’ve opened the trash. Nothing important was harmed in the making of this page.</div>
+              <div class="dialog-buttons">
+                <div class="dialog-button">Empty</div>
+                <div class="dialog-button">Restore</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="taskbar">
+    <div class="start-button">Start</div>
+    <div class="task-info">
+      <div class="taskbar-chip">Welcome</div>
+      <div class="taskbar-chip">6:18 PM</div>
+    </div>
+  </div>
+
+  <script>
+    const iconItems = document.querySelectorAll('.icon-item');
+    const panes = document.querySelectorAll('.pane');
+    const titleLabel = document.querySelector('.titlebar span');
+    const pageTitles = {
+      home: 'Welcome.exe',
+      network: 'Network',
+      inbox: 'Inbox',
+      photos: 'Photos',
+      video: 'Video',
+      trash: 'Recycle Bin'
+    };
+
+    iconItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const page = item.dataset.page;
+        if (!page) return;
+
+        iconItems.forEach(icon => icon.classList.toggle('active', icon === item));
+        panes.forEach(pane => pane.classList.toggle('active', pane.dataset.page === page));
+        titleLabel.textContent = pageTitles[page] || 'Spiral Galaxy';
+      });
+    });
+  </script>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="/assets/js/main.js"></script>
 </html>
