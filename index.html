@@ -430,15 +430,251 @@
       .desktop {
         grid-template-columns: 1fr;
       }
+
+      .icon-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .icon-item {
+        flex: 1;
+        min-width: 140px;
+      }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 768px) {
+      :root {
+        font-size: 14px;
+      }
+
+      body {
+        padding-bottom: 60px;
+        padding: 12px;
+      }
+
+      .desktop {
+        padding: 12px;
+        gap: 12px;
+      }
+
+      .icon-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 8px;
+        box-shadow: 6px 6px 0 #b85ab8;
+      }
+
+      .icon-item {
+        flex: 1;
+        min-width: 100px;
+        padding: 8px;
+        font-size: 0.85rem;
+      }
+
+      .window {
+        box-shadow: 8px 8px 0 #8d3e8d;
+        margin-bottom: 12px;
+      }
+
       .window-body h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+      }
+
+      .profile {
+        flex-direction: column;
+        gap: 12px;
+        padding: 10px;
+      }
+
+      .avatar {
+        width: 72px;
+        height: 72px;
+        border-width: 3px;
+      }
+
+      .profile-name {
+        font-size: 1.1rem;
+      }
+
+      .profile-pronouns {
+        font-size: 0.9rem;
+      }
+
+      .stamp-row {
+        gap: 6px;
+      }
+
+      .stamp-card img {
+        max-height: 40px;
+      }
+
+      .media-card {
+        width: 80px;
+        height: 80px;
       }
 
       .mini-grid {
         grid-template-columns: 1fr;
+      }
+
+      .mini-window {
+        box-shadow: 6px 6px 0 #9461a1;
+      }
+
+      .taskbar {
+        flex-direction: column;
+        gap: 6px;
+        padding: 6px 8px;
+        height: auto;
+      }
+
+      .start-button {
+        width: 100%;
+        padding: 8px;
+      }
+
+      .task-info {
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .titlebar {
+        padding: 8px 10px;
+      }
+
+      .titlebar span {
+        font-size: 0.85rem;
+      }
+
+      .window-body {
+        padding: 12px;
+      }
+
+      .dialog {
+        padding: 10px;
+        width: calc(100% - 20px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        font-size: 13px;
+      }
+
+      body {
+        background-size: 20px 20px;
+        padding: 8px;
+      }
+
+      .desktop {
+        padding: 8px;
+        gap: 8px;
+      }
+
+      .icon-panel {
+        gap: 4px;
+        padding: 6px;
+        box-shadow: 4px 4px 0 #b85ab8;
+      }
+
+      .icon-item {
+        min-width: 80px;
+        padding: 6px;
+        font-size: 0.75rem;
+        gap: 6px;
+      }
+
+      .icon-item::before {
+        width: 24px;
+        height: 24px;
+      }
+
+      .window {
+        border-width: 3px;
+        box-shadow: 6px 6px 0 #8d3e8d;
+        margin-bottom: 8px;
+      }
+
+      .window-body h1 {
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+      }
+
+      .window-body p {
+        font-size: 0.9rem;
+      }
+
+      .profile {
+        padding: 8px;
+      }
+
+      .avatar {
+        width: 60px;
+        height: 60px;
+        border-width: 2px;
+      }
+
+      .profile-name {
+        font-size: 1rem;
+      }
+
+      .stamp-card img {
+        max-height: 32px;
+      }
+
+      .media-card {
+        width: 70px;
+        height: 70px;
+      }
+
+      .mini-window {
+        border-width: 3px;
+        box-shadow: 4px 4px 0 #9461a1;
+      }
+
+      .mini-title {
+        padding: 6px 8px;
+        font-size: 0.85rem;
+      }
+
+      .mini-body {
+        padding: 10px 8px;
+        font-size: 0.9rem;
+      }
+
+      .taskbar {
+        padding: 4px 8px;
+      }
+
+      .start-button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+
+      .taskbar-chip {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+      }
+
+      .titlebar {
+        padding: 6px 8px;
+      }
+
+      .titlebar span {
+        font-size: 0.75rem;
+      }
+
+      .titlebar-button {
+        width: 12px;
+        height: 12px;
+        border-width: 1px;
+      }
+
+      body::before {
+        background: repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 1px, transparent 1px, transparent 6px);
       }
     }
   </style>
