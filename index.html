@@ -72,6 +72,7 @@
       text-transform: none;
       cursor: pointer;
       transition: background 0.2s, border-color 0.2s, color 0.2s;
+      min-width: 0;
     }
 
     .icon-item.active,
@@ -79,6 +80,21 @@
       background: #f5e1ff;
       border-color: #8c3b94;
       color: #2d0b35;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .window {
+      background: #fff5ff;
+      border: 4px solid #9f4ea4;
+      box-shadow: 12px 12px 0 #8d3e8d;
+      margin-bottom: 16px;
+      overflow: hidden;
+      width: 100%;
     }
 
     .icon-item::before {
@@ -444,17 +460,24 @@
     @media (max-width: 980px) {
       .desktop {
         grid-template-columns: 1fr;
+        padding-left: 12px;
+        padding-right: 12px;
       }
 
       .icon-panel {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
+        min-width: 0;
       }
 
       .icon-item {
-        flex: 1;
-        min-width: 140px;
+        flex: 1 1 140px;
+        min-width: 0;
+      }
+
+      .window {
+        width: 100%;
       }
     }
 
@@ -501,6 +524,7 @@
         flex-direction: column;
         gap: 12px;
         padding: 10px;
+        align-items: flex-start;
       }
 
       .avatar {
@@ -519,6 +543,19 @@
 
       .stamp-row {
         gap: 6px;
+        justify-content: center;
+      }
+
+      .titlebar {
+        flex-wrap: wrap;
+      }
+
+      .titlebar-buttons {
+        margin-top: 8px;
+      }
+
+      .task-info {
+        flex-wrap: wrap;
       }
 
       .stamp-card img {
@@ -590,13 +627,18 @@
       }
 
       .icon-panel {
+        display: flex;
+        flex-wrap: wrap;
         gap: 4px;
         padding: 6px;
         box-shadow: 4px 4px 0 #b85ab8;
+        min-width: 0;
+        overflow-x: auto;
       }
 
       .icon-item {
-        min-width: 80px;
+        flex: 1 1 100px;
+        min-width: 0;
         padding: 6px;
         font-size: 0.75rem;
         gap: 6px;
@@ -662,6 +704,28 @@
 
       .taskbar {
         padding: 4px 8px;
+      }
+
+      .titlebar {
+        flex-wrap: wrap;
+      }
+
+      .titlebar-buttons {
+        gap: 6px;
+      }
+
+      .task-info {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .stamp-row {
+        justify-content: center;
+      }
+
+      .window-body {
+        padding-left: 10px;
+        padding-right: 10px;
       }
 
       .start-button {
