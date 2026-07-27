@@ -97,21 +97,18 @@
       width: 100%;
     }
 
+    /* hide the placeholder square (we use the inline svg instead) */
     .icon-item::before {
-      content: '';
-      width: 30px;
-      height: 30px;
-      border: 2px solid #a13a9c;
-      background: #fff;
-      display: inline-block;
+      display: none;
     }
 
-    .icon-item:nth-child(1)::before { background: linear-gradient(135deg, #ffbbf2 0%, #ff9de5 100%); }
-    .icon-item:nth-child(2)::before { background: linear-gradient(135deg, #b8ecff 0%, #74c8ff 100%); }
-    .icon-item:nth-child(3)::before { background: linear-gradient(135deg, #fff0b7 0%, #ffd67c 100%); }
-    .icon-item:nth-child(4)::before { background: linear-gradient(135deg, #d6c4ff 0%, #b2a2ff 100%); }
-    .icon-item:nth-child(5)::before { background: linear-gradient(135deg, #ffc0ff 0%, #ff99dd 100%); }
-    .icon-item:nth-child(6)::before { background: linear-gradient(135deg, #c4ffb6 0%, #9cff86 100%); }
+    /* color the inline icon images to match original stoplight squares */
+    .icon-panel .icon-item:nth-child(1) img.icon-img { background: linear-gradient(135deg, #ffbbf2 0%, #ff9de5 100%); border-color: #a13a9c; }
+    .icon-panel .icon-item:nth-child(2) img.icon-img { background: linear-gradient(135deg, #b8ecff 0%, #74c8ff 100%); border-color: #a13a9c; }
+    .icon-panel .icon-item:nth-child(3) img.icon-img { background: linear-gradient(135deg, #fff0b7 0%, #ffd67c 100%); border-color: #a13a9c; }
+    .icon-panel .icon-item:nth-child(4) img.icon-img { background: linear-gradient(135deg, #d6c4ff 0%, #b2a2ff 100%); border-color: #a13a9c; }
+    .icon-panel .icon-item:nth-child(5) img.icon-img { background: linear-gradient(135deg, #ffc0ff 0%, #ff99dd 100%); border-color: #a13a9c; }
+    .icon-panel .icon-item:nth-child(6) img.icon-img { background: linear-gradient(135deg, #c4ffb6 0%, #9cff86 100%); border-color: #a13a9c; }
 
     .window {
       background: #fff5ff;
@@ -177,6 +174,38 @@
 
     .pane.active {
       display: block;
+    }
+
+    .icon-panel .icon-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-panel .icon-item img.icon-img {
+      width: 50px;
+      height: 50px;
+      display: inline-block;
+      box-sizing: border-box;
+      border: 2px solid #7d2c74;
+      background: #fff;
+      padding: 4px;
+      border-radius: 3px;
+    }
+
+    /* keep titlebar logo inline with the title text */
+    .titlebar img {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+      width: 50px;
+      height: auto;
+    }
+
+    .titlebar-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .window-body h1 {
@@ -497,11 +526,24 @@
       }
 
       .icon-panel {
-        display: flex;
+        display: none;
         flex-wrap: wrap;
         gap: 6px;
         padding: 8px;
         box-shadow: 6px 6px 0 #b85ab8;
+        position: fixed;
+        left: 8px;
+        right: 8px;
+        bottom: 70px;
+        z-index: 20;
+        width: auto;
+        max-height: 50vh;
+        overflow-y: auto;
+        background: #ffffff;
+      }
+
+      .icon-panel.start-visible {
+        display: flex;
       }
 
       .icon-item {
@@ -628,13 +670,26 @@
       }
 
       .icon-panel {
-        display: flex;
+        display: none;
         flex-wrap: wrap;
         gap: 4px;
         padding: 6px;
         box-shadow: 4px 4px 0 #b85ab8;
         min-width: 0;
         overflow-x: auto;
+        position: fixed;
+        left: 6px;
+        right: 6px;
+        bottom: 64px;
+        z-index: 20;
+        width: auto;
+        max-height: 55vh;
+        overflow-y: auto;
+        background: #ffffff;
+      }
+
+      .icon-panel.start-visible {
+        display: flex;
       }
 
       .icon-item {
@@ -762,12 +817,27 @@
 <body>
   <div class="desktop">
     <aside class="icon-panel">
-      <div class="icon-item active" data-page="home">My Computer</div>
-      <div class="icon-item" data-page="network">Network</div>
-      <div class="icon-item" data-page="inbox">Inbox</div>
-      <div class="icon-item" data-page="photos">Photos</div>
-      <div class="icon-item" data-page="video">Video</div>
-      <div class="icon-item" data-page="trash">Trash</div>
+      <div class="icon-item active" data-page="home">
+        <img class="icon-img" src="https://64.media.tumblr.com/7e68019ed95e4b7a04ceb019555682c2/11678410a9b4f3ff-9b/s540x810/0df1e9e2ad78df4b44c5caf927ee9ae8e955fd70.png" alt="My Computer">My Computer
+      </div>
+      <div class="icon-item" data-page="network">
+        <img class="icon-img" src="https://64.media.tumblr.com/bab92a8f198f58cf9dc346d8e2441f2c/5e386587088909bc-44/s540x810/7e49621fcb2e06540806842ba31646b1fc5cd250.png" alt="Network">Network
+      </div>
+      <div class="icon-item" data-page="inbox">
+        <img class="icon-img" src="https://64.media.tumblr.com/abf75904fa8c2450841626ecff259b7f/37f44b10bfe012d1-f7/s540x810/f3a2ba264d9e9a1a7d2a43d05d5ae91ea7d7030c.png" alt="Inbox">Inbox
+      </div>
+      <div class="icon-item" data-page="music">
+        <img class="icon-img" src="https://64.media.tumblr.com/3ea96a37f9c508e9c7ca7f95c2d9e5c6/32f4c776e65ab1bc-a7/s540x810/7e9ac2c7bcb1c31e20ca09649e7d96fb09982fd8.png" alt="Music">Music
+      </div>
+      <div class="icon-item" data-page="photos">
+        <img class="icon-img" src="https://64.media.tumblr.com/d90193974ef48b2ea94b27aec56bfafe/139f43fe7e30a846-68/s540x810/5cc198fbade3361dbe5c3b7013d3cf68be3b0d9e.png" alt="Photos">Photos
+      </div>
+      <div class="icon-item" data-page="video">
+        <img class="icon-img" src="https://64.media.tumblr.com/fec063eb5f38935501e59900eaf9939f/5858e7ac06906ffb-a3/s540x810/43523bfee0beaf1aa96782887b237fc9b2ddcbfd.png" alt="Video">Video
+      </div>
+      <div class="icon-item" data-page="trash">
+        <img class="icon-img" src="https://64.media.tumblr.com/4298712ab2ec48995a76c121a757c70d/63e7f767e7da00ab-62/s540x810/b2f10911ec263eea7a97a1a501a637d4d74d1094.png" alt="Trash">Trash
+      </div>
       <div class="icon-item" data-page="Blog"><a href="https://www.tumblr.com/blog/spiralgalaxywo">BLOG!§"!"§"</a></div>
       password: NICKY
     </aside>
@@ -775,7 +845,10 @@
     <div>
       <section class="window">
         <div class="titlebar">
-          <span>Welcome.exe</span>
+          <div class="titlebar-left">
+            <img src="https://64.media.tumblr.com/84b06159a467d0f3875f0bf39164bac5/34c242fc9a49ed60-80/s540x810/c1fb48324647cd0f956b92343c490aca78a84ab7.png" alt="Welcome">
+            <span>Welcome.exe</span>
+          </div>
           <div class="titlebar-buttons">
             <div class="titlebar-button"></div>
             <div class="titlebar-button"></div>
@@ -897,18 +970,6 @@
                   <p><img src="https://64.media.tumblr.com/b21c8ee6ce714b0b95420e6f2b8de6c8/4ae708fa88fd6797-a0/s75x75_c1/cc8284cd88bb778e722097184a0926b49fde7563.gifv"><a href="https://heynicky.tumblr.com/" target="_blank">  Tumblr</a></p>
                 </div>
               </div>
-
-              <div class="mini-window">
-                <div class="mini-title"> <img src="https://64.media.tumblr.com/f768a9798216e7242c4a6dc45c419258/5732e589548c1c67-99/s75x75_c1/67afbb3c6099118e5df70b3928f5f03b4e973911.gifv"> MUSIC! FOR THE SOUL!</div>
-                <div class="mini-body">
-                  <p><a href="https://www.youtube.com/watch?v=R7TnNytobws&pp=ygUPU2llcnJhIGxlb25pZGVu" target="_blank">SIERRA_Leoniden.mp3</a></p>
-                  <p><a href="https://www.youtube.com/watch?v=6a7V-rG-Q4Y&pp=ygUPZWluIHNvbmcgcmVpY2h0" target="_blank">EIN-SONG-REICHT_Kraftklub.mp3</a></p>
-                  <p><a href="https://www.youtube.com/watch?v=mXaNA8Q3JW8&pp=ygUISXN5IHlvbGE%3D" target="_blank">ISY!_yola&Dani_Lia.mp3</a></p>
-                  <p><a href="https://www.youtube.com/watch?v=9FTKuFESTMU" target="_blank">IT'S-GOLDEN-HOUR-SOMEWHERE_LOVEJOY.mp3</a></p>
-                  <p><a href="https://www.youtube.com/watch?v=WumCI56iYUk" target="_blank">BULLS-IN-THE-BRONX_PIERCE_THE_VEIL.mp3</a></p>
-                  <p><a href="https://www.youtube.com/watch?v=RRKJiM9Njr8" target="_blank">WELCOME-TO-THE-BLACK-PARADE_MY_CHEMICAL_ROMANCE.mp3</a></p>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -932,6 +993,35 @@
                 </ul>
               </div>
             </div>
+          </div>
+
+          <div class="pane" data-page="music">
+            <div class="mini-window">
+              <div class="mini-title">FIND MY OBSESSIONS HERE:</div>
+              <div class="mini-body">
+                <p><a href="https://www.discogs.com/user/nickyspilots" target="_blank">Discogs.app</a></p>
+                <p><a href="https://i.airbuds.fm/nicky.778/xoiteDTcW0" target="_blank">AIRBUDS.app</a></p>
+                <p><a href="https://record.club/nicky" target="_blank">RecordClub.app</a></p>
+                <p><a href="https://music.apple.com/profile/clubmateflasche" target="_blank">AppleMusic.app</a></p>
+              </div><br>
+            </div>
+            <div class="mini-window">
+              <div class="mini-title">OBSESSION!"§)$=§"</div>
+              <div class="mini-body">
+                <iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="150" style="width:100%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/de/album/stranger/1736994853?i=1736995332"></iframe>
+              </div>
+            </div>
+             <div class="mini-window">
+                <div class="mini-title"> <img src="https://64.media.tumblr.com/f768a9798216e7242c4a6dc45c419258/5732e589548c1c67-99/s75x75_c1/67afbb3c6099118e5df70b3928f5f03b4e973911.gifv"> MUSIC! FOR THE SOUL!</div>
+                <div class="mini-body">
+                  <p><a href="https://www.youtube.com/watch?v=R7TnNytobws&pp=ygUPU2llcnJhIGxlb25pZGVu" target="_blank">SIERRA_Leoniden.mp3</a></p>
+                  <p><a href="https://www.youtube.com/watch?v=6a7V-rG-Q4Y&pp=ygUPZWluIHNvbmcgcmVpY2h0" target="_blank">EIN-SONG-REICHT_Kraftklub.mp3</a></p>
+                  <p><a href="https://www.youtube.com/watch?v=mXaNA8Q3JW8&pp=ygUISXN5IHlvbGE%3D" target="_blank">ISY!_yola&Dani_Lia.mp3</a></p>
+                  <p><a href="https://www.youtube.com/watch?v=9FTKuFESTMU" target="_blank">IT'S-GOLDEN-HOUR-SOMEWHERE_LOVEJOY.mp3</a></p>
+                  <p><a href="https://www.youtube.com/watch?v=WumCI56iYUk" target="_blank">BULLS-IN-THE-BRONX_PIERCE_THE_VEIL.mp3</a></p>
+                  <p><a href="https://www.youtube.com/watch?v=RRKJiM9Njr8" target="_blank">WELCOME-TO-THE-BLACK-PARADE_MY_CHEMICAL_ROMANCE.mp3</a></p>
+                </div>
+              </div>
           </div>
 
           <div class="pane" data-page="photos">
@@ -1119,6 +1209,7 @@
       home: 'Welcome.exe',
       network: 'Network',
       inbox: 'Inbox',
+      music: 'Music',
       photos: 'Photos',
       video: 'Video',
       trash: 'Recycle Bin'
@@ -1134,6 +1225,16 @@
         titleLabel.textContent = pageTitles[page] || 'Spiral Galaxy';
       });
     });
+
+    const startButton = document.querySelector('.start-button');
+    const iconPanel = document.querySelector('.icon-panel');
+    if (startButton && iconPanel) {
+      startButton.addEventListener('click', () => {
+        if (window.matchMedia('(max-width: 768px)').matches) {
+          iconPanel.classList.toggle('start-visible');
+        }
+      });
+    }
   </script>
 </body>
 </html>
