@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spiral Galaxy</title>
+  <title>Nicky's Spiral Galaxy</title>
   <style>
     :root {
       font-family: Tahoma, Geneva, Verdana, sans-serif;
@@ -905,7 +905,20 @@
     <div class="start-button">Start</div>
     <div class="task-info">
       <div class="taskbar-chip">Welcome</div>
-      <div class="taskbar-chip">6:18 PM</div>
+      <div class="taskbar-chip" id="berlin-time">6:18 PM</div>
+      <script>
+        function updateBerlinTime() {
+          const berlinTime = new Date().toLocaleString('en-US', {
+        timeZone: 'Europe/Berlin',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+          });
+          document.getElementById('berlin-time').textContent = berlinTime;
+        }
+        updateBerlinTime();
+        setInterval(updateBerlinTime, 1000);
+      </script>
     </div>
   </div>
 
