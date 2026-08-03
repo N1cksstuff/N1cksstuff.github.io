@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nicky's Neighbouring Galaxy</title>
+  <style>
+    :root {
+      font-family: Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffb0f5;
+      color: #1d1d1d;
+      font-size: 16px;
+      cursor: url('https://cdn.cursors-4u.net/previews/sleepy-panda-36a66f5e-32.webp') 32 32, auto !important;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      background-color: #ffb0f5;
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
+      background-size: 24px 24px;
+      overflow-x: hidden;
+      position: relative;
+      padding-bottom: 64px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 1px, transparent 1px, transparent 8px);
+      pointer-events: none;
+    }
+
+    .desktop {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 24px 0;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 16px;
+      align-items: start;
+      position: relative;
+    }
+
+    .icon-panel {
+      display: grid;
+      gap: 10px;
+      background: #ffffff;
+      border: 3px solid #d781d7;
+      box-shadow: 10px 10px 0 #b85ab8;
+      padding: 14px;
+    }
+
+    .icon-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: #fff7ff;
+      border: 2px solid #bc71c8;
+      color: #421f3f;
+      font-weight: 700;
+      text-transform: none;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      min-width: 0;
+    }
+
+    .icon-item.active,
+    .icon-item:hover {
+      background: #f5e1ff;
+      border-color: #8c3b94;
+      color: #2d0b35;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .window {
+      background: #fff5ff;
+      border: 4px solid #9f4ea4;
+      box-shadow: 12px 12px 0 #8d3e8d;
+      margin-bottom: 16px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    /* hide the placeholder square (we use the inline svg instead) */
+    .icon-item::before {
+      display: none;
+    }
+
+    /* color the inline icon images to match original stoplight squares */
+    .icon-panel .icon-item:nth-child(1) img.icon-img { background: linear-gradient(135deg, #ffbbf2 0%, #ff9de5 100%); border-color: #a13a9c; }
+    .icon-panel .icon-item:nth-child(2) img.icon-img { background: linear-gradient(135deg, #b8ecff 0%, #74c8ff 100%); border-color: #a13a9c; }
+    .icon-panel .icon-item:nth-child(3) img.icon-img { background: linear-gradient(135deg, #fff0b7 0%, #ffd67c 100%); border-color: #a13a9c; }
+    .icon-panel .icon-item:nth-child(4) img.icon-img { background: linear-gradient(135deg, #d6c4ff 0%, #b2a2ff 100%); border-color: #a13a9c; }
+    .icon-panel .icon-item:nth-child(5) img.icon-img { background: linear-gradient(135deg, #ffc0ff 0%, #ff99dd 100%); border-color: #a13a9c; }
+    .icon-panel .icon-item:nth-child(6) img.icon-img { background: linear-gradient(135deg, #c4ffb6 0%, #9cff86 100%); border-color: #a13a9c; }
+
+    .window {
+      background: #fff5ff;
+      border: 4px solid #9f4ea4;
+      box-shadow: 12px 12px 0 #8d3e8d;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: linear-gradient(90deg, #ff8ae3 0%, #ff5cbf 100%);
+      color: #3a003d;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 3px solid #7d2c74;
+    }
+
+    .titlebar span {
+      font-size: 0.95rem;
+    }
+
+    .titlebar-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .titlebar-button {
+      width: 14px;
+      height: 14px;
+      border: 2px solid #7d2c74;
+      background: #fff;
+      border-radius: 2px;
+    }
+
+    .titlebar-button:nth-child(1) {
+      background: #FF5555;
+      border-color: #CC0000;
+    }
+
+    .titlebar-button:nth-child(2) {
+      background: #FFD700;
+      border-color: #DAA500;
+    }
+
+    .titlebar-button:nth-child(3) {
+      background: #00DD00;
+      border-color: #00AA00;
+    }
+
+    .window-body {
+      padding: 18px 18px 16px;
+    }
+
+    .pane {
+      display: none;
+    }
+
+    .pane.active {
+      display: block;
+    }
+
+    .icon-panel .icon-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-panel .icon-item img.icon-img {
+      width: 50px;
+      height: 50px;
+      display: inline-block;
+      box-sizing: border-box;
+      border: 2px solid #7d2c74;
+      background: #fff;
+      padding: 4px;
+      border-radius: 3px;
+    }
+
+    /* keep titlebar logo inline with the title text */
+    .titlebar img {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+      width: 50px;
+      height: auto;
+    }
+
+    .titlebar-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .window-body h1 {
+      margin: 0 0 10px;
+      font-size: 2.7rem;
+      line-height: 1.05;
+      color: #5f0f6b;
+    }
+
+    .window-body p {
+      margin: 0;
+      color: #41213d;
+      line-height: 1.6;
+    }
+
+    .window-body small {
+      display: block;
+      margin-top: 10px;
+      color: #632f5f;
+      opacity: 0.9;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px;
+      border: 3px solid #d992e1;
+      background: #fff4ff;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6);
+      margin-top: 12px;
+    }
+
+    .avatar {
+      width: 88px;
+      height: 88px;
+      border: 4px solid #b155a9;
+      background: radial-gradient(circle at 30% 30%, #fffbff 0%, #ffb8f0 30%, #ff7bdc 100%);
+      border-radius: 20px;
+      position: relative;
+    }
+
+    .avatar::after {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 40% 40%, rgba(255,255,255,0.9), transparent 40%);
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .profile-name {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #4b124d;
+    }
+
+    .profile-pronouns {
+      font-size: 0.95rem;
+      color: #3a3a3a !important;
+      opacity: 0.95;
+    }
+
+    
+
+    .stamp-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+      align-items: center;
+    }
+
+    .stamp-card {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+      background: none;
+      border: none;
+      box-shadow: none;
+      width: auto;
+      height: auto;
+    }
+
+    .stamp-card img {
+      max-height: 48px;
+      width: auto;
+      display: block;
+    }
+
+    .stamp-card:nth-child(odd),
+    .stamp-card:nth-child(even) {
+      background: none;
+    }
+
+    .media-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .media-card {
+      width: 96px;
+      height: 96px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: inherit;
+      font-weight: normal;
+      display: block;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .media-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    .media-card:hover {
+      transform: translateY(-1px);
+    }
+
+    .window-body a {
+      color: #9a2f90;
+      text-decoration: underline dotted;
+    }
+
+    .window-body a:hover {
+      color: #5e0f58;
+      text-decoration: underline;
+    }
+
+    .profile .avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .mini-window {
+      background: #fff;
+      border: 4px solid #bc72c9;
+      box-shadow: 8px 8px 0 #9461a1;
+      overflow: hidden;
+    }
+
+    .mini-title {
+      padding: 8px 10px;
+      background: #f0d6ff;
+      border-bottom: 3px solid #c88ad2;
+      color: #402448;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .mini-body {
+      padding: 12px 10px 14px;
+      color: #412842;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .mini-body ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .mini-body li {
+      margin-bottom: 8px;
+    }
+
+    .dialog {
+      background: #fff;
+      border: 4px solid #d698d6;
+      box-shadow: 10px 10px 0 #a05a9f;
+      display: inline-block;
+      padding: 14px;
+      margin-top: 14px;
+      width: calc(100% - 28px);
+    }
+
+    .dialog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f7d3ff;
+      border-bottom: 3px solid #cb8cd2;
+      padding: 8px 10px;
+      font-weight: 700;
+      color: #401f44;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .dialog-body {
+      padding: 10px;
+      color: #4c2d5c;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .dialog-buttons {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .dialog-button {
+      padding: 8px 10px;
+      background: #fff;
+      border: 3px solid #b35ba7;
+      color: #451e4d;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .taskbar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #fff;
+      border-top: 4px solid #d597d7;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 -2px 0 rgba(0,0,0,0.08);
+    }
+
+    .start-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      background: #fff6ff;
+      border: 3px solid #c978ce;
+      color: #401847;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      min-width: 110px;
+    }
+
+    .task-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: 700;
+      color: #422748;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.9rem;
+    }
+
+    .taskbar-chip {
+      background: #fff;
+      padding: 8px 10px;
+      border: 3px solid #cf9ed6;
+    }
+
+    @media (max-width: 980px) {
+      .desktop {
+        grid-template-columns: 1fr;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .icon-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        min-width: 0;
+      }
+
+      .icon-item {
+        flex: 1 1 140px;
+        min-width: 0;
+      }
+
+      .window {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        font-size: 14px;
+      }
+
+      body {
+        padding-bottom: 90px;
+        padding: 12px;
+      }
+
+      .desktop {
+        padding: 12px;
+        gap: 12px;
+      }
+
+      .icon-panel {
+        display: none;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 8px;
+        box-shadow: 6px 6px 0 #b85ab8;
+        position: fixed;
+        left: 8px;
+        right: 8px;
+        bottom: 70px;
+        z-index: 20;
+        width: auto;
+        max-height: 50vh;
+        overflow-y: auto;
+        background: #ffffff;
+      }
+
+      .icon-panel.start-visible {
+        display: flex;
+      }
+
+      .icon-item {
+        flex: 1;
+        min-width: 100px;
+        padding: 8px;
+        font-size: 0.85rem;
+      }
+
+      .window {
+        box-shadow: 8px 8px 0 #8d3e8d;
+        margin-bottom: 12px;
+      }
+
+      .window-body h1 {
+        font-size: 1.8rem;
+      }
+
+      .profile {
+        flex-direction: column;
+        gap: 12px;
+        padding: 10px;
+        align-items: flex-start;
+      }
+
+      .avatar {
+        width: 72px;
+        height: 72px;
+        border-width: 3px;
+      }
+
+      .profile-name {
+        font-size: 1.1rem;
+      }
+
+      .profile-pronouns {
+        font-size: 0.9rem;
+      }
+
+      .stamp-row {
+        gap: 6px;
+        justify-content: center;
+      }
+
+      .titlebar {
+        flex-wrap: wrap;
+      }
+
+      .titlebar-buttons {
+        margin-top: 8px;
+      }
+
+      .task-info {
+        flex-wrap: wrap;
+      }
+
+      .stamp-card img {
+        max-height: 40px;
+      }
+
+      .media-card {
+        width: 80px;
+        height: 80px;
+      }
+
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mini-window {
+        box-shadow: 6px 6px 0 #9461a1;
+      }
+
+      .taskbar {
+        flex-direction: column;
+        gap: 6px;
+        padding: 6px 8px;
+        height: auto;
+      }
+
+      .start-button {
+        width: 100%;
+        padding: 8px;
+      }
+
+      .task-info {
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .titlebar {
+        padding: 8px 10px;
+      }
+
+      .titlebar span {
+        font-size: 0.85rem;
+      }
+
+      .window-body {
+        padding: 12px;
+      }
+
+      .dialog {
+        padding: 10px;
+        width: calc(100% - 20px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        font-size: 13px;
+      }
+
+      body {
+        background-size: 20px 20px;
+        padding: 8px;
+        padding-bottom: 100px;
+      }
+
+      .desktop {
+        padding: 8px;
+        gap: 8px;
+      }
+
+      .icon-panel {
+        display: none;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 6px;
+        box-shadow: 4px 4px 0 #b85ab8;
+        min-width: 0;
+        overflow-x: auto;
+        position: fixed;
+        left: 6px;
+        right: 6px;
+        bottom: 64px;
+        z-index: 20;
+        width: auto;
+        max-height: 55vh;
+        overflow-y: auto;
+        background: #ffffff;
+      }
+
+      .icon-panel.start-visible {
+        display: flex;
+      }
+
+      .icon-item {
+        flex: 1 1 100px;
+        min-width: 0;
+        padding: 6px;
+        font-size: 0.75rem;
+        gap: 6px;
+      }
+
+      .icon-item::before {
+        width: 24px;
+        height: 24px;
+      }
+
+      .window {
+        border-width: 3px;
+        box-shadow: 6px 6px 0 #8d3e8d;
+        margin-bottom: 8px;
+      }
+
+      .window-body h1 {
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+      }
+
+      .window-body p {
+        font-size: 0.9rem;
+      }
+
+      .profile {
+        padding: 8px;
+      }
+
+      .avatar {
+        width: 60px;
+        height: 60px;
+        border-width: 2px;
+      }
+
+      .profile-name {
+        font-size: 1rem;
+      }
+
+      .stamp-card img {
+        max-height: 32px;
+      }
+
+      .media-card {
+        width: 70px;
+        height: 70px;
+      }
+
+      .mini-window {
+        border-width: 3px;
+        box-shadow: 4px 4px 0 #9461a1;
+      }
+
+      .mini-title {
+        padding: 6px 8px;
+        font-size: 0.85rem;
+      }
+
+      .mini-body {
+        padding: 10px 8px;
+        font-size: 0.9rem;
+      }
+
+      .taskbar {
+        padding: 4px 8px;
+      }
+
+      .titlebar {
+        flex-wrap: wrap;
+      }
+
+      .titlebar-buttons {
+        gap: 6px;
+      }
+
+      .task-info {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .stamp-row {
+        justify-content: center;
+      }
+
+      .window-body {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .start-button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+
+      .taskbar-chip {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+      }
+
+      .titlebar {
+        padding: 6px 8px;
+      }
+
+      .titlebar span {
+        font-size: 0.75rem;
+      }
+
+      .titlebar-button {
+        width: 12px;
+        height: 12px;
+        border-width: 1px;
+      }
+
+      body::before {
+        background: repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 1px, transparent 1px, transparent 6px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="desktop">
+    <aside class="icon-panel">
+      <div class="icon-item active" data-page="home">
+        <img class="icon-img" src="https://64.media.tumblr.com/7e68019ed95e4b7a04ceb019555682c2/11678410a9b4f3ff-9b/s540x810/0df1e9e2ad78df4b44c5caf927ee9ae8e955fd70.png" alt="My Computer">My Computer
+      </div>
+      <div class="icon-item" data-page="network">
+        <img class="icon-img" src="https://64.media.tumblr.com/bab92a8f198f58cf9dc346d8e2441f2c/5e386587088909bc-44/s540x810/7e49621fcb2e06540806842ba31646b1fc5cd250.png" alt="Network">Network
+      </div>
+      <div class="icon-item" data-page="inbox">
+        <img class="icon-img" src="https://64.media.tumblr.com/abf75904fa8c2450841626ecff259b7f/37f44b10bfe012d1-f7/s540x810/f3a2ba264d9e9a1a7d2a43d05d5ae91ea7d7030c.png" alt="Inbox">Inbox
+      </div>
+      <div class="icon-item" data-page="music">
+        <img class="icon-img" src="https://64.media.tumblr.com/3ea96a37f9c508e9c7ca7f95c2d9e5c6/32f4c776e65ab1bc-a7/s540x810/7e9ac2c7bcb1c31e20ca09649e7d96fb09982fd8.png" alt="Music">Music
+      </div>
+      <div class="icon-item" data-page="photos">
+        <img class="icon-img" src="https://64.media.tumblr.com/d90193974ef48b2ea94b27aec56bfafe/139f43fe7e30a846-68/s540x810/5cc198fbade3361dbe5c3b7013d3cf68be3b0d9e.png" alt="Photos">Photos
+      </div>
+      <div class="icon-item" data-page="video">
+        <img class="icon-img" src="https://64.media.tumblr.com/fec063eb5f38935501e59900eaf9939f/5858e7ac06906ffb-a3/s540x810/43523bfee0beaf1aa96782887b237fc9b2ddcbfd.png" alt="Video">Video
+      </div>
+      <div class="icon-item" data-page="trash">
+        <img class="icon-img" src="https://64.media.tumblr.com/4298712ab2ec48995a76c121a757c70d/63e7f767e7da00ab-62/s540x810/b2f10911ec263eea7a97a1a501a637d4d74d1094.png" alt="Trash">Trash
+      </div>
+      <div class="icon-item" data-page="Blog"><a href="https://privatelyownedspiralgalaxy.neocities.org/">BLOG & Other Projects</a></div>
+    </aside>
+
+    <div>
+      <section class="window">
+        <div class="titlebar">
+          <div class="titlebar-left">
+            <img src="https://64.media.tumblr.com/84b06159a467d0f3875f0bf39164bac5/34c242fc9a49ed60-80/s540x810/c1fb48324647cd0f956b92343c490aca78a84ab7.png" alt="Welcome">
+            <span>Welcome.exe</span>
+          </div>
+          <div class="titlebar-buttons">
+            <div class="titlebar-button"></div>
+            <div class="titlebar-button"></div>
+            <div class="titlebar-button"></div>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="pane active" data-page="home">
+            <h1 style="align-items: center; justify-items: center; "><img src="blinkiesCafe-VR.gif"> <img style="width: 30px; height: auto; align-items: center; justify-items: center; justify-content: center; position:absolute; " src="https://64.media.tumblr.com/6aec5420c6da5b5997c4a2bfd972a702/d2053116c06b3cb2-39/s100x200/023927c7ac24b37e87742817518d0f86ff2f164c.pnj" alt="Webstamp"></h1>
+            <div class="profile">
+              <div class="avatar"><img src="603892971_17932773123116255_4645512705030269751_n.jpg" alt="Nicky ^^"></div>
+
+              <div class="profile-info">
+                <div class="profile-name">NICKY♡✩</div>
+                <div style="color: #8a8a8a; font-size: 14px;" class="profile-pronouns">she/her/they/them</div>
+                <div style="color: #000000; font-size: 18px;">Here since 2001 ☽🔮☾ Peruvian chic<br>
+T. 2028💍<br>
+✨ Dickheaded genderfluid child of inmigrants✨</div>
+</div>
+              </div>
+            
+            <p></p>
+            <small>Best on Desktop! If you're on mobile, click "START" <3 </small>
+            <div class="stamp-row">
+              <div class="stamp-card"><a href="https://store.oliviarodrigo.com/" target="_blank"><img src="blinkiesCafe-Sa.gif" alt="webstamp"></a></div>
+              <div class="stamp-card"><a href="https://www.twentyonepilots.com/" target="_blank"><img src="blinkiesCafe-QY.gif" alt="webstamp"></a></div>
+              <div class="stamp-card"><a href="https://shop.kraftklub.to/" target="_blank"><img src="blinkiesCafe-VO.gif" alt="webstamp"></a></div>
+              <div class="stamp-card"><a href="https://www.mychemicalromance.com/" target="_blank"><img src="blinkiesCafe-0D.gif" alt="webstamp"></a></div>
+              <div class="stamp-card"><a href="WhyamInotHer.html" target="_blank"><img src="blinkiesCafe-AF.gif" alt="webstamp"></a></div>  <div class="stamp-row">         
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/3711771ebb0c01a54c3fd74d6f8b6d1e/1e4ee533e40ac45f-89/s100x200/0515af15284a055618d6922129481309cd491c0e.jpg" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/3b760e758a4932fe4adb5a67b9e558ce/1e4ee533e40ac45f-3d/s100x200/f36973a22c13a072b7e295d1b03d54ddf1e2056a.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/f34a4d5896004c348ca6821f570b2d14/382e7f15eab99436-bc/s250x400/d54ca89198c9ccb67c00c5e3870d7ffe23f4eab0.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/66be78981d48a18392116c3fa952fca8/5732e589548c1c67-e1/s100x200/be997d5173da32608fe599b3487a99f86d03ac10.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/04463492092d40bbe3a59baf60723643/687832104e77ea72-d4/s100x200/70c616e039c94a758c0f4f6dd38f59bf777c8019.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/6099aec0262c51625baf6739378f657d/687832104e77ea72-5f/s100x200/21525c01f33d0741ec77f2c9917aaf433f3dab0e.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/1814ef6f996bbda3b9c332e0e54e4e25/687832104e77ea72-d6/s100x200/d7474ef6dd4479c4ab230bcee64bd853b6496d0e.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/0056f72b5ecfdad1715916dc17c15335/687832104e77ea72-24/s100x200/bb0cbaf9a4c770818885cfd1729cb79793e7bcfd.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/bb97700fb08790f7a8dbec21e8d3d0e3/9574327874d6f544-d1/s100x200/5cd7fe0f028a112cccdc05c648b9aae91b2e0f19.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/635c6595732689832992f4d579bac456/2383a6ea20118e43-be/s100x200/db6ab9b9988638acd2b2cb8677e5552f2e1097e6.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/4261f7f9227b71415c235d6847bc07cd/4ae708fa88fd6797-f5/s100x200/5cbb5b38873f4955ef8a6f452fc97bada39f8b28.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c4d8f7609ce07771d6b2d3cbf9dcb8ab/5732e589548c1c67-8c/s100x200/8ec9a0c04558c9c759d1077a21153b1e29e2d5b2.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/8f2e9a5d1105bfecf1a4277e0fbeb219/b18aff3ce9323114-63/s100x200/0a813959f8a1f163f9c74f9428d0cb050e4f2c3d.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/ee8db9402c98e19b7c7cfb3216cf50a1/09fe12a80bbf1fd7-c2/s100x200/d04b5367aa6ff0a292856217126b304b14e1cdfe.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/dd2726d02db3a15aea10a43fab1c8189/2313462277efff0c-8e/s100x200/11b5546df2b31c79bbde4bb28827d4428b1af244.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/8b673284d414874594bbb38bc8b4a4f1/2313462277efff0c-1d/s100x200/836b9cd52356519ceab138895939f468d32f6170.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/6c03ec128c6adfcccfd59e1ec2c9c1ab/c7d482321697bcc4-8e/s100x200/a69cafa864ccdfceddee051919b3b7ddd55997ab.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/794f3f31c665dc0da8c5b01790b33e3b/394622394477a7d8-c0/s100x200/aa4d90df9847974e99dabb620bd1ca1b41f62f53.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/748d7e805520056409b134d09dcea5a5/394622394477a7d8-c6/s100x200/90706904d8fc35cf0a0a74d8a8ba1fd7cfa1bffa.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c541a5ccd6954c5f5abf2eb01297d6c3/394622394477a7d8-60/s100x200/2956e1440d8c0426955c427516b932bd3106c927.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/ba3289d5f870a808167b937e730d58da/3c7512c789785a26-66/s100x200/e49009de9acb65c3509d7242bab9821d9af2a4f1.webp" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/851c648c1f55e58faaa0b9356c1630cf/3c7512c789785a26-82/s100x200/a2712e7e1d4ba2504c16b0481a358b4bbcddb26f.webp" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/5dff3f058f0fd3db65ef2679a33371b2/0f3ad1aff0d9e5ba-6d/s100x200/a0966439e39802e726fa49676da4e84820ec11b8.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c5dea8db4ecad9855d934b96070c91e3/3c7512c789785a26-98/s100x200/c0d38830c8c030702c15ba9672f9f1e5e5355d6a.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/6a11f915860083d7c6d279cdae575a59/4563b7e1e7a264b5-c2/s100x200/c6e18630657035f70041c9f91770b39f881313ea.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/7d7508164475fe5c98f57c51becfc22f/4563b7e1e7a264b5-45/s100x200/c46b538a0179b1583ec49aa74cda2f08223d9d30.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/93c13ac605079661f7809a0ad9d9d49c/4563b7e1e7a264b5-84/s100x200/c3fefb20af9af7f179908f91a6c86886e20b898b.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/continue_anyway_by_kicked_in_teeth-dbvqsb1.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/hewwo%20kitty.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/tumblr_pyhwgrcMF61y8ua8do1_100.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/ohoh-oh%20good%20to%20see%20you%20again.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/15.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/free_stamp__strawberry_addict_by_o0o_ayame_o0o-d36bxqf.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/high_school_musical_4__by_hsm_haters_fc.jpg" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/i_support_spinning_by_dinru.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/pink_stamp_by_ftourini.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/tumblr_inline_mr1jkyENHm1qz4rgp.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/tumblr_inline_pe6llamHiO1v11djx_1280.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/tumblr_pbyzqd09lD1xzybrpo4_100.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/tumblr_inline_pedksjWYF31vlugze_500.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/tumblr_inline_pgraffnuNe1v11djx_1280.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/me%20when%20amon%20came%20back%20as%20a%20ghoul%20send%20tweet.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/07_by_tcrtps-dbpu0er.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/487b391b-cf82-4ce0-90f4-a12d88486e2c.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/5vKP52s.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/i_never_understood_the_hate_by_teruing-d6z5fbt.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/old_web_stamp_by_vtge-dcgi6h4.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/pastel%20(19).png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/tumblr_inline_plj6czywpQ1vsqiz2_500.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/tumblr_pbbd1hGBbb1xz2nuuo4_100.png" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/e11dfaa5cf051490497c1ef14e8c4082/dd851ed67dd48774-80/s100x200/09b256663252601c1212e1cb3187e4b7d1927636.pnj" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/808768d74abb75d0f1a73f081024f6d4/dd851ed67dd48774-b4/s100x200/764cf959775ca259c5bd395b9ccb8fb0eae5fee3.jpg" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/b04c6252afbd977e21f842448848dd06/dd851ed67dd48774-6d/s100x200/398cafff0252e46dc62b6cfd2b03f792b9d1f562.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/369740ee96cce3e7cde2b4558e6e68e5/dd851ed67dd48774-91/s100x200/f1547923edd954493164bac90f9b4d532e1cac0f.pnj" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/16df8d110fbeefd853d02e17e85fa979/75e1970698d520db-e9/s100x200/0d723d8fc35944d2096788e63bcd0e65c3535fec.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/4bae3589315701a7cde3c4e81a54392f/75e1970698d520db-cb/s100x200/24ff4b147779da5613cd6c4a6ca358a654e48927.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/d00d4871811115c8882316c298873782/75e1970698d520db-9b/s100x200/47b60cdf03b60b161c41f85576b976593ec54013.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/c382246711eb3625b32519dcc214a54f/75e1970698d520db-9e/s100x200/cb74cb1a7803d5445c19c9b4d41bdcde0082aa71.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/dc2a5ab5f49da8171b6021e6bf473f89/75e1970698d520db-4e/s100x200/dff1284e13797b0d2d0aee9c29c19ed11b9560cb.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/d65749e24d9e70a42a4275d39c14d246/c7235cf795f34a29-cc/s100x200/650489481a52aca5fd2b8fa5dea9135341d014b6.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/c3050120d811db8e4e1cf539f51347cc/3c7512c789785a26-ca/s100x200/d58d0821fc612a749f38bfbc0f578636e7b44a6c.pnj" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/71a7f0892ee7909475f0dbf07c763eca/3c7512c789785a26-b5/s100x200/65213801e8db02cb60550045873fd625de189fec.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/d17cdeda6ca6e7d81505fff4c1aeb701/1b7051ab2d6e501a-a2/s100x200/b27da5783dca03fb5a67277962079c317a850b0e.pnj" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/5420e8e9d2b012b9f39319d9287f1305/1b7051ab2d6e501a-84/s100x200/8561ce3b6f7cbc7bb02d7036e2945abf28e22443.pnj" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/cc96c2796bcf9e71ec12f23e70250b7a/6672f487bca8affa-52/s100x200/5751f55f18de33c5df8aef31e4b3ae53215943a0.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/8af4d88aff7e37d1e81bc73f7213b7d4/86408c0474108007-9c/s100x200/68d2d977cd86d89b188947a23abd75d7d6b94837.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/dafb23c107296921aded535749c5cb05/86408c0474108007-73/s100x200/8d4a4115b97916a4c2a74ef275e5800bb7600f8b.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/ee338fb7c02399b170a6f452dc85b4b1/86408c0474108007-82/s100x200/bb5eb0aa8099ce9604de1907c1535758159aa322.jpg" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/04e4a9f23018cc64209e519cd4d8f2f6/86408c0474108007-27/s100x200/92ea82173c49d35ad665230b1887d767a4d3df90.jpg" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/untitled_by_theartofnotlikingyou-d6lqqe6.gif" alt="webstamp"></div> 
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/4f84e59a458e83cc30c7cfd5f2d4648d/6d3849bfe5555df5-fb/s100x200/f41f5df5adfbe71fa46fcad62b17c585558f9ec0.gifv" alt="webstamp"></div>     
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/e38419dde170cc90b6b5404eac24fd2c/6d3849bfe5555df5-1e/s100x200/2ea41d28871080edf96cce3efb519e766370b9ed.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/a03b704b7d9a289a09fcc7d7cc278dfc/6d3849bfe5555df5-1e/s100x200/d39ead854a4db344a77f5bdbc02e19842a830cef.pnj" alt="webstamp"></div>   
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/7f34c15bf08c9dd6b879443bf9543b08/a2b9a9b92798b874-8c/s100x200/ca458d345e9433eca308984c636ad6e20e1da4c4.gifv" alt="webstamp"></div>   
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/2bb49d4f0dd47abeda027015a28d5181/4650c263c2440927-6b/s100x200/33ddc5ded0f14250bd2925c8f6d8a2395db2a281.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/77483a3d44f50b8690fb5672303bdec4/4650c263c2440927-0b/s100x200/dc130041be960c747e860795fa1ed1fd9f91e3d7.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c0de60c9501f1f63cc3aa8a16e01d650/4650c263c2440927-60/s100x200/ba5162ca0556213992dc34fdc159dfcd8ac6c602.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/5c997b95f4e35391ad5a0e83315cd99b/4650c263c2440927-90/s100x200/e5c7c92b70f5a18711a9b9ba0612f773b22633fd.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/ecc7a24943bb3b6c40345229f201da62/473928ea48888009-9f/s100x200/e75ae400acfe9825ce08ae940aed68fd938b80b7.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/5e1c82eab347ff9c422c1722644ce1e7/473928ea48888009-66/s100x200/e87c6686cb3942ab258a121817dcc4a64bbc0f57.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/4ee123bb50e73fcd62c08b404186dd51/473928ea48888009-55/s100x200/4643effe23a593b821e810e1e2b7f7a7c5dc35f2.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/3ce1df334fe20a7cc7f2f7f251b8480e/59615182664b0a64-3a/s100x200/7ac5cf915adc3fa300098407e7faff3371812653.gifv" alt="webstamp"></div>
+ 
+            </div>
+            
+
+	
+            <h3>THIS WEBSITE HAS WON AWARDS (sort of)</h3>
+            <img style="width: 400px; height: auto;" src="award-antinazi.png" alt="Webstamp">
+            THANK YOU TO THESE AMAZING PEOPLE:
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;" class="mutuals">
+            <a href="https://omfg.neocities.org/graphics" target="_blank"><img src="omfg-button-1.gif"></a>
+            <a href="https://blinkies.cafe/archive" target="_blank"><img src="https://transbro.neocities.org/Buttons/mutuals/blinkies.cafe.gif"></a>
+            <a href="https://sunny-cities.neocities.org/" target="_blank"><img src="https://transbro.neocities.org/Buttons/mutuals/SunnyCities.gif"></a>
+            <a href="https://artsyazure.com/" target="_blank"><img src="https://artsyazure.com/assets/sitebutton1.gif"></a>
+            <a href="https://transbro.neocities.org/" target="_blank"><img src="https://transbro.neocities.org/Buttons/transbrobutton.gif"></a>
+            <a href="https://skelenby.neocities.org/"> <img src="https://skelenby.neocities.org/src/skelenbybtn.gif" alt="skelenby: create - collect"> <br>
+              </a> Should I have missed someone please hit me up! <a href="mailto:nick.mails@icloud.com">nick.mails@icloud.com</a></div>
+            </div>
+            <br>
+            <div class="footer">
+            <a href="privacy.html" target="_blank">privacy</a>
+            </div>
+          </div>
+
+          <div class="pane" data-page="network">
+            <div class="mini-grid">
+              <div class="mini-window">
+                <div class="mini-title"> <img src="https://64.media.tumblr.com/d178f8a717728abecfa8ba3e0a34530d/4ae708fa88fd6797-23/s75x75_c1/0a4b8a7abef403a903989f2c24e4acfe18f1def7.pnj">   Sign Up</div>
+                <div class="mini-body">
+                  <p>Subscribe or else ^^</p>
+                  <ul>
+                    <li><a href="https://threads.com/clubmateflasche" target="_blank">Nicky says even more shit</a></li>
+                    <li><a href="https://privatelyownedspiralgalaxy.neocities.org/" target="_blank">I have a NeoCities too</a></li>
+
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mini-window">
+                
+                <div class="mini-title"><img src="https://64.media.tumblr.com/48903f93b7581eddf2a8e6bb6d2070ac/825667254f79c386-c6/s75x75_c1/4f779f0084f9a237ef84f6d5f409833aca4f8e3d.gifv">MORE ONLINE?</div> 
+                <div class="mini-body">
+                  <div style="display: grid; display: flex; flex-wrap: wrap; gap: 10px;" class="socials">
+                  <a href="https://www.instagram.com/clubmateflasche/" target="_blank"><img src="instagram.png" alt="Instagram logo">  </a>
+                  <a href="https://twitch.tv/hey_nicky" target="_blank"> <img src="twitch.png" alt="Twitch logo"> </a>
+                  <a href="https://www.youtube.com/@clubmateflasche" target="_blank"> <img src="youtube.png" alt="YouTube logo"> </a>
+                 <a href="https://heynicky.tumblr.com/" target="_blank">  <img src="tumblr.png" alt="Tumblr logo"> </a>  
+                 <a href="https://lnk.bio/clubmateflasche" target="_blank">  <img src="https://blinkies.cafe/b/display/0280-pinkalien.gif" alt="take me away logo"> </a>
+
+                </div>
+                </div>
+              </div>
+            </div>
+          
+
+                        <div class="mini-window">
+                <div class="mini-title"> <img src="https://64.media.tumblr.com/b845095c4f9ffb3175386c8700304cd2/825667254f79c386-95/s75x75_c1/4fce2b5a523bf3238ac679adf91208640a51e245.gifv"> CHECK OUT THESE LOVELY SITES</div>
+                <div class="mini-body">
+                  <p>Yummy!</p>
+                  <ul>
+                    <li><a href="https://kotatsu.me/" target="_blank">kotatsu.me</a></li>
+                    <li><a href="https://graphics-cafe.tumblr.com/" target="_blank">glittergeist</a></li>
+                    <li><a href="https://blinkie.world/" target="_blank">blinkie.world !FLASH WARNING!</a></li>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;" class="mutuals">
+            <a href="https://omfg.neocities.org/graphics" target="_blank"><img src="omfg-button-1.gif"></a>
+            <a href="https://blinkies.cafe/archive" target="_blank"><img src="https://transbro.neocities.org/Buttons/mutuals/blinkies.cafe.gif"></a>
+            <a href="https://sunny-cities.neocities.org/" target="_blank"><img src="https://transbro.neocities.org/Buttons/mutuals/SunnyCities.gif"></a>
+            <a href="https://artsyazure.com/" target="_blank"><img src="https://artsyazure.com/assets/sitebutton1.gif"></a>
+            <a href="https://transbro.neocities.org/" target="_blank"><img src="https://transbro.neocities.org/Buttons/transbrobutton.gif"></a>
+            <a href="https://skelenby.neocities.org/"> <img src="https://skelenby.neocities.org/src/skelenbybtn.gif" alt="skelenby: create - collect"> </a><br>
+                    More to come soon! <3
+
+                  </ul>
+                </div>
+              </div>
+</div>
+          <div class="pane" data-page="inbox">
+            <div class="mini-window">
+              <div class="mini-title">Inbox</div>
+              <div class="mini-body">
+                <p>New mail from: <a href="mailto:me@nicky.wtf">me@nicky.wtf</a></p>
+                <p>Subject: “Check out, Big Spider!”</p>
+                <p>Unread: 42069 items</p>
+              </div>
+            </div>
+            <div class="mini-window">
+              <div class="mini-title">Messages</div>
+              <div class="mini-body">
+                <ul>
+                  
+                  <li>Friend request from <a href="https://zer0deleted.carrd.co" target="_blank">DELETED</a></li>
+                  <li><strong>Event: New Hot Concerts in your area!!!!!!!!!!</strong></li>
+                  <li>Reminder: You have 222243 unpaid invoices</li>
+                </ul>
+              </div>
+            </div>
+            <div class="mini-window">
+              <div class="mini-title">Guestbook! Say something nice! or not-</div>
+              <div class="mini-body">
+            <iframe src="https://www5.cbox.ws/box/?boxid=964858&boxtag=STen7t" width="100%" height="450" allowtransparency="yes" allow="autoplay" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"></iframe>	
+
+            </div>
+          </div></div>
+
+          <div class="pane" data-page="music">
+            <div class="mini-window">
+              <div class="mini-title">FIND MY OBSESSIONS HERE:</div>
+              <div class="mini-body">
+                <p><a href="https://www.discogs.com/user/nickyspilots" target="_blank">Discogs.app</a></p>
+                <p><a href="https://i.airbuds.fm/nicky.778/xoiteDTcW0" target="_blank">AIRBUDS.app</a></p>
+                <p><a href="https://record.club/nicky" target="_blank">RecordClub.app</a></p>
+                <p><a href="https://music.apple.com/profile/clubmateflasche" target="_blank">AppleMusic.app</a></p>
+              </div><br>
+            </div>
+            <div class="mini-window">
+              <div class="mini-title">OBSESSION!"§)$=§"</div>
+              <div class="mini-body">
+                <iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="150" style="width:100%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/de/album/stranger/1736994853?i=1736995332"></iframe>
+              </div>
+            </div>
+             <div class="mini-window">
+                <div class="mini-title"> <img src="https://64.media.tumblr.com/f768a9798216e7242c4a6dc45c419258/5732e589548c1c67-99/s75x75_c1/67afbb3c6099118e5df70b3928f5f03b4e973911.gifv"> MUSIC! FOR THE SOUL!</div>
+                <div class="mini-body">
+                  <p><a href="https://www.youtube.com/watch?v=R7TnNytobws&pp=ygUPU2llcnJhIGxlb25pZGVu" target="_blank">SIERRA_Leoniden.mp3</a></p>
+                  <p><a href="https://www.youtube.com/watch?v=6a7V-rG-Q4Y&pp=ygUPZWluIHNvbmcgcmVpY2h0" target="_blank">EIN-SONG-REICHT_Kraftklub.mp3</a></p>
+                  <p><a href="https://www.youtube.com/watch?v=mXaNA8Q3JW8&pp=ygUISXN5IHlvbGE%3D" target="_blank">ISY!_yola&Dani_Lia.mp3</a></p>
+                  <p><a href="https://www.youtube.com/watch?v=9FTKuFESTMU" target="_blank">IT'S-GOLDEN-HOUR-SOMEWHERE_LOVEJOY.mp3</a></p>
+                  <p><a href="https://www.youtube.com/watch?v=WumCI56iYUk" target="_blank">BULLS-IN-THE-BRONX_PIERCE_THE_VEIL.mp3</a></p>
+                  <p><a href="https://www.youtube.com/watch?v=RRKJiM9Njr8" target="_blank">WELCOME-TO-THE-BLACK-PARADE_MY_CHEMICAL_ROMANCE.mp3</a></p>
+                </div>
+              </div>
+          </div>
+
+          <div class="pane" data-page="photos">
+            <div class="mini-window">
+              <div class="mini-title">Photos</div>
+              <div class="mini-body">
+                <p>ALL THE STAMPS!!!!!!!!!!!!!!!</p>
+                <p>CHECK OUT <a href="#Network" target="_blank">Network</a> for more and credits!</p>
+              <div class="stamp-card"><img src="blinkiesCafe-Sa.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="blinkiesCafe-QY.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="blinkiesCafe-VO.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="blinkiesCafe-0D.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="blinkiesCafe-AF.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="blinkiesCafe-bB.gif" alt="webstamp"></div>
+                            <div class="stamp-card"><img src="https://64.media.tumblr.com/1804e98979ff7aca1c28934c0c4d13f6/c3e62ee6e94b49ee-9a/s250x400/9de61057aff452e0be34305fe0f04849235946e9.webp" alt="webstamp"></div>
+                                          <div class="stamp-card"><img src="https://64.media.tumblr.com/e48ddc76d2e86a4a75cefbe3956ef4db/c3e62ee6e94b49ee-58/s250x400/9d600f2bdb79087320deb4685116dbd0b06f2699.gifv" alt="webstamp"></div>
+                                                        <div class="stamp-card"><img src="https://64.media.tumblr.com/8726f3adccfec27a7d22fdf9ac7e130d/c3e62ee6e94b49ee-0e/s250x400/cc31b5bb1ed14666a166149ec6ace90890d9d583.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/e05fa505b0903efa40b293b3caf9602e/c3e62ee6e94b49ee-12/s250x400/bcc9e6b076afb2a3f578067d107162379dede1be.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/db4a4750cd9bc61340a8ae307dcf5c78/0cf7d0e14ff711a5-52/s250x400/948e89d4f732ba2e0947e39b449eb414a6a86674.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/b2db63193d328a623ce741c6152d93cf/efa59677884e5c34-ad/s400x600/14fab98885a7a63dee0c5ace58e473576f757d8c.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/3ac3e045e49a74b5a12c091aab903160/5732e589548c1c67-65/s250x400/576f362910b2292f6e7449e69ef8e76851fec4b9.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/7ad547cf196ab99913e95807549850c5/c7622e3007499f41-a1/s250x400/99cf6164a373f4ee4fe9b9205d4c1ad2134070ed.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c9866be81498de05e3c727f5dfe4300c/a5e52d0aeeb9d8b9-bf/s250x400/fea970b172b2db0570a1af12525cb58074ef1b6f.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c94b6802589a524b67321ac85754a0ca/a5e52d0aeeb9d8b9-eb/s250x400/b8e4d599bfd30cda038f1f44693b892e6dba0808.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/97dbbf48cd8216ae5917848367a9282e/a5e52d0aeeb9d8b9-46/s250x400/d1bbf4ed3223de282b8282e44c37e40d94bb87c0.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/21ec3d9cba29e7ee7ec134331c25bde4/a5e52d0aeeb9d8b9-90/s250x400/c6b85adedaac18b545c1b636bbf376fb9d5649ca.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/a4cca1232b1f15b791c5e7d5b6eaf7d5/5732e589548c1c67-af/s250x400/a7f539d2694a3a1fac42de151bc3b7cb8e5ec58a.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/d454fc30f2f58630d0ac88aeafb2e0af/2383a6ea20118e43-dc/s100x200/799bf5d9ecc63e23ae8e8db20f0dffcff4a971f7.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/8c1965df5a6ccc3eabac593e574419b/394622394477a7d8-71/s250x400/289df5bf43a7740b67c4506a89ab1b42cceddc81.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/f1335d202c724c1e05798764200441b6/394622394477a7d8-3d/s250x400/14e3b2923af7a216d8f4a13ea78c57a8a7badbcf.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/1f32c415add31452c390aa9cd4a45062/244fdab6b045e016-32/s250x400/36ba53e329fcdfe1edd1c34598dcc8de56afbd90.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/8f246c50d65f0e9a661a04c155d813ec/244fdab6b045e016-a8/s250x400/205b446cbeb49a41d591b92ac9ef055ffe1fa075.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/5206657ab79f628b0bd77d1981d6f52c/244fdab6b045e016-46/s250x400/8d689061bd2f917c04fc3b1b9ef9ce6c490c570a.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/f3043c98414b1922da955a7bc3dd665c/244fdab6b045e016-1e/s250x400/51fbe63f12a066b600713528458cde4e442fb4d1.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/77dbcc6ee47c37f33b8d33757a06afe2/244fdab6b045e016-59/s250x400/192c2eef91e10336b9239eab29cdf053994b07dd.gifv" alt="webstamp"></div>
+                            <div class="stamp-card"><img src="https://64.media.tumblr.com/db4a4750cd9bc61340a8ae307dcf5c78/0cf7d0e14ff711a5-52/s250x400/948e89d4f732ba2e0947e39b449eb414a6a86674.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/db4a4750cd9bc61340a8ae307dcf5c78/0cf7d0e14ff711a5-52/s250x400/948e89d4f732ba2e0947e39b449eb414a6a86674.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/db4a4750cd9bc61340a8ae307dcf5c78/0cf7d0e14ff711a5-52/s250x400/948e89d4f732ba2e0947e39b449eb414a6a86674.gifv" alt="webstamp"></div>
+                            <div class="stamp-card"><img src="blinkiesCafe-CG.gif" alt="webstamp"></div>
+                            <div class="stamp-card"><img src="blinkiesCafe-GP.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/b2db63193d328a623ce741c6152d93cf/efa59677884e5c34-ad/s400x600/14fab98885a7a63dee0c5ace58e473576f757d8c.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://blinkies.cafe/b/display/0210-werewolfmoonhowl.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/3ac3e045e49a74b5a12c091aab903160/5732e589548c1c67-65/s250x400/576f362910b2292f6e7449e69ef8e76851fec4b9.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/7ad547cf196ab99913e95807549850c5/c7622e3007499f41-a1/s250x400/99cf6164a373f4ee4fe9b9205d4c1ad2134070ed.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c9866be81498de05e3c727f5dfe4300c/a5e52d0aeeb9d8b9-bf/s250x400/fea970b172b2db0570a1af12525cb58074ef1b6f.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c94b6802589a524b67321ac85754a0ca/a5e52d0aeeb9d8b9-eb/s250x400/b8e4d599bfd30cda038f1f44693b892e6dba0808.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/97dbbf48cd8216ae5917848367a9282e/a5e52d0aeeb9d8b9-46/s250x400/d1bbf4ed3223de282b8282e44c37e40d94bb87c0.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/21ec3d9cba29e7ee7ec134331c25bde4/a5e52d0aeeb9d8b9-90/s250x400/c6b85adedaac18b545c1b636bbf376fb9d5649ca.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/a4cca1232b1f15b791c5e7d5b6eaf7d5/5732e589548c1c67-af/s250x400/a7f539d2694a3a1fac42de151bc3b7cb8e5ec58a.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/d454fc30f2f58630d0ac88aeafb2e0af/2383a6ea20118e43-dc/s100x200/799bf5d9ecc63e23ae8e8db20f0dffcff4a971f7.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/f1335d202c724c1e05798764200441b6/394622394477a7d8-3d/s250x400/14e3b2923af7a216d8f4a13ea78c57a8a7badbcf.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/1f32c415add31452c390aa9cd4a45062/244fdab6b045e016-32/s250x400/36ba53e329fcdfe1edd1c34598dcc8de56afbd90.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/8f246c50d65f0e9a661a04c155d813ec/244fdab6b045e016-a8/s250x400/205b446cbeb49a41d591b92ac9ef055ffe1fa075.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/5206657ab79f628b0bd77d1981d6f52c/244fdab6b045e016-46/s250x400/8d689061bd2f917c04fc3b1b9ef9ce6c490c570a.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/f3043c98414b1922da955a7bc3dd665c/244fdab6b045e016-1e/s250x400/51fbe63f12a066b600713528458cde4e442fb4d1.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/77dbcc6ee47c37f33b8d33757a06afe2/244fdab6b045e016-59/s250x400/192c2eef91e10336b9239eab29cdf053994b07dd.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/9548c8ceb74783f4d940bf36c78eae12/4563b7e1e7a264b5-11/s100x200/d68da43b4c2f40fba3dcac20f593d783755e326b.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="blinkiesCafe-M1.gif" alt="webstamp"></div>
+                        <div class="stamp-card"><img src="https://64.media.tumblr.com/200778f53c8e873f85fe6fe0abc918a8/4563b7e1e7a264b5-a5/s100x200/0259f9776a93cdde4833cb8b1dbf4de783298ace.gifv" alt="webstamp"></div>
+            </div><br>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/444e336c58f295647dc07fa173d0d60e/4160be3cc2b84620-e3/s500x750/153ecb75962a68b7182e293f1bb0ff901cddc006.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/444e336c58f295647dc07fa173d0d60e/4160be3cc2b84620-e3/s500x750/153ecb75962a68b7182e293f1bb0ff901cddc006.gifv" alt="webstamp"></div>
+            </div><br>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/444e336c58f295647dc07fa173d0d60e/4160be3cc2b84620-e3/s500x750/153ecb75962a68b7182e293f1bb0ff901cddc006.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/444e336c58f295647dc07fa173d0d60e/4160be3cc2b84620-e3/s500x750/153ecb75962a68b7182e293f1bb0ff901cddc006.gifv" alt="webstamp"></div>
+              <br><br>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/3711771ebb0c01a54c3fd74d6f8b6d1e/1e4ee533e40ac45f-89/s100x200/0515af15284a055618d6922129481309cd491c0e.jpg" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/3b760e758a4932fe4adb5a67b9e558ce/1e4ee533e40ac45f-3d/s100x200/f36973a22c13a072b7e295d1b03d54ddf1e2056a.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/f34a4d5896004c348ca6821f570b2d14/382e7f15eab99436-bc/s250x400/d54ca89198c9ccb67c00c5e3870d7ffe23f4eab0.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/66be78981d48a18392116c3fa952fca8/5732e589548c1c67-e1/s100x200/be997d5173da32608fe599b3487a99f86d03ac10.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/04463492092d40bbe3a59baf60723643/687832104e77ea72-d4/s100x200/70c616e039c94a758c0f4f6dd38f59bf777c8019.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/6099aec0262c51625baf6739378f657d/687832104e77ea72-5f/s100x200/21525c01f33d0741ec77f2c9917aaf433f3dab0e.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/1814ef6f996bbda3b9c332e0e54e4e25/687832104e77ea72-d6/s100x200/d7474ef6dd4479c4ab230bcee64bd853b6496d0e.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/0056f72b5ecfdad1715916dc17c15335/687832104e77ea72-24/s100x200/bb0cbaf9a4c770818885cfd1729cb79793e7bcfd.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/bb97700fb08790f7a8dbec21e8d3d0e3/9574327874d6f544-d1/s100x200/5cd7fe0f028a112cccdc05c648b9aae91b2e0f19.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/635c6595732689832992f4d579bac456/2383a6ea20118e43-be/s100x200/db6ab9b9988638acd2b2cb8677e5552f2e1097e6.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/4261f7f9227b71415c235d6847bc07cd/4ae708fa88fd6797-f5/s100x200/5cbb5b38873f4955ef8a6f452fc97bada39f8b28.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c4d8f7609ce07771d6b2d3cbf9dcb8ab/5732e589548c1c67-8c/s100x200/8ec9a0c04558c9c759d1077a21153b1e29e2d5b2.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/8f2e9a5d1105bfecf1a4277e0fbeb219/b18aff3ce9323114-63/s100x200/0a813959f8a1f163f9c74f9428d0cb050e4f2c3d.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/ee8db9402c98e19b7c7cfb3216cf50a1/09fe12a80bbf1fd7-c2/s100x200/d04b5367aa6ff0a292856217126b304b14e1cdfe.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/dd2726d02db3a15aea10a43fab1c8189/2313462277efff0c-8e/s100x200/11b5546df2b31c79bbde4bb28827d4428b1af244.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/8b673284d414874594bbb38bc8b4a4f1/2313462277efff0c-1d/s100x200/836b9cd52356519ceab138895939f468d32f6170.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/6c03ec128c6adfcccfd59e1ec2c9c1ab/c7d482321697bcc4-8e/s100x200/a69cafa864ccdfceddee051919b3b7ddd55997ab.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/794f3f31c665dc0da8c5b01790b33e3b/394622394477a7d8-c0/s100x200/aa4d90df9847974e99dabb620bd1ca1b41f62f53.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/748d7e805520056409b134d09dcea5a5/394622394477a7d8-c6/s100x200/90706904d8fc35cf0a0a74d8a8ba1fd7cfa1bffa.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c541a5ccd6954c5f5abf2eb01297d6c3/394622394477a7d8-60/s100x200/2956e1440d8c0426955c427516b932bd3106c927.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/continue_anyway_by_kicked_in_teeth-dbvqsb1.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/hewwo%20kitty.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/tumblr_pyhwgrcMF61y8ua8do1_100.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/ohoh-oh%20good%20to%20see%20you%20again.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/15.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/free_stamp__strawberry_addict_by_o0o_ayame_o0o-d36bxqf.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/high_school_musical_4__by_hsm_haters_fc.jpg" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/i_support_spinning_by_dinru.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/pink_stamp_by_ftourini.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/tumblr_inline_mr1jkyENHm1qz4rgp.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/tumblr_inline_pe6llamHiO1v11djx_1280.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/tumblr_pbyzqd09lD1xzybrpo4_100.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/tumblr_inline_pedksjWYF31vlugze_500.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/tumblr_inline_pgraffnuNe1v11djx_1280.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps/me%20when%20amon%20came%20back%20as%20a%20ghoul%20send%20tweet.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/07_by_tcrtps-dbpu0er.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/487b391b-cf82-4ce0-90f4-a12d88486e2c.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/5vKP52s.gif" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/i_never_understood_the_hate_by_teruing-d6z5fbt.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/old_web_stamp_by_vtge-dcgi6h4.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/pastel%20(19).png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/tumblr_inline_plj6czywpQ1vsqiz2_500.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/tumblr_pbbd1hGBbb1xz2nuuo4_100.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/untitled_by_theartofnotlikingyou-d6lqqe6.gif" alt="webstamp"></div>
+                     <div class="stamp-card"><img src="https://64.media.tumblr.com/e11dfaa5cf051490497c1ef14e8c4082/dd851ed67dd48774-80/s100x200/09b256663252601c1212e1cb3187e4b7d1927636.pnj" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/808768d74abb75d0f1a73f081024f6d4/dd851ed67dd48774-b4/s100x200/764cf959775ca259c5bd395b9ccb8fb0eae5fee3.jpg" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/b04c6252afbd977e21f842448848dd06/dd851ed67dd48774-6d/s100x200/398cafff0252e46dc62b6cfd2b03f792b9d1f562.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/369740ee96cce3e7cde2b4558e6e68e5/dd851ed67dd48774-91/s100x200/f1547923edd954493164bac90f9b4d532e1cac0f.pnj" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/16df8d110fbeefd853d02e17e85fa979/75e1970698d520db-e9/s100x200/0d723d8fc35944d2096788e63bcd0e65c3535fec.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/4bae3589315701a7cde3c4e81a54392f/75e1970698d520db-cb/s100x200/24ff4b147779da5613cd6c4a6ca358a654e48927.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/d00d4871811115c8882316c298873782/75e1970698d520db-9b/s100x200/47b60cdf03b60b161c41f85576b976593ec54013.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/c382246711eb3625b32519dcc214a54f/75e1970698d520db-9e/s100x200/cb74cb1a7803d5445c19c9b4d41bdcde0082aa71.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/dc2a5ab5f49da8171b6021e6bf473f89/75e1970698d520db-4e/s100x200/dff1284e13797b0d2d0aee9c29c19ed11b9560cb.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/d65749e24d9e70a42a4275d39c14d246/c7235cf795f34a29-cc/s100x200/650489481a52aca5fd2b8fa5dea9135341d014b6.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/c3050120d811db8e4e1cf539f51347cc/3c7512c789785a26-ca/s100x200/d58d0821fc612a749f38bfbc0f578636e7b44a6c.pnj" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/71a7f0892ee7909475f0dbf07c763eca/3c7512c789785a26-b5/s100x200/65213801e8db02cb60550045873fd625de189fec.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/d17cdeda6ca6e7d81505fff4c1aeb701/1b7051ab2d6e501a-a2/s100x200/b27da5783dca03fb5a67277962079c317a850b0e.pnj" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/5420e8e9d2b012b9f39319d9287f1305/1b7051ab2d6e501a-84/s100x200/8561ce3b6f7cbc7bb02d7036e2945abf28e22443.pnj" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/cc96c2796bcf9e71ec12f23e70250b7a/6672f487bca8affa-52/s100x200/5751f55f18de33c5df8aef31e4b3ae53215943a0.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/8af4d88aff7e37d1e81bc73f7213b7d4/86408c0474108007-9c/s100x200/68d2d977cd86d89b188947a23abd75d7d6b94837.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/dafb23c107296921aded535749c5cb05/86408c0474108007-73/s100x200/8d4a4115b97916a4c2a74ef275e5800bb7600f8b.gifv" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/ee338fb7c02399b170a6f452dc85b4b1/86408c0474108007-82/s100x200/bb5eb0aa8099ce9604de1907c1535758159aa322.jpg" alt="webstamp"></div>
+            <div class="stamp-card"><img src="https://64.media.tumblr.com/04e4a9f23018cc64209e519cd4d8f2f6/86408c0474108007-27/s100x200/92ea82173c49d35ad665230b1887d767a4d3df90.jpg" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://y2k.neocities.org/stamps2/untitled_by_theartofnotlikingyou-d6lqqe6.gif" alt="webstamp"></div>            
+                          <div class="stamp-card"><img src="https://64.media.tumblr.com/4f84e59a458e83cc30c7cfd5f2d4648d/6d3849bfe5555df5-fb/s100x200/f41f5df5adfbe71fa46fcad62b17c585558f9ec0.gifv" alt="webstamp"></div>     
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/e38419dde170cc90b6b5404eac24fd2c/6d3849bfe5555df5-1e/s100x200/2ea41d28871080edf96cce3efb519e766370b9ed.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/a03b704b7d9a289a09fcc7d7cc278dfc/6d3849bfe5555df5-1e/s100x200/d39ead854a4db344a77f5bdbc02e19842a830cef.pnj" alt="webstamp"></div>   
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/7f34c15bf08c9dd6b879443bf9543b08/a2b9a9b92798b874-8c/s100x200/ca458d345e9433eca308984c636ad6e20e1da4c4.gifv" alt="webstamp"></div>   
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/2bb49d4f0dd47abeda027015a28d5181/4650c263c2440927-6b/s100x200/33ddc5ded0f14250bd2925c8f6d8a2395db2a281.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/77483a3d44f50b8690fb5672303bdec4/4650c263c2440927-0b/s100x200/dc130041be960c747e860795fa1ed1fd9f91e3d7.pnj" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/c0de60c9501f1f63cc3aa8a16e01d650/4650c263c2440927-60/s100x200/ba5162ca0556213992dc34fdc159dfcd8ac6c602.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/5c997b95f4e35391ad5a0e83315cd99b/4650c263c2440927-90/s100x200/e5c7c92b70f5a18711a9b9ba0612f773b22633fd.gifv" alt="webstamp"></div>
+                          <div class="stamp-card"><img src="https://64.media.tumblr.com/ecc7a24943bb3b6c40345229f201da62/473928ea48888009-9f/s100x200/e75ae400acfe9825ce08ae940aed68fd938b80b7.png" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/5e1c82eab347ff9c422c1722644ce1e7/473928ea48888009-66/s100x200/e87c6686cb3942ab258a121817dcc4a64bbc0f57.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/4ee123bb50e73fcd62c08b404186dd51/473928ea48888009-55/s100x200/4643effe23a593b821e810e1e2b7f7a7c5dc35f2.gifv" alt="webstamp"></div>
+              <div class="stamp-card"><img src="https://64.media.tumblr.com/3ce1df334fe20a7cc7f2f7f251b8480e/59615182664b0a64-3a/s100x200/7ac5cf915adc3fa300098407e7faff3371812653.gifv" alt="webstamp"></div>
+            </div>
+              </div>
+          
+
+          <div class="pane" data-page="video">
+            <img src="giphy.gif">
+            <div class="mini-window">
+              <div class="mini-title">Videos!</div>
+              <div class="mini-body">
+                <p>Soon there will be videos. or maybe not.</p>
+                <ul>
+                  <li><a href="https://youtu.be/fqx-DgdeuMI?si=mJmXjoNdgM-uUhlH">Turning Minecraft into a Space exploration game</a></li>
+                  <li><a href="https://www.youtube.com/watch?v=MCaVV0FuTEY">MariMari - POP Shuvit!</a></li>
+                  <li><a href="https://youtu.be/yYiCdD3x8OU?si=ujthBli5_2cMba2k">HARHAR</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="pane" data-page="trash">
+            <div class="dialog">
+              <div class="dialog-header">Recycle Bin</div>
+              <div class="dialog-body">I LIVE HERE GO AWAY</div>
+              <div class="dialog-buttons">
+                <div class="dialog-button">Empty</div>
+                <div class="dialog-button">Restore</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="taskbar">
+    <div class="start-button">Start</div>
+    <div class="task-info">
+      <div class="taskbar-chip">Welcome</div>
+      <div class="taskbar-chip" id="berlin-time">6:18 PM</div>
+      <script>
+        function updateBerlinTime() {
+          const berlinTime = new Date().toLocaleString('en-US', {
+        timeZone: 'Europe/Berlin',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+          });
+          document.getElementById('berlin-time').textContent = berlinTime;
+        }
+        updateBerlinTime();
+        setInterval(updateBerlinTime, 1000);
+      </script>
+    </div>
+  </div>
+
+  <script>
+    const iconItems = document.querySelectorAll('.icon-item');
+    const panes = document.querySelectorAll('.pane');
+    const titleLabel = document.querySelector('.titlebar span');
+    const pageTitles = {
+      home: 'Welcome.exe',
+      network: 'Network',
+      inbox: 'Inbox',
+      music: 'Music',
+      photos: 'Photos',
+      video: 'Video',
+      trash: 'Recycle Bin'
+    };
+
+    iconItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const page = item.dataset.page;
+        if (!page) return;
+
+        iconItems.forEach(icon => icon.classList.toggle('active', icon === item));
+        panes.forEach(pane => pane.classList.toggle('active', pane.dataset.page === page));
+        titleLabel.textContent = pageTitles[page] || 'Spiral Galaxy';
+      });
+    });
+
+    const startButton = document.querySelector('.start-button');
+    const iconPanel = document.querySelector('.icon-panel');
+    if (startButton && iconPanel) {
+      startButton.addEventListener('click', () => {
+        if (window.matchMedia('(max-width: 768px)').matches) {
+          iconPanel.classList.toggle('start-visible');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

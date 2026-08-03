@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101113" />
+    <title>Spidertracker</title>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="map-screen" aria-label="Spidertracker map">
+        <div id="map" aria-label="Map of Hamburg"></div>
+
+        <header class="map-header">
+          <p class="wordmark">SPIDERTRACKER</p>
+          <button class="place-switcher" id="worldwide-toggle" type="button" aria-pressed="true">
+            <span>Hamburg</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
+          </button>
+        </header>
+
+        <div class="weather-chip" id="weather-chip" aria-label="Current temperature in Hamburg">
+          <span class="weather-symbol" aria-hidden="true">☀︎</span><span id="temperature-value">--°</span>
+        </div>
+
+        <div class="map-controls" aria-label="Map controls">
+          <button class="map-control" id="locate-me" type="button" aria-label="Find my location">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 13.7 20l-3.4-6.3-6.8-3.4z"/></svg>
+          </button>
+          <button class="map-control" id="map-style" type="button" aria-label="Map appearance">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 6 8.5-3 8.5 3-8.5 3zM3.5 12l8.5 3 8.5-3M3.5 18l8.5 3 8.5-3"/></svg>
+          </button>
+        </div>
+
+        <button class="report-button" id="report-sighting" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          Report a sighting
+        </button>
+
+        <section class="map-dock" id="map-dock" aria-label="Map menu">
+          <button class="dock-handle" id="dock-toggle" type="button" aria-expanded="false" aria-label="Expand map menu"><span></span></button>
+          <div class="dock-compact">
+            <button class="dock-search" id="search-toggle" type="button" aria-label="Search Spidertracker">
+              <svg class="dock-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6"/><path d="m15.3 15.3 4.2 4.2"/></svg>
+              <span class="dock-search-label">Spidertracker</span>
+              <svg class="dock-mic-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9.1" y="2.8" width="5.8" height="10.6" rx="2.9"/><path d="M5.8 11.3a6.2 6.2 0 0 0 12.4 0M12 17.6v3.6"/></svg>
+            </button>
+            <button class="profile-trigger" id="profile-toggle" type="button" aria-label="Open profile"><span>E</span></button>
+
+          </div>
+          <div class="dock-expanded" aria-hidden="true">
+            <div class="dock-section-heading"><span>Explore</span><button class="text-button" id="close-dock" type="button">Done</button></div>
+            <p class="dock-title">Find spiders around Hamburg</p>
+            <div class="quick-actions">
+              <button class="quick-action" data-search="Parks"><span class="quick-icon park-icon">⌁</span><span>Parks</span></button>
+              <button class="quick-action" data-search="Gardens"><span class="quick-icon garden-icon">✦</span><span>Gardens</span></button>
+              <button class="quick-action" data-search="Waterfront"><span class="quick-icon water-icon">≈</span><span>Waterfront</span></button>
+              <button class="quick-action" data-search="Recent sightings"><span class="quick-icon sighting-icon">•</span><span>Sightings</span></button>
+            </div>
+            <button class="dock-row" id="view-sightings" type="button"><span class="row-icon">⌁</span><span>Recent sightings</span><span class="chevron">›</span></button>
+            <button class="dock-row mobile-report" id="mobile-report-sighting" type="button"><span class="row-icon report-row-icon">+</span><span>Report a sighting</span><span class="chevron">›</span></button>
+          </div>
+        </section>
+
+        <section class="search-panel" id="search-panel" aria-hidden="true" aria-label="Search">
+          <div class="sheet-grabber" aria-hidden="true"></div>
+          <div class="search-header">
+            <form class="search-form" id="search-form">
+              <label class="visually-hidden" for="hamburg-search">Search Hamburg</label>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6"/><path d="m15.3 15.3 4.2 4.2"/></svg>
+              <input id="hamburg-search" type="search" placeholder="Search Hamburg" autocomplete="off" />
+            </form>
+            <button class="sheet-close" id="search-close" type="button" aria-label="Close search">✕</button>
+          </div>
+          <div class="sheet-body">
+            <section class="sheet-section">
+              <h2>Recents</h2>
+              <ul class="recents">
+                <li><button class="recent-item" data-place="St. Pauli">St. Pauli <span>· Hamburg</span><b>•••</b></button></li>
+                <li><button class="recent-item" data-place="Elbphilharmonie">Elbphilharmonie <span>· Hamburg</span><b>•••</b></button></li>
+              </ul>
+            </section>
+            <section class="sheet-section">
+              <h2>Find Nearby</h2>
+              <ul class="nearby-list">
+                <li><button class="nearby-item" data-search="Restaurants"><span>🍴</span>Restaurants</button></li>
+                <li><button class="nearby-item" data-search="Transit Stations"><span>🚇</span>Transit Stations</button></li>
+                <li><button class="nearby-item" data-search="Grocery Stores"><span>🛒</span>Grocery Stores</button></li>
+                <li><button class="nearby-item" data-search="Parks"><span>🌳</span>Parks</button></li>
+              </ul>
+            </section>
+          </div>
+        </section>
+
+        <section class="profile-panel" id="profile-panel" aria-hidden="true" aria-label="Profile">
+          <div class="sheet-grabber" aria-hidden="true"></div>
+          <button class="profile-close" id="profile-close" type="button" aria-label="Close profile">✕</button>
+          <div class="profile-banner" id="profile-banner" aria-hidden="true"></div>
+          <div class="profile-identity">
+            <button class="profile-avatar" id="profile-avatar" type="button" aria-label="Open customization">E</button>
+            <div class="profile-name-block">
+              <div class="profile-name-row">
+                <h1 id="profile-name">Explorer</h1>
+                <p class="profile-pronouns" id="profile-pronouns"></p>
+              </div>
+              <p class="profile-username" id="profile-username"></p>
+            </div>
+          </div>
+          <p class="profile-bio" id="profile-bio"></p>
+          <div class="profile-summary">
+            <div class="profile-tile"><span>0</span><small>Saved</small></div>
+            <div class="profile-tile"><span>0</span><small>Reports</small></div>
+            <div class="profile-tile"><span>0</span><small>Sightings</small></div>
+          </div>
+          <div class="profile-actions">
+            <button class="profile-row" id="open-character" type="button"><span class="profile-row-icon gray">☷</span><span>Edit theme</span><b>›</b></button>
+            <button class="profile-row" id="open-settings" type="button"><span class="profile-row-icon mint">⚙︎</span><span>Settings</span><b>›</b></button>
+          </div>
+        </section>
+
+        <section class="map-style-panel" id="map-style-panel" aria-hidden="true" aria-label="Map modes">
+          <div class="sheet-grabber" aria-hidden="true"></div>
+          <button class="profile-close" id="map-style-close" type="button" aria-label="Close map modes">✕</button>
+          <h2>Map Modes</h2>
+          <div class="map-mode-grid">
+            <button class="map-mode active" type="button" data-map-style="explore"><span class="mode-preview explore-preview"></span><span>Explore</span></button>
+            <button class="map-mode" type="button" data-map-style="driving"><span class="mode-preview driving-preview"></span><span>Driving</span></button>
+            <button class="map-mode" type="button" data-map-style="transit"><span class="mode-preview transit-preview"></span><span>Transit</span></button>
+            <button class="map-mode" type="button" data-map-style="satellite"><span class="mode-preview satellite-preview"></span><span>Satellite</span></button>
+          </div>
+        </section>
+
+        <section class="character-panel" id="character-panel" aria-hidden="true" aria-label="Edit profile">
+          <div class="sheet-grabber" aria-hidden="true"></div>
+          <button class="profile-close" id="character-close" type="button" aria-label="Close edit profile">✕</button>
+          <h2>Edit Profile</h2>
+          <p class="character-intro">Customize name, pronouns, visuals and bio.</p>
+          <div class="character-banner-preview" id="character-banner-preview" role="button" tabindex="0" aria-label="Change banner picture"></div>
+          <div class="character-preview" id="character-preview" role="button" tabindex="0" aria-label="Change avatar picture"><span id="character-initial">E</span></div>
+          <p class="character-upload-hint">Click the banner or avatar above to change your pictures.</p>
+          <input class="visually-hidden" id="avatar-upload-input" type="file" accept="image/*" />
+          <input class="visually-hidden" id="banner-upload-input" type="file" accept="image/*" />
+          <label class="character-field-label" for="character-name">Display name</label>
+          <input class="character-input" id="character-name" maxlength="20" value="Explorer" />
+          <div class="character-field-grid">
+            <div>
+              <label class="character-field-label" for="character-username">Username</label>
+              <input class="character-input" id="character-username" maxlength="20" value="explorer" />
+            </div>
+            <div>
+              <label class="character-field-label" for="character-pronouns">Pronouns</label>
+              <input class="character-input" id="character-pronouns" maxlength="30" value="" />
+            </div>
+          </div>
+          <label class="character-field-label" for="character-bio">Bio</label>
+          <textarea class="character-textarea" id="character-bio" maxlength="140" rows="4" placeholder="A short bio to display on your profile."></textarea>
+          <section class="customizer-group"><h3>Color</h3><div class="swatch-row" data-customize="color"><button class="swatch active" data-value="violet" aria-label="Violet"></button><button class="swatch coral" data-value="coral" aria-label="Coral"></button><button class="swatch ocean" data-value="ocean" aria-label="Ocean"></button><button class="swatch moss" data-value="moss" aria-label="Moss"></button></div></section>
+          <section class="customizer-group"><h3>Style</h3><div class="style-row" data-customize="style"><button class="style-choice active" data-value="orbit">Orbit</button><button class="style-choice" data-value="glow">Glow</button><button class="style-choice" data-value="sunset">Sunset</button></div></section>
+          <button class="save-character" id="save-character" type="button">Save profile</button>
+        </section>
+
+        <section class="settings-panel" id="settings-panel" aria-hidden="true" aria-label="Settings">
+          <div class="sheet-grabber" aria-hidden="true"></div>
+          <button class="profile-close" id="settings-close" type="button" aria-label="Close settings">✕</button>
+          <header class="settings-console-header">
+            <p class="settings-console-title">SPIDERTRACKER</p>
+            <p class="settings-console-sub">system console <span class="console-cursor" aria-hidden="true">▮</span></p>
+          </header>
+
+          <section class="sys-block">
+            <h3 class="sys-block-title"><span class="sys-comment">//</span> SYS.INFO</h3>
+            <dl class="sys-table">
+              <div class="sys-row"><dt>App</dt><dd>Spidertracker</dd></div>
+              <div class="sys-row"><dt>Version</dt><dd id="sys-version">--</dd></div>
+              <div class="sys-row"><dt>Runtime</dt><dd id="sys-runtime">--</dd></div>
+              <div class="sys-row"><dt>Viewport</dt><dd id="sys-viewport">--</dd></div>
+              <div class="sys-row"><dt>Locale</dt><dd id="sys-locale">--</dd></div>
+              <div class="sys-row"><dt>Network</dt><dd id="sys-network">--</dd></div>
+            </dl>
+          </section>
+
+          <section class="sys-block">
+            <h3 class="sys-block-title"><span class="sys-comment">//</span> SYS.CONFIG</h3>
+            <dl class="sys-table">
+              <div class="sys-row"><dt>Mapbox token</dt><dd id="sys-mapbox">--</dd></div>
+              <div class="sys-row"><dt>Map engine</dt><dd id="sys-map-engine">--</dd></div>
+              <div class="sys-row"><dt>Supabase</dt><dd id="sys-supabase">--</dd></div>
+              <div class="sys-row"><dt>Weather API</dt><dd id="sys-weather">--</dd></div>
+            </dl>
+          </section>
+
+          <section class="sys-block">
+            <h3 class="sys-block-title"><span class="sys-comment">//</span> SYS.MAP</h3>
+            <dl class="sys-table">
+              <div class="sys-row"><dt>Active style</dt><dd id="sys-map-style">--</dd></div>
+              <div class="sys-row"><dt>Region</dt><dd id="sys-region">--</dd></div>
+              <div class="sys-row"><dt>Terrain 3D</dt><dd id="sys-terrain">--</dd></div>
+              <div class="sys-row"><dt>Live markers</dt><dd id="sys-markers">--</dd></div>
+            </dl>
+          </section>
+
+          <section class="sys-block">
+            <h3 class="sys-block-title"><span class="sys-comment">//</span> SYS.USER</h3>
+            <dl class="sys-table">
+              <div class="sys-row"><dt>Session</dt><dd id="sys-session">--</dd></div>
+              <div class="sys-row"><dt>Identity</dt><dd id="sys-identity">--</dd></div>
+              <div class="sys-row"><dt>Character</dt><dd id="sys-character">--</dd></div>
+              <div class="sys-row"><dt>Guest flag</dt><dd id="sys-guest">--</dd></div>
+            </dl>
+          </section>
+
+          <section class="sys-block">
+            <h3 class="sys-block-title"><span class="sys-comment">//</span> SYS.STORE</h3>
+            <dl class="sys-table">
+              <div class="sys-row"><dt>Location svc</dt><dd id="sys-location">--</dd></div>
+              <div class="sys-row"><dt>Lab mode</dt><dd id="sys-lab">--</dd></div>
+            </dl>
+          </section>
+
+          <div class="settings-tabs" role="tablist" aria-label="Settings sections">
+            <button class="settings-tab active" data-settings-tab="account" type="button">Account</button>
+            <button class="settings-tab" data-settings-tab="privacy" type="button">Privacy</button>
+            <button class="settings-tab" data-settings-tab="lab" type="button">Lab</button>
+          </div>
+          <div class="settings-content" data-settings-view="account">
+            <button class="settings-row" id="change-email" type="button"><span>Change email</span><b>›</b></button>
+            <button class="settings-row" id="change-password" type="button"><span>Change password</span><b>›</b></button>
+            <button class="settings-row" id="sign-out" type="button"><span>Sign out</span><b>›</b></button>
+            <button class="settings-row danger" id="delete-account" type="button"><span>Delete account</span><b>›</b></button>
+          </div>
+          <div class="settings-content" data-settings-view="privacy" hidden>
+            <button class="settings-row toggle-row" id="location-services-toggle" type="button" aria-pressed="false">
+              <span>Location Services</span>
+              <span class="settings-toggle-pill"><i></i></span>
+            </button>
+            <button class="settings-row" type="button"><span>Notifications</span><b>›</b></button>
+            <button class="settings-row" type="button"><span>Privacy controls</span><b>›</b></button>
+          </div>
+          <div class="settings-content" data-settings-view="lab" hidden>
+            <button class="settings-row toggle-row" id="lab-mode-toggle" type="button" aria-pressed="false">
+              <span>Enable experimental labs</span>
+              <span class="settings-toggle-pill"><i></i></span>
+            </button>
+            <p class="settings-hint">Turn on upcoming Spidertracker features early and help shape what ships next.</p>
+            <button class="settings-row" type="button"><span>Beta map layers</span><b>›</b></button>
+            <button class="settings-row" type="button"><span>Early access badges</span><b>›</b></button>
+          </div>
+        </section>
+      </section>
+    </main>
+    <section class="welcome-screen" id="welcome-screen" aria-label="Welcome to Spidertracker">
+      <div class="welcome-card">
+        <p class="welcome-wordmark">SPIDERTRACKER</p><div class="welcome-mark">⌁</div>
+        <h1>Find the stories<br>around you.</h1><p>Join the community that tracks spider sightings, or explore quietly as a guest.</p>
+        <button class="auth-primary" data-auth-mode="signup" type="button">Create account</button><button class="auth-secondary" data-auth-mode="signin" type="button">Sign in</button><button class="auth-guest" id="continue-guest" type="button">Lurk as guest</button>
+      </div>
+    </section>
+    <section class="auth-screen" id="auth-screen" aria-hidden="true" aria-label="Account access">
+      <form class="auth-card" id="auth-form">
+        <button class="auth-close" id="auth-close" type="button" aria-label="Close account access">✕</button><p class="welcome-wordmark">SPIDERTRACKER</p><h2 id="auth-title">Create account</h2><p id="auth-copy">Save sightings and make your profile yours.</p>
+        <label>Email<input id="auth-email" type="email" autocomplete="email" required /></label><label>Password<input id="auth-password" type="password" autocomplete="current-password" minlength="6" required /></label>
+        <button class="auth-primary" id="auth-submit" type="submit">Create account</button><div class="auth-divider"><span>or</span></div><button class="discord-button" id="discord-login" type="button"><span>✦</span> Continue with Discord</button><button class="auth-switch" id="auth-switch" type="button">Already have an account? Sign in</button>
+      </form>
+    </section>
+    <div class="location-notice" id="location-notice" role="status" aria-live="polite">
+      <span class="notice-icon" aria-hidden="true">⌖</span>
+      <span><strong>Allow location access</strong><small>Find your position on the map.</small></span>
+      <button id="location-notice-close" type="button" aria-label="Dismiss location notice">✕</button>
+    </div>
+    <div class="toast" role="status" id="toast">Sighting reporting is coming soon.</div>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
